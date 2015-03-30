@@ -1,31 +1,32 @@
 // JavaScript source code
-var UnitClass = Object.create(GameObjectClass);
+var UnitClass = Object.create();
 {
-    UnitClass.Velos;
-    UnitClass.Titav;
-    UintClass.Aegis;
+      UnitClass.Velos;
+      UnitClass.Titav;
+      UintClass.Aegis;
 
-    UnitClass.init = function(POWER_A, POWER_T, POWER_V)
+      UnitClass.Units = new Array();
+
+    UnitClass.init = function(Velos, Titav, Aegis)
     {
         this.Velos = POWER_V;
         this.Aegis = POWER_A;
         this.Titav = POWER_T;
     };
 
-    function CreateUnits() {
-
-        var Units = new Array();
-
+    UnitClass.CreateUnits = function ()
+    {
         //if() get when button is pressed to make a unit
         Units.push(Velos);
         //
         Units.push(Titav);
         //
-        Units[Units.length] = Unit.Velos;
+        Units.push(Aegis);
 
-    }
+    };
 
-    function RemoveUnits() {
+    UnitClass.RemoveUnits = function () 
+    {
 
         for (var index = 0; index < this.Units.length; index++)
         {
@@ -34,6 +35,6 @@ var UnitClass = Object.create(GameObjectClass);
                 Units.slice(0);
             }
         }
-    }
-}
+    };
+};
     
