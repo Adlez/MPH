@@ -1,4 +1,4 @@
-﻿var WorldClass =
+﻿var WorldObject =
 	{
 		h_WorldType: 0,
 		h_WorldHasRuins: false,
@@ -11,8 +11,6 @@
 
 		x: 0,
 		y: 0,
-		vX: 0,
-		vY: 0,
 		spriteAnim: undefined,
 		width: undefined,
 		height: undefined,
