@@ -1,12 +1,11 @@
 ﻿var WorldClass =
 	{
+		
+
+
 		h_WorldFertilityLevel: 0,
 		h_WorldMinerlaLevel: 0,
 		h_WorldHasRuins: false,
-		h_WorldMaxMineralAmount: 0,
-		h_WorldMinMineralAmount: 0,
-		h_WorldStartingMineralAmount: 0,
-		h_WorldCurrentMineralAmount: 0,
 		x: 0,
 		y: 0,
 		vX: 0,
@@ -25,4 +24,6 @@
 			this.width = width;
 			this.height = height;
 		},
+
+	//	MainColonyWorld : WorldClass;
 	};
