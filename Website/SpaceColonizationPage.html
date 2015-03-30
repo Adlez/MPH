@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link href="reset.css" rel="stylesheet" type="text/css" />
+	<link href="base.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>A Giant Hula Hoop</title>
+	<!--<script type="text/javascript" src="jquery.js"></script>-->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<title>Jewel Warrior</title>
+	<link rel="stylesheet" href="styles/main.css" />
+	<link rel="stylesheet" href="styles/fontfaces.css" />
+	<link rel="stylesheet" href="styles/mobile.css"
+		 media="screen and (max-device-width: 768px) and (orientation: portrait),
+                 screen and (max-device-width: 1024px) and (orientation: landscape)" />
+	<link rel="apple-touch-icon-precomposed"
+		 href="images/ios-icon.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="72x72"
+		 href="images/ios-icon-ipad.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="114x114"
+		 href="images/ios-icon-iphone-retina.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="144x144"
+		 href="images/ios-icon-ipad-retina.png" />
+	<link rel="apple-touch-startup-image"
+		 href="images/ios-startup-748x1024.png"
+		 media="screen and (min-device-width: 768px)
+                        and (orientation:landscape)" />
+	<link rel="apple-touch-startup-image"
+		 href="images/ios-startup-768x1004.png"
+		 media="screen and (min-device-width: 768px)
+                        and (orientation:portrait)" />
+	<link rel="apple-touch-startup-image"
+		 href="images/ios-startup-320x460.png"
+		 media="screen and (max-device-width:320px)" />
+	<!-- Include JS Scripts here-->
+<!--	<script type="text/javascript" src="js/SpaceColonization/screenSplash.js"></script>-->
+
+	<script src="js/SpaceColonization/mph.js"></script>
+	<script>
+		window.addEventListener( "load", function ()
+		{
+			mph.load( "js/SpaceColonization/dom.js" );
+			if ( mph.isStandalone() )
+			{
+				mph.load( "js/SpaceColonization/screenSplash.js" );
+				mph.load( "js/SpaceColonization/MainMenu.js", mph.setup );
+			} else
+			{
+				mph.load( "js/SpaceColonization/screenInstall.js", mph.setup );
+			}
+
+		} );
+	</script>
+
+<!--	<script type="text/javascript" src="js/SpaceColonization/dom.js"></script>
+	<script type="text/javascript" src="js/SpaceColonization/game.js"></script>
+	<script type="text/javascript" src="js/SpaceColonization/MainMenu.js"></script>
+	<script type="text/javascript" src="js/SpaceColonization/mphGameScript.js"></script>
+	<script type="text/javascript" src="js/SpaceColonization/screenInstall.js"></script>
+	<script type="text/javascript" src="js/SpaceColonization/WorldClass.js"></script>
+	<!-- script type="text/javascript" src="js/ScriptName.js"></script> -->
+</head>
+<body>
+	<div id="wrap">
+		<div id="masthead">
+
+		</div>
+		<div id="OEF"><goldtext><h1>L The Boneyard </h1></goldtext> <h3> L </h3></div>
+		<div id="mainnav">
+			<ul>
+				<li><a class="nav-home" href="index.html">Home</a></li>
+				<li><a class="nav-about" href="WhoIAm.html">A Bit About Me</a></li>
+				<li><a class="nav-resume" href="resume.html">Resume</a></li>
+				<li><a class="previousworks" href="previousworks.html"> Things I've done</a></li>
+				<li><a class="contact" href="contact.html"> Contact</a></li>
+			</ul>
+		</div><br><br>
+		<h4><goldtext> Works I've done so far. </goldtext></h4>
+		<p><i> Site under construction.</i></p><br><br>
+		<div id="ExampleNav">
+			<ul>
+				<li><a class="nav-WorksMain" href="previousworks.html">Main</a></li>
+				<li><a class="nav-images" href="ConceptArt.html">Concept Art</a></li>
+				<li><a class="nav-writing" href="Writing.html">Writing</a></li>
+				<li><a class="nav-code" href="ExampleCode.html">Example Code</a></li>
+				<li><a class="nav-games" href="Games.html"> Games</a></li>
+			</ul>
+		</div><br><br>
+	</div>
+	<canvas id="myCanvas" width="750" height="500"></canvas>
+
+	<div id="game">
+		<div class="screen" id="splash-screen">
+			<h1 class="logo">Jewel <br />Warrior</h1>
+			<span class="continue">Click to continue</span>
+		</div>
+		<div class="screen" id="install-screen">
+			<h1 class="logo">Jewel <br />Warrior</h1>
+			<span>
+				Click the <img src="images/install-icon.png"
+					  alt="Install icon">
+				button to install the game to your home screen.
+			</span>
+		</div>
+		<div class="screen" id="main-menu">
+			<h2 class="logo">Jewel <br />Warrior</h2>
+			<ul class="menu">
+				<li><button name="game-screen">Play</button>
+				<li><button name="high-scores">Highscore</button>
+				<li><button name="about">About</button>
+				<li><button name="exit-screen">Exit</button>
+			</ul>
+		</div>
+		<div class="screen" id="game-screen"></div>
+		<div class="screen" id="high-scores"></div>
+	</div>
+
+	<p>
+		This is a simple Space Colonization game inspired by the Halo Forerunner Saga books.<br />
+		It is not complete yet (23/03/2015)<br />
+	</p>
+
+
+</body>
+</html>

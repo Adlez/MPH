@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link href="reset.css" rel="stylesheet" type="text/css" />
+<link href="base.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>The Boneyard</title>
+
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+		function randomPos(){
+           document.getElementById("MoveButton").style.left= (Math.random()*700)+"px" ;
+            document.getElementById("MoveButton").style.top= (Math.random()*500)+"px" ;
+			}
+                
+         function Sorry_Folks()
+			{ alert("I can't give you a raise. Sorry for wasting your time."); }
+</script>
+
+<style>
+
+body	{ height: 305px; width: 200px; }
+
+<!-- y translate, higher number moves down, low number moves up */
+
+#testTransform		{transform:translate(100px); background-color:blue; width: 100px; transform:matrix(-1, 0, 0, 1, -50, 0); color:pink;}
+ /* transform:translate(100px);-->
+bottomstuff	{position:absolute; bottom:0; font-size: 3em; }
+MainContainer {height: 900px; border: thin red solid;}*/
+
+</style>
+<style type="text/css">
+button
+{
+	position:absolute;
+	top:750px;
+	left:300px;
+}
+
+</style> </head>
+
+<body>
+
+
+	
+<div id="banner">
+<div id="wrap">
+<div id="masthead">
+	 
+      </div>
+<div id="OEF"> <goldtext><h1>L The Boneyard </h1></goldtext> <h3> L </h3></div>
+           <div id="mainnav">     
+           <ul>	
+                <li><a class="nav-home" href="index.html">Home</a></li>                      			 
+                <li><a class="nav-about" href="WhoIAm.html">A Bit About Me</a></li>              		
+                <li><a class="nav-resume" href="resume.html">Resume</a></li>   
+				<li><a class="previousworks" href="previousworks.html"> Things I've done</a></li>
+				<li><a class="contact" href="contact.html"> Contact</a></li>
+			</ul>
+			</div><br>
+			<br><br>
+<MainContainer>
+<h2> Welcome</h2><br>
+<div id="sidebar">
+<TEXT="000000"> <!-- What is this?-->
+            <p><i> Site Under Construction.</i> </p></TEXT></div>
+<br><HomePageText> There will be more things on here eventually to make this page look nice, but for now it will remain empty.<br>
+Please, use the links above to look around.<br><br>
+By the way, it just so happens I can increase the amount of money you can make. All you have to do is click on "Give me a raise" down below.</HomePageText>
+<!--<div id="ButtonContainer"><a id="triggerButton" href="#"></href><input type="button" onclick="show_prompt(this shouldn't be appearing)" value="Give me a Raise." 
+</div>-->
+<!--<span style="padding: 15px; background: red;"  onmouseout="this.firstChild.hidden='';"><input type="button" name="test" id="test" value="roll over me" onmouseover="this.hidden=true;"></span>
+-->
+<br>
+<button id="MoveButton" onmouseover="randomPos()" onclick="Sorry_Folks()">Give me a raise.</button><br><br>
+
+<!--codecs='avc1.42E01E, mp4a.40.2'"  codecs='theora, vorbis'"-->
+
+</MainContainer>
+
+</div>
+</body>
+</html>
