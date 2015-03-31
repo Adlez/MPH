@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link href="reset.css" rel="stylesheet" type="text/css" />
+<link href="base.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>The Boneyard</title>
+<script type="text/javascript" src="jquery.js"></script>
+
+<style>
+body	{background-image: url(pictures/myworks/guided_balance.png); height: 730px; background-repeat: no-repeat; background-position: center; top:0%; background-attachment: fixed;}
+#sidebar		{float:left; width:1000px; background: rgba(0,0,0,.2); background-color:#000000; 
+					padding:0px 5px 0px 5px; border:thin blue solid; margin-right:1.15px; color:#FFFFFF;}
+codeexample1	{float:right;}
+codeexample2	{float:right;}
+
+<!-- y translate, higher number moves down, low number moves up */
+/* matrix( x scale. xskew (ignore), yskew(ignore), y scale, w translation, y translation) */
+
+ /* transform:translate(100px); -->
+</style> </head>
+
+<body>
+<div id="wrap">
+<div id="masthead">
+ 
+      </div>
+ <goldtext><h1>L The Boneyard </h1></goldtext> <h3> L </h3>
+           <div id="mainnav">     
+           <ul>	
+                <li><a class="nav-home" href="index.html">Home</a></li>                      			 
+                <li><a class="nav-about" href="WhoIAm.html">A Bit About Me</a></li>              		
+                <li><a class="nav-resume" href="resume.html">Resume</a></li>   
+				<li><a class="previousworks" href="previousworks.html"> Things I've done</a></li> 
+				<li><a class="contact" href="contact.html"> Contact</a></li>
+			</ul>
+			</div><br><br>
+<h4><goldtext> Works I've done so far. </goldtext></h4>
+<p><i> Site under construction.</i></p><br><br>
+           <div id="ExampleNav">     
+           <ul>	
+				<li><a class="nav-WorksMain" href="previousworks.html">Main</a></li>
+                <li><a class="nav-images" href="ConceptArt.html">Concept Art</a></li>                      			 
+                <li><a class="nav-writing" href="Writing.html">Writing</a></li>              		
+                <li><a class="nav-code" href="ExampleCode.html">Example Code</a></li>   
+				<li><a class="nav-games" href="Games.html"> Games</a></li>
+				
+			</ul>
+			</div><br><br>
+			<p> One example of some code I've written in Visual Studio is the attack button for a program I made for testing <br>
+			character levels, armour and skills and everything else for my tabletop rpg. The objective is to use the program to find what level and <br>
+			kind of enemies the players could handle.<br></p>
+			<codeexample1> <img src="pictures/code example1.png" width="400" height="300" alt="" ?><br> </codeexample1>
+<div id="sidebar">
+ Private Sub btnAttack_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAttack.Click<br>
+        'The following will happen when the user clicks the "attack" button<br>
+        'First the program will find out what weapons the user has equipped and in which hand<br>
+        'Then it calculates the user's "Accuracy", their chance to hit<br>
+        'Next it finds the amount of damage that is to be dealt out.<br>
+        radSkillSelectNoneDerek.Checked = True<br>
+        radSkillSelectNoneVex.Checked = True<br><br><br><br>
+
+
+        TurnCounter = TurnCounter + 1<br>
+        lblHitAimTarget.Text = "Hit"<br>
+        'If there is no weapon equipped<br>
+        If EmptyHands = True And MeleeTwoHanded = False And MeleeLeft = False And RangeLeft = False And RangeRight = False And RangedTwoHaned = False And MeleeRight = False Then<br>
+            Dim HITValue As Random<br>
+            Dim HIT As Integer<br>
+            HITValue = New Random<br>
+            HIT = HITValue.Next(1, 11)<br>
+            txtHitAimTarget.Text = HIT + Dexterity<br>
+            txtDamage.Text = Strength<br>
+            'If a two handed melee weapon is equipped<br>
+        ElseIf MeleeTwoHanded = True And MeleeLeft = False And RangeLeft = False And RangeRight = False And RangedTwoHaned = False And MeleeRight = False Then<br>
+            lblHitAimTarget.Text = "Hit"<br>
+            Dim HITValue As Random<br>
+            Dim HIT As Integer<br>
+            HITValue = New Random<br>
+            HIT = HITValue.Next(1, 11)<br>
+            txtHitAimTarget.Text = HIT + Dexterity<br>
+            txtDamage.Text = LeftOutputWeaponDamage + LeftWeaponNTValue<br>
+            'If a melee weapon is in the left hand and not the right<br>
+        ElseIf MeleeLeft = True And MeleeTwoHanded = False And RangeLeft = False And RangedTwoHaned = False And MeleeRight = False Then<br>
+            If LeftHandIsDom = True Then<br>
+                lblHitAimTarget.Text = "Hit"<br>
+                Dim HITValue As Random<br>
+                Dim HIT As Integer<br>
+                HITValue = New Random<br>
+                HIT = HITValue.Next(1, 11)<br>
+                txtHitAimTarget.Text = HIT + Dexterity<br>
+                txtDamage.Text = LeftOutputWeaponDamage + LeftWeaponNTValue<br>
+            ElseIf RightHandisDom = True Then<br>
+                lblHitAimTarget.Text = "Hit"<br>
+                Dim HITValue As Random<br>
+                Dim HIT As Integer<br>
+                HITValue = New Random<br>
+                HIT = HITValue.Next(1, 11)<br>
+                txtHitAimTarget.Text = HIT + Dexterity<br>
+                txtDamage.Text = LeftOutputWeaponDamage<br>
+            End If<br>
+            'If a melee weapon is equipped in the Right hand and not the left<br>
+        ElseIf MeleeRight = True And MeleeTwoHanded = False And RangeLeft = False And RangedTwoHaned = False And MeleeLeft = False Then<br>
+            If RightHandisDom = True Then<br>
+                lblHitAimTarget.Text = "Hit"<br>
+                Dim HITValue As Random<br>
+                Dim HIT As Integer<br>
+                HITValue = New Random<br>
+                HIT = HITValue.Next(1, 11)<br>
+                txtHitAimTarget.Text = HIT + Dexterity<br>
+                txtDamage.Text = RightOutputWeaponDamage + RightWeaponNTValue<br>
+            ElseIf LeftHandIsDom = True Then<br>
+                lblHitAimTarget.Text = "Hit"<br>
+                Dim HITValue As Random<br>
+                Dim HIT As Integer<br>
+                HITValue = New Random<br>
+                HIT = HITValue.Next(1, 11)<br>
+                txtHitAimTarget.Text = HIT + Dexterity<br>
+                txtDamage.Text = RightOutputWeaponDamage<br>
+            End If<br>
+            'If dual-wielding two melee weapons<br>
+        ElseIf MeleeRight = True And MeleeLeft = True And MeleeTwoHanded = False And RangeLeft = False And RangeRight = False And RangedTwoHaned = False Then<br>
+            If LeftHandIsDom = True Then<br>
+                lblHitAimTarget.Text = "Hit"<br>
+                Dim HITValue As Random<br>
+                Dim HIT As Integer<br>
+                HITValue = New Random<br>
+                HIT = HITValue.Next(1, 11)<br>
+                txtHitAimTarget.Text = HIT + Dexterity<br>
+                txtDamage.Text = RightOutputWeaponDamage + LeftOutputWeaponDamage + LeftWeaponNTValue<br>
+            ElseIf RightHandisDom = True Then<br>
+                lblHitAimTarget.Text = "Hit"<br>
+                Dim HITValue As Random<br>
+                Dim HIT As Integer<br>
+                HITValue = New Random<br>
+                HIT = HITValue.Next(1, 11)<br>
+                txtHitAimTarget.Text = HIT + Dexterity<br>
+                txtDamage.Text = RightOutputWeaponDamage + LeftOutputWeaponDamage + RightWeaponNTValue<br>
+            End If<br>
+            'If wielding a two-handed ranged weapon<br>
+        ElseIf RangedTwoHaned = True And RangeRight = False And RangeLeft = False And MeleeLeft = False And MeleeRight = False And MeleeTwoHanded = False Then<br>
+            lblHitAimTarget.Text = "Aim"<br>
+            txtHitAimTarget.Text = Accuracy + Dexterity + LeftOutputWeaponAim<br>
+            txtDamage.Text = LeftOutputWeaponDamage + LeftWeaponNTValue<br>
+            'If wielding a ranged weapon in the left hand and not the right<br>
+        ElseIf RangeLeft = True And RangeRight = False And RangedTwoHaned = False And MeleeLeft = False And MeleeRight = False And MeleeTwoHanded = False<br>
+                lblHitAimTarget.Text = "Aim"<br>
+                txtHitAimTarget.Text = Accuracy + Dexterity + LeftOutputWeaponAim<br>
+                txtDamage.Text = LeftOutputWeaponDamage + LeftWeaponNTValue<br>
+            ElseIf RightHandisDom = True Then<br>
+                lblHitAimTarget.Text = "Aim"<br>
+                txtHitAimTarget.Text = Accuracy + LeftOutputWeaponAim<br>
+                txtDamage.Text = LeftOutputWeaponDamage<br>
+            End If<br>
+            'If wielding a ranged weapon in the right hand and not the left<br>
+        ElseIf RangeRight = True And RangedTwoHaned = False And RangeLeft = False And MeleeLeft = False And MeleeRight = False And MeleeTwoHanded = False Then<br>
+            If RightHandisDom = True Then<br>
+                lblHitAimTarget.Text = "Aim"<br>
+                txtHitAimTarget.Text = Accuracy + Dexterity + RightOutputWeaponAim<br>
+                txtDamage.Text = RightOutputWeaponDamage + RightWeaponNTValue<br>
+            ElseIf LeftHandIsDom = True Then<br>
+                lblHitAimTarget.Text = "Aim"<br>
+                txtHitAimTarget.Text = Accuracy + RightOutputWeaponAim<br>
+                txtDamage.Text = RightOutputWeaponDamage<br>
+            End If<br>
+            'If dual wielding a ranged weapon and a melee weapon<br>
+        Else<br>
+            txtHitAimTarget.Text = Dexterity + LeftOutputWeaponAim + RightOutputWeaponAim<br>
+            If RangeRight = True And MeleeLeft = True And RangeLeft And MeleeRight = False And RangedTwoHaned = False And MeleeTwoHanded = False Then<br>
+                lblHitAimTarget.Text = "Hit"<br>
+                Dim HITValue As Random<br>
+                Dim HIT As Integer<br>
+                HITValue = New Random<br>
+                HIT = HITValue.Next(1, 11)<br>
+                txtHitAimTarget.Text = HIT + Dexterity<br>
+                If RightHandisDom = True Then<br>
+                    lblHitAimTarget.Text = "Hit"<br>
+                    txtRangeDamageDealt.Text = RightOutputWeaponDamage + RightWeaponNTValue<br>
+                    txtDamage.Text = LeftOutputWeaponDamage<br>
+                    txtHitAimTarget.Text = txtHitAimTarget.Text + Accuracy<br>
+                ElseIf LeftHandIsDom = True Then<br>
+                    lblHitAimTarget.Text = "Hit"<br>
+                    txtRangeDamageDealt.Text = RightOutputWeaponDamage<br>
+                    txtDamage.Text = LeftOutputWeaponDamage + LeftWeaponNTValue<br>
+                End If<br>
+<br>
+            ElseIf RangeLeft = True And MeleeRight = True And RangeRight And MeleeLeft = False And MeleeTwoHanded = False Then<br>
+                lblHitAimTarget.Text = "Hit"<br>
+                Dim HITValue As Random<br>
+                Dim HIT As Integer<br>
+                HITValue = New Random<br>
+                HIT = HITValue.Next(1, 11)<br>
+                txtHitAimTarget.Text = HIT + Dexterity<br>
+                If RightHandisDom = True Then<br>
+                    lblHitAimTarget.Text = "Hit"<br>
+                    txtRangeDamageDealt.Text = LeftOutputWeaponDamage<br>
+                    txtDamage.Text = RightOutputWeaponDamage + RightWeaponNTValue<br>
+                ElseIf LeftHandIsDom = True Then<br>
+                    lblHitAimTarget.Text = "Hit"<br>
+                    txtRangeDamageDealt.Text = LeftOutputWeaponDamage + LeftWeaponNTValue<br>
+                    txtDamage.Text = RightOutputWeaponDamage<br>
+                    txtHitAimTarget.Text = txtHitAimTarget.Text + Accuracy<br>
+                End If<br>
+            End If<br>
+        End If<br>
+<br>
+        'specific character traits<br>
+        If radCharacterDerek.Checked = True Then<br>
+            txtHitAimTarget.Text = txtHitAimTarget.Text + 4<br>
+            If RangeLeft = False And RangeRight = False And RangedTwoHaned = False Then<br>
+                txtDamage.Text = Val(txtDamage.Text) + 10<br>
+            End If<br>
+<br>
+        ElseIf radCharacterVex.Checked = True Then<br>
+            If RangedTwoHaned Or RangeRight Or RangeLeft = True Then<br>
+                txtHitAimTarget.Text = txtHitAimTarget.Text + 20<br>
+            End If<br>
+        ElseIf radCharacterChester.Checked = True Then<br>
+            If MeleeRight = True Then<br>
+                txtDamage.Text = txtDamage.Text - RightWeaponNTValue<br>
+            End If<br>
+            If MeleeLeft = True Then<br>
+                MsgBox("You have no Left Hand")<br>
+                txtDamage.Text = txtDamage.Text - RightWeaponNTValue<br>
+            End If<br>
+            If RangeRight = True Then<br>
+                txtDamage.Text = txtDamage.Text - RightWeaponNTValue<br>
+            End If<br>
+            If RangeLeft = True Then<br>
+                txtDamage.Text = txtDamage.Text - LeftWeaponNTValue<br>
+                MsgBox("You have no Left Hand")<br>
+            End If<br>
+            If RangedTwoHaned = True Then<br>
+                txtDamage.Text = txtDamage.Text - LeftWeaponNTValue<br>
+            End If<br>
+            If MeleeTwoHanded = True Then<br>
+                txtDamage.Text = txtDamage.Text - LeftWeaponNTValue<br>
+            End If<br>
+        ElseIf radCharacterLauren.Checked = True Then<br>
+<br>
+        End If<br>
+<br>
+<br>
+    End Sub<br>
+	</div>
+				<codeexample2> <img src="pictures/code example2.png" width="400" height="300" alt="" ?><br></codeexample2>
+				<codeexample2> <img src="pictures/code example3.png" width="400" height="300" alt="" ?><br></codeexample2>
+</div>
+</body>
+</html>
