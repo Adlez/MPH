@@ -33,24 +33,8 @@ mph.display = (function() {
     }
 
     function setup() {
-        var boardElement = $("#game-screen .game-board")[0];
-
-        cols = mph.settings.cols;
-        rows = mph.settings.rows;
-        mphSize = mph.settings.mphSize;
-
-        canvas = document.createElement("canvas");
-        ctx = canvas.getContext("2d");
-        dom.addClass(canvas, "board");
-        canvas.width = cols * mphSize;
-        canvas.height = rows * mphSize;
-        ctx.scale(mphSize, mphSize);
         
-        boardElement.appendChild(canvas);
-        boardElement.appendChild(createBackground());
-        
-        previousCycle = Date.now();
-        requestAnimationFrame(cycle);
+        createBackground();
     }
 
     function addAnimation(runTime, fncs) {
@@ -97,8 +81,8 @@ mph.display = (function() {
         }
     }
 
-    function drawmph(type, x, y, scale, rot) {
-        var image = mph.images["images/mphs" +
+    function drawjewel(type, x, y, scale, rot) {
+        var image = mph.images["images/jewels" +
                         mphSize + ".png"];
         ctx.save();
         if (typeof scale !== "undefined" && scale > 0) {

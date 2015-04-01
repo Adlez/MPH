@@ -1,21 +1,18 @@
-// JavaScript source code
-var UnitClass = Object.create();
-{
-      UnitClass.Velos;
-      UnitClass.Titav;
-      UintClass.Aegis;
 
-      UnitClass.Units = new Array();
+mph.UnitClass = (function () {
+    UnitClass.Velos;
+    UnitClass.Titav;
+    UintClass.Aegis;
 
-    UnitClass.init = function(Velos, Titav, Aegis)
-    {
+    UnitClass.Units = [];
+
+    UnitClass.init = function (Velos, Titav, Aegis) {
         this.Velos = POWER_V;
         this.Aegis = POWER_A;
         this.Titav = POWER_T;
     };
 
-    UnitClass.CreateUnits = function ()
-    {
+    UnitClass.CreateUnits = function () {
         //if() get when button is pressed to make a unit
         Units.push(Velos);
         //
@@ -25,16 +22,13 @@ var UnitClass = Object.create();
 
     };
 
-    UnitClass.RemoveUnits = function () 
-    {
+    UnitClass.RemoveUnits = function () {
 
-        for (var index = 0; index < this.Units.length; index++)
-        {
-            if (Units[0] == POWER_V)
-            {
+        for (var index = 0; index < this.Units.length; index++) {
+            if (Units[0] == POWER_V) {
                 Units.slice(0);
             }
         }
     };
-};
+})();
     

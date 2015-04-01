@@ -2,10 +2,11 @@ mph.screens["game-screen"] = (function() {
     var settings = mph.settings,
         storage = mph.storage,
         display = mph.display,
-		board = mph.board,
-        input = mph.input,
+		input = mph.input,
         dom = mph.dom,
         audio = mph.audio,
+        world = mph.world,
+        unit = mph.UnitClass,
         $ = dom.$,
         cursor,
         firstRun = true,
@@ -20,7 +21,7 @@ mph.screens["game-screen"] = (function() {
             startTime : 0, // time at start of level
             endTime : 0 // time to game over
         };
-        cursor = {
+        cursor = { //for keyboard input
             x : 0,
             y : 0,
             selected : false
@@ -41,18 +42,10 @@ mph.screens["game-screen"] = (function() {
             }
         }
        
-        board.initialize(startmphs,
+        game.initialize(startmphs,
         function() {
             display.initialize(function() {
-                display.redraw(board.getBoard(), function() {
-                    audio.initialize();
-                    if (useActiveGame) {
-                        setLevelTimer(true, activeGame.time);
-                        updateGameInfo();
-                    } else {
-                        advanceLevel();
-                    }
-                });
+                
             });
         });
     }
@@ -80,33 +73,7 @@ mph.screens["game-screen"] = (function() {
             = gameState.level;
     }
     
-    function advanceLevel() {
-        gameState.level++;
-        announce("Level " + gameState.level);
-        audio.play("levelup");
-                
-        updateGameInfo();
-        gameState.startTime = Date.now();
-        gameState.endTime = settings.baseLevelTimer *
-            Math.pow(gameState.level, -0.05 * gameState.level);
-        setLevelTimer(true);
-        display.levelUp();
-    }
-
-    
-    function addScore(points) {
-        var nextLevelAt = Math.pow(
-            settings.baseLevelScore,
-            Math.pow(settings.baseLevelExp, gameState.level-1)
-        );
-        gameState.score += points;
-        if (gameState.score >= nextLevelAt) {
-            advanceLevel();
-        }
-        updateGameInfo();
-    }
-
-
+       
     function setLevelTimer(reset) {
         if (gameState.timer) {
             clearTimeout(gameState.timer);
@@ -161,77 +128,14 @@ mph.screens["game-screen"] = (function() {
         cursor.selected = select;
         display.setCursor(x, y, select);
     }
-
-    function selectmph(x, y) {
-        if (arguments.length == 0) {
-            selectmph(cursor.x, cursor.y);
-            return;
-        }
-        if (cursor.selected) {
-            var dx = Math.abs(x - cursor.x),
-                dy = Math.abs(y - cursor.y),
-                dist = dx + dy;
-
-            if (dist == 0) {
-                // deselected the selected mph
-                setCursor(x, y, false);
-            } else if (dist == 1) {
-                // selected an adjacent mph
-                board.swap(cursor.x, cursor.y, 
-                    x, y, playBoardEvents);
-                setCursor(x, y, false);
-            } else {
-                // selected a different mph
-                setCursor(x, y, true);
-            }
-        } else {
-            setCursor(x, y, true);
-        }
-    }
-
-    function playBoardEvents(events) {
-        if (events.length > 0) {
-            var boardEvent = events.shift(),
-                next = function() {
-                    playBoardEvents(events);
-                };
-            switch (boardEvent.type) {
-                case "move" :
-                    display.movemphs(boardEvent.data, next);
-                    break;
-                case "remove" :
-                    audio.play("match");
-                    display.removemphs(boardEvent.data, next);
-                    break;
-                case "refill" :
-                    announce("No moves!");
-                    display.refill(boardEvent.data, next);
-                    break;
-                case "score" :
-                    addScore(boardEvent.data);
-                    next();
-                    break;
-                case "badswap" :
-                    audio.play("badswap");
-                    break;
-                default :
-                    next();
-                    break;
-            }
-        } else {
-            display.redraw(board.getBoard(), function() {
-                // good to go again
-            });
-        }
-    }
-    
+   
     function moveCursor(x, y) {
         if (cursor.selected) {
             x += cursor.x;
             y += cursor.y;
             if (x >= 0 && x < settings.cols 
                 && y >= 0 && y < settings.rows) {
-                selectmph(x, y);
+                selectMph(x, y);
             }
         } else {
             x = (cursor.x + x + settings.cols) % settings.cols;
@@ -290,7 +194,7 @@ mph.screens["game-screen"] = (function() {
     
     function setup() {
         input.initialize();
-        input.bind("selectmph", selectmph);
+        //input.bind("selectMph", selectMph);
         input.bind("moveUp", moveUp);
         input.bind("moveDown", moveDown);
         input.bind("moveLeft", moveLeft);
