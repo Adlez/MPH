@@ -10,3 +10,12 @@
 		},
 
 	};
+
+function Car()
+{
+	this.make = "Ford";
+	this.speed = 100;
+}
+
+Object.create()
+var anotherClass = Object.create;
