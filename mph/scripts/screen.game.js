@@ -16,6 +16,22 @@ mph.screens["game-screen"] = ( function ()
 	var mcStoredFood = 0;
 	var mcStroedMat = 0;
 
+	/*
+	function GameLoop()
+		{
+			if ( h_GameOver == true )
+			{
+				GameOver();
+				return;
+			}
+
+			context.fillRect( 0, 0, canvas.width, canvas.height );
+			window.requestAnimationFrame( GameLoop(), canvas );
+			update();
+			render();
+		};
+	*/
+
 	function gameLoop()
 	{
 	//	context.fillRect( 0, 0, canvas.width, canvas.height );
