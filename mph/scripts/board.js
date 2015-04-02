@@ -22,7 +22,9 @@ mph.board = ( function ()
 
 	return {
 		initialize: initialize,
-//		getBoard: getBoard,
+		swap: swap,
+		canSwap: canSwap,
+		getBoard: getBoard,
 		print: print
 	};
 

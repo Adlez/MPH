@@ -13,19 +13,15 @@ mph.screens["game-screen"] = ( function ()
 	    paused = false,
 	    pauseTime;
 
-	var mcStoredFood = 0;
-	var mcStroedMat = 0;
-
 	function gameLoop()
 	{
 	//	context.fillRect( 0, 0, canvas.width, canvas.height );
-	//	window.requestAnimationFrame( gameLoop, canvas );
+		window.requestAnimationFrame( gameLoop, canvas );
 		update();
-		//	render();
-		console.log( mcStoredFood );
+		render();
 	}
 
-	//gameLoop();
+	gameLoop();
 
 	function render()
 	{
@@ -64,12 +60,25 @@ mph.screens["game-screen"] = ( function ()
 			}
 		}
 
-		mcStoredFood += 10;
-		console.log( mcStoredFood );
-
-		setLevelTimer( false );
-		gameLoop();
-
+		board.initialize(
+		function ()
+		{
+			display.initialize( function ()
+			{
+				display.redraw( board.getBoard(), function ()
+				{
+					audio.initialize();
+					if ( useActiveGame )
+					{
+						setLevelTimer( true, activeGame.time );
+						updateGameInfo();
+					} else
+					{
+						advanceLevel();
+					}
+				} );
+			} );
+		} );
 	}
 
 	function announce( str )
@@ -97,8 +106,10 @@ mph.screens["game-screen"] = ( function ()
 
 	function updateGameInfo()
 	{
-		$( "#game-screen .mainColonyStoredFood span" )[0].innerHTML = gameState.mainColonyStoredFood;
-		$( "#game-screen .mainColonyStoredMaterial span" )[0].innerHTML = gameState.mainColonyStoredMaterial;
+		$( "#game-screen .mainColonyStoredFood span" )[0].innerHTML
+		    = gameState.mainColonyStoredFood;
+		$( "#game-screen .mainColonyStoredMaterial span" )[0].innerHTML
+		    = gameState.mainColonyStoredMaterial;
 	}
 
 
@@ -116,8 +127,22 @@ mph.screens["game-screen"] = ( function ()
 
 	function setLevelTimer( reset )
 	{
-		mcStoredFood += Date.now();
-		console.log( mcStoredFood );
+		if ( gameState.timer )
+		{
+			clearTimeout( gameState.timer );
+			gameState.timer = 0;
+		}
+		if ( reset )
+		{
+			gameState.startTime = Date.now();
+			gameState.endTime =
+			    settings.baseLevelTimer *
+			    Math.pow( gameState.level,
+					   +0.05 * gameState.level );
+		}
+		var delta = gameState.startTime + Date.now(),
+		    percent = ( delta / gameState.endTime ) * 100,
+		    progress = $( "#game-screen .time .indicator" )[0];
 /*		if ( delta < 0 )
 		{
 			gameOver();
