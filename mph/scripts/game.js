@@ -17,9 +17,7 @@ mph.game = ( function ()
 		// extract screen parameters from arguments
 		var args = Array.prototype.slice.call( arguments, 1 );
 		// run the screen module
-		mph.screens[screenId].run.apply(
-		    mph.screens[screenId], args
-		);
+		mph.screens[screenId].run.apply(mph.screens[screenId], args);
 
 		// display the screen html
 		dom.addClass( screen, "active" );
@@ -37,14 +35,14 @@ mph.game = ( function ()
 		    gradient,
 		    i;
 		/* Original Code */
-		   canvas.width = rect.width;
-		   canvas.height = rect.height; 
-		/*Test Code*//*
-		canvas.width = rect.height;
-		canvas.height = rect.width;*/
+		//		   canvas.width = rect.width;
+		//		   canvas.height = rect.height; 
+		/*Test Code*/
+		canvas.width = 1820;
+		canvas.height = 920;
 
 		//scale for wide and tall
-		ctx.scale( rect.height, rect.width );
+		//ctx.scale( rect.height, rect.width );
 
 		gradient = ctx.createRadialGradient(
 		    0.25, 0.15, 0.5,
@@ -53,7 +51,7 @@ mph.game = ( function ()
 		gradient.addColorStop( 0, "rgb(55,65,50)" );
 		gradient.addColorStop( 1, "rgb(0,0,0)" );
 		ctx.fillStyle = gradient;
-		ctx.fillRect( 0, 0, 1, 1 );
+		ctx.fillRect( 0, 0, 1000, 920 );
 
 		ctx.strokeStyle = "rgba(255,255,255,0.02)";
 		ctx.strokeStyle = "rgba(0,0,0,0.2)";

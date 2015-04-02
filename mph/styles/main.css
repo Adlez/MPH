@@ -1,4 +1,21 @@
-
+@media (orientation: landscape) {
+    #splash-screen,
+    #main-menu {
+        font-size : 1.0em;
+        padding-top : 0.25em;
+    }
+    ul.menu li {
+        display : inline-block;
+        margin : 0;
+    }
+    ul.menu li button {
+        margin : 0.25em;
+        font-size : 0.5em;
+    }
+    .jewel-size {
+        font-size : 16px;
+    }
+}
 body {
 	margin: 0;
 	-webkit-touch-callout: none;
@@ -12,15 +29,15 @@ body {
 	left: 0;
 	top: 0;
 	font-size: 40px;
-	width: 8em;
-	height: 12em;
-	background-color: rgb(30,30,30);
+	width: 12em;
+	height: 8em;
+	background-color: rgb(100,30,125);
 	font-family: Geo;
-	color: rgb(200,200,100);
+	color: rgb(225,237,207);
 }
 
 .jewel-size {
-	font-size: 40px;
+	font-size: 20px;
 }
 
 #jewel-proto {
@@ -46,7 +63,7 @@ body {
 
 #splash-screen {
 	text-align: center;
-	padding-top: 2.5em;
+	padding-top: 1.5em;
 }
 
 	#splash-screen .continue {
@@ -57,12 +74,22 @@ body {
 
 .logo {
 	font-family: Slackey;
+	margin: 0.75em;
+	text-align: center;
+	color: rgb(225,237,207);
+	font-size: 0.35em;
+	line-height: 0.9em;
+	text-shadow: 0.03em 0.03em 0.03em rgb(255,255,255), -0.03em -0.03em 0.03em rgb(255,255,250), 0.10em 0.15em 0.15em rgb(0,0,0);
+}
+
+.Titlelogo {
+	font-family:'Trebuchet MS';
 	margin: 0;
 	text-align: center;
-	color: rgb(70,120,20);
-	font-size: 1.5em;
+	color: rgb(225,237,207);
+	font-size: 0.75em;
 	line-height: 0.9em;
-	text-shadow: 0.03em 0.03em 0.03em rgb(255,255,0), -0.03em -0.03em 0.03em rgb(255,255,0), 0.10em 0.15em 0.15em rgb(0,0,0);
+	text-shadow: 0.03em 0.03em 0.03em rgb(255,255,255), -0.03em -0.03em 0.03em rgb(255,255,250), 0.10em 0.15em 0.15em rgb(0,0,0);
 }
 
 .no-textshadow .logo {
@@ -72,7 +99,7 @@ body {
 
 /* Main menu styles */
 #main-menu {
-	padding-top: 1em;
+	padding-top: 0.15em;
 }
 
 ul.menu {
@@ -83,17 +110,17 @@ ul.menu {
 }
 
 	ul.menu li {
-		margin: 0.8em 0;
+		margin: 0.1em;
 	}
 
 		ul.menu li button {
-			font-family: Slackey, sans-serif;
-			font-size: 0.6em;
-			color: rgb(100,120,0);
+			font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			font-size: 0.4em;
+			color: rgb(225,237,207);
 			width: 10em;
 			height: 1.5em;
-			background: rgb(10,20,0);
-			border: 0.1em solid rgb(255,255,0);
+			background: rgb(146,182,183);
+			border: 0.1em solid rgb(9,15,54);
 			border-radius: 0.5em;
 			-webkit-box-shadow: 0.2em 0.2em 0.3em rgb(0,0,0);
 			-moz-box-shadow: 0.2em 0.2em 0.3em rgb(0,0,0);
@@ -119,7 +146,7 @@ ul.gameScreen li button {
 	vertical-align: middle; */
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	font-size: 0.7em;
-	color: rgb(100,10,100);
+	color: rgb(225,237,207);
 	width: 1.5em;
 	height: 1.5em;
 	background: rgb(255,250,10);
@@ -266,8 +293,8 @@ ul.gameScreen li button {
 	top: 50%;
 	margin-top: -0.5em;
 	width: 100%;
-	font-family: Slackey, sans-serif;
-	color: rgb(150,150,75);
+	font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	color: rgb(225,237,207);
 	text-shadow: 0.03em 0.03em 0.03em rgb(255,255,0), -0.03em -0.03em 0.03em rgb(255,255,0), 0.1em 0.15em 0.15em rgb(0,0,0);
 	text-align: center;
 	white-space: nowrap;
@@ -345,7 +372,7 @@ ul.gameScreen li button {
 	padding: 0 0.75em;
 	font-family: Geo, sans-serif;
 	font-size: 0.5em;
-	color: rgba(200,200,100,0.5);
+	color: rgba(225,237,207,0.5);
 	background: rgb(10,20,0);
 	border: 1px solid rgba(200,200,100,0.5);
 	border-radius: 0.2em;
@@ -389,3 +416,4 @@ ul.gameScreen li button {
 			width: 30%;
 			text-align: center;
 		}
+
