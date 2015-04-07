@@ -13,237 +13,182 @@ mph.screens["game-screen"] = ( function ()
 	    paused = false,
 	    pauseTime;
 
-	function gameLoop()
-	{
-	//	context.fillRect( 0, 0, canvas.width, canvas.height );
-		window.requestAnimationFrame( gameLoop, canvas );
-		update();
-		render();
+	
+	function gameLoop() {
+	    window.requestAnimationFrame(gameLoop, display.canvas);
+	    
+	    startGame();
+	    update();
+	   
 	}
 
-	gameLoop();
+	
 
-	function render()
-	{
+	    function startGame() {
+	        gameState = {
+	            mcStoredFood: 0,
+	            mcStoredMaterial: 0,
+	            timer: 0, // setTimeout reference
+	            startTime: 0, // time at start of level
+	            endTime: 0 // time to game over
+	        };
 
-	}
+	       
+	        var activeGame = storage.get("activeGameData"),
+                useActiveGame;
 
-	function update()
-	{
-		addFood( 10 );
-		addMaterial( 10 );
-
-	}
-
-	function startGame()
-	{
-		gameState = {
-			mcStoredFood: 0,
-			mcStoredMaterial: 0,
-			timer: 0, // setTimeout reference
-			startTime: 0, // time at start of level
-			endTime: 0 // time to game over
-		};
-
-		var activeGame = storage.get( "activeGameData" ),
-		    useActiveGame;
-
-		if ( activeGame )
-		{
-			useActiveGame = window.confirm(
-			    "Do you want to continue your previous game?"
-			);
-			if ( useActiveGame )
-			{
-				gameState.mcStoredFood = activeGame.mcStoredFood;
-				gameState.mcStoredMaterial = activeGame.mcStoredMaterial;
-			}
-		}
-
-		board.initialize(
-		function ()
-		{
-			display.initialize( function ()
-			{
-				display.redraw( board.getBoard(), function ()
-				{
-					audio.initialize();
-					if ( useActiveGame )
-					{
-						setLevelTimer( true, activeGame.time );
-						updateGameInfo();
-					} else
-					{
-						advanceLevel();
-					}
-				} );
-			} );
-		} );
-	}
-
-	function announce( str )
-	{
-		var element = $( "#game-screen .announcement" )[0];
-		element.innerHTML = str;
-		if ( Modernizr.cssanimations )
-		{
-			dom.removeClass( element, "zoomfade" );
-			setTimeout( function ()
-			{
-				dom.addClass( element, "zoomfade" );
-			}, 1 );
-		} else
-		{
-			dom.addClass( element, "active" );
-			setTimeout( function ()
-			{
-				dom.removeClass( element, "active" );
-			}, 1000 );
-		}
-	}
+	        if (activeGame) {
+	            useActiveGame = window.confirm(
+                    "Do you want to continue your previous game?"
+                );
+	            if (useActiveGame) {
+	                gameState.mcStoredFood = activeGame.mcStoredFood;
+	                gameState.mcStoredMaterial = activeGame.mcStoredMaterial;
+	            }
+	        }
 
 
 
-	function updateGameInfo()
-	{
-		$( "#game-screen .mainColonyStoredFood span" )[0].innerHTML
-		    = gameState.mainColonyStoredFood;
-		$( "#game-screen .mainColonyStoredMaterial span" )[0].innerHTML
-		    = gameState.mainColonyStoredMaterial;
-	}
+	        audio.initialize();
+	        if (useActiveGame) {
+	            //setLevelTimer(true, activeGame.time);
+	            updateGameInfo();
+	        }
 
 
-	function addFood( food )
-	{
-		gameState.mainColonyStoredFood += food;
-		updateGameInfo();
-	}
-	function addMaterial( material )
-	{
-		gameState.mainColonyStoredMaterial += material;
-		updateGameInfo();
-	}
+	    }
+
+	    var previousTime = Date.now();
+	    
+
+	    function update()
+	    {
+	        
+	        var deltaTime = (Date.now() - previousTime) / 1000;
+	        previousTime = Date.now();
+
+	        //addFood(10);
+	        //addMaterial(10);
+	        gameState.mcStoredFood += 1;
+	        console.log(gameState.mcStoredFood);
+
+	        window.requestAnimationFrame(update);
+	        window.requestAnimationFrame(updateGameInfo);
+	    }
+
+	    function announce(str) {
+	        var element = $("#game-screen .announcement")[0];
+	        element.innerHTML = str;
+	        if (Modernizr.cssanimations) {
+	            dom.removeClass(element, "zoomfade");
+	            setTimeout(function () {
+	                dom.addClass(element, "zoomfade");
+	            }, 1);
+	        } else {
+	            dom.addClass(element, "active");
+	            setTimeout(function () {
+	                dom.removeClass(element, "active");
+	            }, 1000);
+	        }
+	    }
 
 
-	function setLevelTimer( reset )
-	{
-		if ( gameState.timer )
-		{
-			clearTimeout( gameState.timer );
-			gameState.timer = 0;
-		}
-		if ( reset )
-		{
-			gameState.startTime = Date.now();
-			gameState.endTime =
-			    settings.baseLevelTimer *
-			    Math.pow( gameState.level,
-					   +0.05 * gameState.level );
-		}
-		var delta = gameState.startTime + Date.now(),
-		    percent = ( delta / gameState.endTime ) * 100,
-		    progress = $( "#game-screen .time .indicator" )[0];
-/*		if ( delta < 0 )
-		{
-			gameOver();
-		} else
-		{
-			progress.style.width = percent + "%";
-			gameState.timer = setTimeout( function ()
-			{
-				setLevelTimer( false );
-			}, 30 );
-		}*/
-	}
 
-	function gameOver()
-	{
-		audio.play( "gameover" );
-		stopGame();
-		storage.set( "activeGameData", null );
-		display.gameOver( function ()
-		{
-			announce( "Game over" );
-			setTimeout( function ()
-			{
-				mph.game.showScreen(
-				    "hiscore", gameState.score );
-			}, 2500 );
-		} );
-	}
+	    function updateGameInfo() {
+	        $("#game-screen .mainColonyStoredFood span")[0].innerHTML = gameState.mcStoredFood;
+	        $("#game-screen .mainColonyStoredMat span")[0].innerHTML = gameState.mcStoredMaterial;
+
+	        
+	        
+	    }
 
 
-	function run()
-	{
-		if ( firstRun )
-		{
-			setup();
-			firstRun = false;
-		}
-		startGame();
-	}
+	    /*function addFood(food) {
+	        gameState.mainColonyStoredFood += food;
+	        updateGameInfo();
+	    }
+	    function addMaterial(material) {
+	        gameState.mainColonyStoredMaterial += material;
+	        updateGameInfo();
+	    }*/
 
 
-	function stopGame()
-	{
-		clearTimeout( gameState.timer );
-	}
-
-	function saveGameData()
-	{
-		storage.set( "activeGameData", {
-			level: gameState.level,
-			score: gameState.score,
-			time: Date.now() - gameState.startTime,
-			mphs: board.getBoard()
-		} );
-	}
-
-	function togglePause( enable )
-	{
-		if ( enable == paused ) return; // no change
-
-		var overlay = $( "#game-screen .pause-overlay" )[0];
-		paused = enable;
-		overlay.style.display = paused ? "block" : "none";
-
-		if ( paused )
-		{
-			clearTimeout( gameState.timer );
-			gameState.timer = 0;
-			pauseTime = Date.now();
-		} else
-		{
-			gameState.startTime += Date.now() - pauseTime;
-			setLevelTimer( false );
-		}
-	}
+	    
+	    function gameOver() {
+	        audio.play("gameover");
+	        stopGame();
+	        storage.set("activeGameData", null);
+	        display.gameOver(function () {
+	            announce("Game over");
+	            setTimeout(function () {
+	                mph.game.showScreen(
+                        "hiscore", gameState.score);
+	            }, 2500);
+	        });
+	    }
 
 
-	function setup()
-	{
-		input.initialize();
+	    function run() {
+	        if (firstRun) {
+	            setup();
+	            firstRun = false;
+	        }
+	        gameLoop();
+	    }
 
-		dom.bind( "#game-screen button[name=exit]", "click",
-		    function ()
-		    {
-		    	togglePause( true );
-		    	var exitGame = window.confirm(
-			    "Do you want to return to the main menu?"
-			);
-		    	togglePause( false );
-		    	if ( exitGame )
-		    	{
-		    		saveGameData();
-		    		stopGame();
-		    		mph.game.showScreen( "main-menu" )
-		    	}
-		    }
-		);
-	}
 
-	return {
-		run: run
-	};
+	    function stopGame() {
+	       
+	    }
+
+	    function saveGameData() {
+	        storage.set("activeGameData", {
+	            level: gameState.level,
+	            score: gameState.score,
+	            time: Date.now() - gameState.startTime,
+	            mphs: board.getBoard()
+	        });
+	    }
+
+	    function togglePause(enable) {
+	        if (enable == paused) return; // no change
+
+	        var overlay = $("#game-screen .pause-overlay")[0];
+	        paused = enable;
+	        overlay.style.display = paused ? "block" : "none";
+
+	        if (paused) {
+	            
+	            pauseTime = Date.now();
+	        } else {
+	            
+	            ;
+	        }
+	    }
+
+
+	    function setup() {
+	        input.initialize();
+
+	        dom.bind("#game-screen button[name=exit]", "click",
+                function () {
+                    togglePause(true);
+                    var exitGame = window.confirm(
+                    "Do you want to return to the main menu?"
+                );
+                    togglePause(false);
+                    if (exitGame) {
+                        saveGameData();
+                        stopGame();
+                        mph.game.showScreen("main-menu")
+                    }
+                }
+            );
+	    }
+
+	    return {
+	        run: run
+	    };
+	
 } )();
 
