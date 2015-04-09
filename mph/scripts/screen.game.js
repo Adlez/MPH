@@ -1,28 +1,79 @@
 mph.screens["game-screen"] = ( function ()
 {
 	var settings = mph.settings,
-	    storage = mph.storage,
-	    display = mph.display,
-		//board = mph.board,
-	    input = mph.input,
-	    dom = mph.dom,
-	    audio = mph.audio,
-	    $ = dom.$,
-	    firstRun = true,
-	    paused = false,
-	    pauseTime;
+	storage = mph.storage,
+	display = mph.display,
+	board = mph.board,
+	input = mph.input,
+	dom = mph.dom,
+	audio = mph.audio,
+	$ = dom.$,
+	cursor,
+	firstRun = true,
+	paused = false,
+	pauseTime;
+	//Main Colony Object
+	var mainColony = {
+		mcStoredFood: 0,
+		mcStoredMaterial: 0,
+		mcFoodProduction: 0,
+		mcMaterialProduction: 0,
+		mcStoredScience: 0,
+		mcCurBuildingCount: 0,
+		mcCurFarmCount: 0,
+		mcCurMineCount: 0,
+		mcBuildingCap: 0,
+		mcLevel: 0,
+	//Main Colony Functions
+		mcProduceFood: function ()
+		{
+			mainColony.mcStoredFood += mainColony.mcFoodProduction;
+		},
+		mcProduceMaterial: function ()
+		{
+			mainColony.mcStoredMaterial += mainColony.mcMaterialProduction;
+		},
 
+	//Build function(s)
+		mcBuildFarm: function()
+		{
+			if ( mainColony.mcCurBuildingCount >= mainColony.mcColonyBuildingCap )
+			{ return; }
+			else
+			{
+				mainColony.mcCurFarmCount++;
+				mainColony.mcCurBuildingCount++;
+			}
+		},
+		mcBuildMine: function ()
+		{
+			if ( mainColony.mcCurBuildingCount >= mainColony.mcColonyBuildingCap )
+			{ return; }
+			else
+			{
+				mainColony.mcCurMineCount++;
+				mainColony.mcCurBuildingCount++;
+			}
+		}
+	};
 	
-	function gameLoop()
+
+	//constructor function for main colony, can duplicate this for every other colony
+	function MainColony( storedFood, storedMaterial ) //creates the Main Colony
 	{
-	    window.requestAnimationFrame(gameLoop, display.canvas);
-	    
-	   
-	    update();
-	   
+		this.mcStoredFood = storedFood;
+		this.mcStoredMaterial = storedMaterial;
+		this.mcLevel = 1;
+		this.mcBuildingCap = this.mcLevel * 3.2;
+
 	}
 
-	
+	function gameLoop()
+	{
+		window.requestAnimationFrame( gameLoop, display.canvas );
+		update();
+	}
+
 
 	    function startGame() {
 	        gameState = {
@@ -32,7 +83,9 @@ mph.screens["game-screen"] = ( function ()
 	            startTime: 0, // time at start of level
 	            endTime: 0 // time to game over
 	        };
-
+	        mainColony.mcCurFarmCount += 1;
+	        mainColony.mcCurMineCount += 1;
+	        mainColony.mcBuildingCap = 3;
 	       
 	        var activeGame = storage.get("activeGameData"),
                 useActiveGame;
@@ -75,6 +128,15 @@ mph.screens["game-screen"] = ( function ()
 	       
 	        //console.log(gameState.mcStoredFood);
 
+	        mainColony.mcFoodProduction = mainColony.mcCurFarmCount;
+	        // both of these are incorrect amounts for now
+	        mainColony.mcMaterialProduction = mainColony.mcCurMineCount;
+
+	        //changeFood(10);
+	        //changeMaterial(10);
+	        //		mainColony.mcStoredFood += ( mainColony.mcFoodProduction * 0.0001 );//slows down everything by a lot
+	        //		mainColony.mcStoredMaterial += ( mainColony.mcMaterialProduction * 0.0001 );
+
 	        window.requestAnimationFrame(update);
 	        window.requestAnimationFrame(updateGameInfo);
 	    }
@@ -103,6 +165,16 @@ mph.screens["game-screen"] = ( function ()
 
 	        
 	        
+	    }
+
+	    function changeFood( food )
+	    {
+	        mainColony.mcStoredFood += food;
+	    }
+
+	    function changeMaterial( material )
+	    {
+	        mainColony.mcStoredMaterial += material;
 	    }
 
 
@@ -212,4 +284,3 @@ mph.screens["game-screen"] = ( function ()
 	    };
 	
 } )();
-
