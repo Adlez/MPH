@@ -1,4 +1,4 @@
-var mph = {};
+/*var mph = {};
 
 importScripts("board.js");
 
@@ -33,4 +33,4 @@ addEventListener("message", function(event) {
         });
     }
 
-}, false);
+}, false);*/

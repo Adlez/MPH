@@ -3,21 +3,21 @@ mph.screens["game-screen"] = ( function ()
 	var settings = mph.settings,
 	    storage = mph.storage,
 	    display = mph.display,
-		board = mph.board,
+		//board = mph.board,
 	    input = mph.input,
 	    dom = mph.dom,
 	    audio = mph.audio,
 	    $ = dom.$,
-	    cursor,
 	    firstRun = true,
 	    paused = false,
 	    pauseTime;
 
 	
-	function gameLoop() {
+	function gameLoop()
+	{
 	    window.requestAnimationFrame(gameLoop, display.canvas);
 	    
-	    startGame();
+	   
 	    update();
 	   
 	}
@@ -55,6 +55,8 @@ mph.screens["game-screen"] = ( function ()
 	            updateGameInfo();
 	        }
 
+	        gameLoop();
+
 
 	    }
 
@@ -69,8 +71,9 @@ mph.screens["game-screen"] = ( function ()
 
 	        //addFood(10);
 	        //addMaterial(10);
-	        gameState.mcStoredFood += 1;
-	        console.log(gameState.mcStoredFood);
+	        gameState.mcStoredFood += deltaTime;
+	       
+	        //console.log(gameState.mcStoredFood);
 
 	        window.requestAnimationFrame(update);
 	        window.requestAnimationFrame(updateGameInfo);
@@ -95,22 +98,22 @@ mph.screens["game-screen"] = ( function ()
 
 
 	    function updateGameInfo() {
-	        $("#game-screen .mainColonyStoredFood span")[0].innerHTML = gameState.mcStoredFood;
-	        $("#game-screen .mainColonyStoredMat span")[0].innerHTML = gameState.mcStoredMaterial;
+	        $("#game-screen .mainColonyStoredFood span")[0].innerHTML = Math.floor(gameState.mcStoredFood);
+	        $("#game-screen .mainColonyStoredMat span")[0].innerHTML = Math.floor(gameState.mcStoredMaterial);
 
 	        
 	        
 	    }
 
 
-	    /*function addFood(food) {
-	        gameState.mainColonyStoredFood += food;
-	        updateGameInfo();
+	    function addFood(food) {
+	        gameState.mcStoredFood += food;
+	        
 	    }
 	    function addMaterial(material) {
-	        gameState.mainColonyStoredMaterial += material;
-	        updateGameInfo();
-	    }*/
+	        gameState.mcStoredMaterial += material;
+	        
+	    }
 
 
 	    
@@ -133,7 +136,8 @@ mph.screens["game-screen"] = ( function ()
 	            setup();
 	            firstRun = false;
 	        }
-	        gameLoop();
+	        startGame();
+	        //gameLoop();
 	    }
 
 
@@ -146,7 +150,7 @@ mph.screens["game-screen"] = ( function ()
 	            level: gameState.level,
 	            score: gameState.score,
 	            time: Date.now() - gameState.startTime,
-	            mphs: board.getBoard()
+	            //mphs: board.getBoard()
 	        });
 	    }
 
@@ -178,12 +182,29 @@ mph.screens["game-screen"] = ( function ()
                 );
                     togglePause(false);
                     if (exitGame) {
-                        saveGameData();
+                        //saveGameData();
                         stopGame();
                         mph.game.showScreen("main-menu")
                     }
                 }
+
+
             );
+
+	        dom.bind("#game-screen button[name=Army]", "click",
+               function () {
+                   togglePause(true);
+                   var exitGame = window.confirm(
+                   "Do you want to go to the unit screen?"
+               );
+                   togglePause(false);
+                   if (exitGame) {
+                       //saveGameData();
+                       //stopGame();
+                       mph.game.showScreen("unit-screen")
+                   }
+               }
+	        );
 	    }
 
 	    return {
