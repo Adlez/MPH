@@ -143,6 +143,7 @@ if (Modernizr.standalone) {
             "loader!scripts/screen.hiscore.js",
             "loader!scripts/screen.main-menu.js",
             "loader!scripts/screen.game.js",
+            "loader!scripts/screen.unit.js",
             "loader!images/jewels"
                 + mph.settings.mphSize + ".png"
         ]

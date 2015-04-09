@@ -1,12 +1,9 @@
-
 mph.screens["unit-screen"] = (function ()
 {
-    var settings = mph.settings,
-	    storage = mph.storage,
+    var storage = mph.storage,
 	    display = mph.display,
-		input = mph.input,
-	    dom = mph.dom,
-	    audio = mph.audio,
+        game = mph.game,
+		dom = mph.dom,
 	    $ = dom.$,
 	    firstRun = true,
 	    paused = false,
@@ -24,15 +21,16 @@ mph.screens["unit-screen"] = (function ()
     {
         unitState = 
         {
-            Aegis: POWER_A,
-            Titav: POWER_T,
-            Velos: POWER_V,
+            Aegis: 30,
+            Titav: 20,
+            Velos: 10,
             displayVelos: 0,
+            displayTitav: 0,
+            displayAegis: 0,
             Units: []
         };
 
 
-        //audio.initialize();
         gameLoop();
     }
 
@@ -45,6 +43,8 @@ mph.screens["unit-screen"] = (function ()
         previousTime = Date.now();
 
         //unitState.Velos += deltaTime;
+        //createUnits();
+        //displayUnits();
 
         //console.log(gameState.mcStoredFood);
 
@@ -70,36 +70,55 @@ mph.screens["unit-screen"] = (function ()
 
     function createUnits () 
     {
-        dom.bind("#game-screen button[name=exit]", "click",
-           function () 
+        dom.bind("#unit-screen button[name=CV]", "click",
+           function ()
            {
-               Units.push(Velos);
+               unitState.Units.push(Velos);
            }
+           
         );
-        
-
     };
 
     function displayUnits() {
-        for (var index = 0; index < this.Units.length; index++) {
-            unitState.displayVelos = Units[index];
+        for (var index = 0; index < unitState.Units.length; index++)
+        {
+            if (unitState.Units[index] == 10) {
+                unitState.displayVelos = unitState.Units[index];
+                index++;
+            }
         }
     };
 
     function destroyUnits () {
 
-        for (var index = 0; index < this.Units.length; index++) {
-            if (Units[0] == POWER_V) {
-                Units.slice(0);
+        for (var index = 0; index < unitState.Units.length; index++) {
+            if (unitState.Units[0] == 10) {
+                unitState.Units.slice(index);
             }
         }
     };
 
     function updateGameInfo() {
        $("#unit-screen .Velos span")[0].innerHTML = Math.floor(unitState.displayVelos);
-       $("#unit-screen .Titav span")[0].innerHTML = Math.floor(unitState.Titav);
-       $("#unit-screen .Aegis span")[0].innerHTML = Math.floor(unitState.Aegis);
+       $("#unit-screen .Titav span")[0].innerHTML = Math.floor(unitState.displayTitav);
+       $("#unit-screen .Aegis span")[0].innerHTML = Math.floor(unitState.displayAegis);
 
+    }
+
+    function togglePause(enable) {
+        if (enable == paused) return; // no change
+
+        var overlay = $("#unit-screen .pause-overlay")[0];
+        paused = enable;
+        overlay.style.display = paused ? "block" : "none";
+
+        if (paused) {
+
+            pauseTime = Date.now();
+        } else {
+
+            ;
+        }
     }
 
     function run() {
@@ -111,20 +130,12 @@ mph.screens["unit-screen"] = (function ()
     }
 
     function setup() {
-        input.initialize();
-
-        dom.bind("#game-screen button[name=exit]", "click",
-            function () {
-                
-                var exitGame = window.confirm(
-                "Do you want to return to the game screen?"
-            );
-                
-                if (exitGame) {
-                    mph.game.showScreen("game-screen")
-                }
-            }
-        );
+        
+        var backButton =
+           $("#unitscreen footer button[name=back]")[0];
+        dom.bind(backButton, "click", function(e) {
+            game.showScreen("game-screen");
+        });
     }
 
     return {

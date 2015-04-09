@@ -272,7 +272,7 @@ mph.screens["game-screen"] = ( function ()
                    togglePause(false);
                    if (exitGame) {
                        //saveGameData();
-                       //stopGame();
+                       stopGame();
                        mph.game.showScreen("unit-screen")
                    }
                }
