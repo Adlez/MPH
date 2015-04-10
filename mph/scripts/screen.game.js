@@ -31,11 +31,11 @@ mph.screens["game-screen"] = ( function ()
 			endTime: 0 // time to game over
 		};
 
-//		var MainColony1 = MainColony( 500, 100 );
+		//		var MainColony1 = MainColony( 500, 100 );
 
-//		mainColony.mcCurFarmCount += 1;
-//		mainColony.mcCurMineCount += 1;
-//		mainColony.mcBuildingCap = 3;
+		//		objMainColony.mcCurFarmCount += 1;
+		//		objMainColony.mcCurMineCount += 1;
+		//		objMainColony.mcBuildingCap = 3;
 
 		var activeGame = storage.get( "activeGameData" ),
 		   useActiveGame;
@@ -81,7 +81,7 @@ mph.screens["game-screen"] = ( function ()
 
 	function buildButtonPressed( buildingName )
 	{
-		setTimeout( buildBuilding( buildingName ), objMainColony.mainColony.mcConstructionTime )
+		setTimeout( buildBuilding( buildingName ), objMainColony.mcConstructionTime )
 	}
 
 	function update()
@@ -95,12 +95,12 @@ mph.screens["game-screen"] = ( function ()
 		//console.log(gameState.mcStoredFood);
 		objMainColony.mcFoodProduction = objMainColony.mcCurFarmCount;
 		// both of these are incorrect amounts for now
-		//mainColony.mcMaterialProduction = mainColony.mcCurMineCount;
+		//objMainColony.mcMaterialProduction = objMainColony.mcCurMineCount;
 
 		//changeFood(10);
 		//changeMaterial(10);
 		objMainColony.mcStoredFood += ( objMainColony.mcFoodProduction * 0.0001 );//slows down everything by a lot
-		//objMainColony.mainColony.mcStoredMaterial += ( objMainColony.mainColony.mcMaterialProduction * 0.0001 );
+		//objMainColony.mcStoredMaterial += ( objMainColony.mcMaterialProduction * 0.0001 );
 
 		window.requestAnimationFrame( update );
 		window.requestAnimationFrame( updateGameInfo );
@@ -138,28 +138,28 @@ mph.screens["game-screen"] = ( function ()
 
 	}
 
-/*	function changeFood( food )
-	{
-		mainColony.mcStoredFood += food;
-	}
-
-	function changeMaterial( material )
-	{
-		mainColony.mcStoredMaterial += material;
-	}
-
-
-	function addFood( food )
-	{
-		gameState.mcStoredFood += food;
-
-	}
-	function addMaterial( material )
-	{
-		gameState.mcStoredMaterial += material;
-
-	}
-	*/
+	/*	function changeFood( food )
+		{
+			objMainColony.mcStoredFood += food;
+		}
+	
+		function changeMaterial( material )
+		{
+			objMainColony.mcStoredMaterial += material;
+		}
+	
+	
+		function addFood( food )
+		{
+			gameState.mcStoredFood += food;
+	
+		}
+		function addMaterial( material )
+		{
+			gameState.mcStoredMaterial += material;
+	
+		}
+		*/
 
 
 	function gameOver()
@@ -225,224 +225,59 @@ mph.screens["game-screen"] = ( function ()
 		}
 	}
 
+	function setup()
+	{
+		input.initialize();
 
-<<<<<<< HEAD
-	    function startGame() {
-	        gameState = {
-	            mcStoredFood: 0,
-	            mcStoredMaterial: 0,
-	            timer: 0, // setTimeout reference
-	            startTime: 0, // time at start of level
-	            endTime: 0 // time to game over
-	        };
-	        mainColony.mcCurFarmCount += 1;
-	        mainColony.mcCurMineCount += 1;
-	        mainColony.mcBuildingCap = 3;
-	       
-	        var activeGame = storage.get("activeGameData"),
-                useActiveGame;
-
-	        if (activeGame) {
-	            useActiveGame = window.confirm(
-                    "Do you want to continue your previous game?"
-                );
-	            if (useActiveGame) {
-	                gameState.mcStoredFood = activeGame.mcStoredFood;
-	                gameState.mcStoredMaterial = activeGame.mcStoredMaterial;
-	            }
-	        }
+		dom.bind( "#game-screen button[name=exit]", "click",
+		   function ()
+		   {
+		   	togglePause( true );
+		   	var exitGame = window.confirm(
+			"Do you want to return to the main menu?"
+		 );
+		   	togglePause( false );
+		   	if ( exitGame )
+		   	{
+		   		//saveGameData();
+		   		stopGame();
+		   		mph.game.showScreen( "main-menu" )
+		   	}
+		   }
 
 
+	    );
 
-	        audio.initialize();
-	        if (useActiveGame) {
-	            //setLevelTimer(true, activeGame.time);
-	            updateGameInfo();
-	        }
+		dom.bind( "#game-screen button[name=Army]", "click",
+		  function ()
+		  {
+		  	togglePause( true );
+		  	var exitGame = window.confirm(
+			"Do you want to go to the unit screen?"
+		 );
+		  	togglePause( false );
+		  	if ( exitGame )
+		  	{
+		  		//saveGameData();
+		  		stopGame();
+		  		mph.game.showScreen( "unit-screen" )
+		  	}
+		  }
+		);
 
-	        gameLoop();
-
-
-	    }
-
-	    var previousTime = Date.now();
-	    
-
-	    function update()
-	    {
-	        
-	        var deltaTime = (Date.now() - previousTime) / 1000;
-	        previousTime = Date.now();
-
-	        //addFood(10);
-	        //addMaterial(10);
-	        gameState.mcStoredFood += deltaTime;
-	       
-	        //console.log(gameState.mcStoredFood);
-
-	        mainColony.mcFoodProduction = mainColony.mcCurFarmCount;
-	        // both of these are incorrect amounts for now
-	        mainColony.mcMaterialProduction = mainColony.mcCurMineCount;
-
-	        //changeFood(10);
-	        //changeMaterial(10);
-	        //		mainColony.mcStoredFood += ( mainColony.mcFoodProduction * 0.0001 );//slows down everything by a lot
-	        //		mainColony.mcStoredMaterial += ( mainColony.mcMaterialProduction * 0.0001 );
-
-	        window.requestAnimationFrame(update);
-	        window.requestAnimationFrame(updateGameInfo);
-	    }
-
-	    function announce(str) {
-	        var element = $("#game-screen .announcement")[0];
-	        element.innerHTML = str;
-	        if (Modernizr.cssanimations) {
-	            dom.removeClass(element, "zoomfade");
-	            setTimeout(function () {
-	                dom.addClass(element, "zoomfade");
-	            }, 1);
-	        } else {
-	            dom.addClass(element, "active");
-	            setTimeout(function () {
-	                dom.removeClass(element, "active");
-	            }, 1000);
-	        }
-	    }
+		dom.bind( "#game-screen button[name=buildFarm]", "click",
+		  function ()
+		  {
+		  	//(buildingName, buildCost, constructionTime, curBuildingCount, maintCost)
+		  	objMainColony.mcBuildBuilding( "Farm", 0, 0, 0, 0 );
+		  }
 
 
+		);
+	}
 
-	    function updateGameInfo() {
-	        $("#game-screen .mainColonyStoredFood span")[0].innerHTML = Math.floor(gameState.mcStoredFood);
-	        $("#game-screen .mainColonyStoredMat span")[0].innerHTML = Math.floor(gameState.mcStoredMaterial);
-
-	        
-	        
-	    }
-
-	    function changeFood( food )
-	    {
-	        mainColony.mcStoredFood += food;
-	    }
-
-	    function changeMaterial( material )
-	    {
-	        mainColony.mcStoredMaterial += material;
-	    }
-
-
-	    function addFood(food) {
-	        gameState.mcStoredFood += food;
-	        
-	    }
-	    function addMaterial(material) {
-	        gameState.mcStoredMaterial += material;
-	        
-	    }
-
-
-	    
-	    function gameOver() {
-	        audio.play("gameover");
-	        stopGame();
-	        storage.set("activeGameData", null);
-	        display.gameOver(function () {
-	            announce("Game over");
-	            setTimeout(function () {
-	                mph.game.showScreen(
-                        "hiscore", gameState.score);
-	            }, 2500);
-	        });
-	    }
-
-
-	    function run() {
-	        if (firstRun) {
-	            setup();
-	            firstRun = false;
-	        }
-	        startGame();
-	        //gameLoop();
-	    }
-
-
-	    function stopGame() {
-	       
-	    }
-
-	    function saveGameData() {
-	        storage.set("activeGameData", {
-	            level: gameState.level,
-	            score: gameState.score,
-	            time: Date.now() - gameState.startTime,
-	            //mphs: board.getBoard()
-	        });
-	    }
-
-	    function togglePause(enable) {
-	        if (enable == paused) return; // no change
-
-	        var overlay = $("#game-screen .pause-overlay")[0];
-	        paused = enable;
-	        overlay.style.display = paused ? "block" : "none";
-
-	        if (paused) {
-	            
-	            pauseTime = Date.now();
-	        } else {
-	            
-	            ;
-	        }
-	    }
-
-
-	    function setup() {
-	        input.initialize();
-
-	        dom.bind("#game-screen button[name=exit]", "click",
-                function () {
-                    togglePause(true);
-                    var exitGame = window.confirm(
-                    "Do you want to return to the main menu?"
-                );
-                    togglePause(false);
-                    if (exitGame) {
-                        //saveGameData();
-                        stopGame();
-                        mph.game.showScreen("main-menu")
-                    }
-                }
-
-
-            );
-
-	        dom.bind("#game-screen button[name=Army]", "click",
-               function () {
-                   togglePause(true);
-                   var exitGame = window.confirm(
-                   "Do you want to go to the unit screen?"
-               );
-                   togglePause(false);
-                   if (exitGame) {
-                       //saveGameData();
-                       stopGame();
-                       mph.game.showScreen("unit-screen")
-                   }
-               }
-	        );
-
-	        dom.bind( "#game-screen button[name=buildFarm]", "click",
-			function ()
-			{
-			    //(buildingName, buildCost, constructionTime, curBuildingCount, maintCost)
-			    objMainColony.mcBuildBuilding( "Farm", 0, 0, 0, 0 );
-			}
-
-
-	        );
-	    }
-
-	    return {
-	        run: run
-	    };
+	return {
+		run: run
+	};
 
 } )();
