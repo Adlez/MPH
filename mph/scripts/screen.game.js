@@ -9,6 +9,7 @@ mph.screens["game-screen"] = ( function ()
 	audio = mph.audio,
 	$ = dom.$,
 	cursor,
+	buildingFarm = false,
 	firstRun = true,
 	paused = false,
 	pauseTime;
@@ -97,10 +98,17 @@ mph.screens["game-screen"] = ( function ()
 		// both of these are incorrect amounts for now
 		//objMainColony.mcMaterialProduction = objMainColony.mcCurMineCount;
 
-		//changeFood(10);
-		//changeMaterial(10);
 		objMainColony.mcStoredFood += ( objMainColony.mcFoodProduction * 0.0001 );//slows down everything by a lot
 		//objMainColony.mcStoredMaterial += ( objMainColony.mcMaterialProduction * 0.0001 );
+
+		//MainColonyLevel
+		objMainColony.update();
+//Construction Stuff
+		if ( buildingFarm )
+		{
+			objBuildings.buildingConstructionTime++;
+			console.log( objBuildings.buildingConstructionTime );
+		}
 
 		window.requestAnimationFrame( update );
 		window.requestAnimationFrame( updateGameInfo );
@@ -268,8 +276,10 @@ mph.screens["game-screen"] = ( function ()
 		dom.bind( "#game-screen button[name=buildFarm]", "click",
 		  function ()
 		  {
-		  	//(buildingName, buildCost, constructionTime, curBuildingCount, maintCost)
-		  	objMainColony.mcBuildBuilding( "Farm", 0, 0, 0, 0 );
+		  	//(buildingName, buildCost, constructionTime, maintCost)
+		  	buildingFarm = true;
+		  	objBuildings.buildingConstructionTime = 35;
+		  	objBuildings.buildingCurBuildTime = 0;		  	
 		  }
 
 
@@ -278,6 +288,7 @@ mph.screens["game-screen"] = ( function ()
 
 	return {
 		run: run
+
 	};
 
 } )();
