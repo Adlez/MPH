@@ -5,7 +5,6 @@ mph.screens["unit-screen"] = (function ()
         game = mph.game,
 		dom = mph.dom,
 	    $ = dom.$,
-        enemy = mph.enemyColony,
         firstRun = true,
 	    paused = false,
 	    pauseTime;
@@ -17,8 +16,6 @@ mph.screens["unit-screen"] = (function ()
         update();
        
     }
-
-    createUnits();
 
     function startGame()
     {
@@ -32,6 +29,7 @@ mph.screens["unit-screen"] = (function ()
             displayAegis: 0,
             displayPower: 0,
             finalPower: 0,
+            unitRemove: 1,
             victory: false,
             loser: false,
             Power: 100,
@@ -54,11 +52,9 @@ mph.screens["unit-screen"] = (function ()
         var deltaTime = (Date.now() - previousTime) / 1000;
         previousTime = Date.now();
 
-        //unitState.Velos += deltaTime;
-        //createUnits();
         totalPower();
         displayUnits();
-
+        
         //console.log(gameState.mcStoredFood);
 
         window.requestAnimationFrame(update);
@@ -92,6 +88,8 @@ mph.screens["unit-screen"] = (function ()
     function createAegis() {
        unitState.Units.push(unitState.Aegis);
     };
+
+    createUnits();
 
     function createUnits () 
     {
@@ -172,12 +170,10 @@ mph.screens["unit-screen"] = (function ()
         {
             if (unitState.Units[index] == 10) {
                 unitState.displayVelos = (unitState.Units[index] / 10);
-                //unitState.displayPower += unitState.Units[index];
                 index++;
             }
             if (unitState.Units[index] == 20) {
                 unitState.displayTitav = (unitState.Units[index] / 20);
-                //unitState.displayPower += unitState.Units[index];
                 index++;
             }
             if (unitState.Units[index] == 30) {
@@ -189,11 +185,26 @@ mph.screens["unit-screen"] = (function ()
 
     function destroyUnits () {
 
-        for (var index = 0; index < unitState.Units.length; index++) {
-            if (unitState.Units[0] == 10) {
-                unitState.Units.slice(index);
+                for (var index = 0; index < unitState.Units.length; index++) {
+                if (unitState.Units[index] == 10) {
+                    unitState.Units.slice(index, 1);
+                    unitState.displayPower -= unitState.Velos;
+                    unitState.displayVelos -= unitState.unitRemove;
+                }
+
+                else if (unitState.Units[index] == unitState.Titav) {
+                    unitState.Units.slice(index, 1);
+                    unitState.displayPower -= unitState.Titav;
+                    unitState.displayVelos -= (unitState.unitRemove);
+                }
+
+                else if (unitState.Units[index] == unitState.Aegis) {
+                    unitState.Units.slice(index, 1);
+                    unitState.displayPower -= unitState.Aegis;
+                    unitState.displayVelos -= (unitState.unitRemove);
+                }
+                index++;
             }
-        }
     };
 
     function totalPower()
@@ -214,16 +225,15 @@ mph.screens["unit-screen"] = (function ()
 
     function decideBattle() {
         unitState.finalPower = unitState.displayPower;
-        unitState.finalPower - unitState.Power;
+        enemyColony.Power = enemyColony.setRandPower();
+        unitState.finalPower -= enemyColony.Power;
         if (unitState.finalPower <= 0) {
-            unitState.victory = true;
-        }
-
-        if (unitState.finalPower >= 1) {
             unitState.loser = true;
         }
-
-        showAttackResult();
+        else {
+            unitState.victory = true;
+        }
+       showAttackResult();
     }
 
     function showAttackResult()
@@ -236,6 +246,8 @@ mph.screens["unit-screen"] = (function ()
         if (unitState.loser == true) {
             var loserW = window.confirm(
              "You lost, everyone is dead....good job?");
+
+            destroyUnits();
         }
     }
 
