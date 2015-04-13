@@ -6,30 +6,23 @@
 		mcMaterialProduction = 0,
 		mcStoredScience = 0,
 		mcCurBuildingCount = 0,
-		mcMaxBuildingCount = 0,
 		mcCurFarmCount = 0,
 		mcCurMineCount = 0,
 		mcBuildingCap = 0,
 		mcLevel = 0,
+		mcConstructionInProgress = false,
 		//Main Colony Functions
-		mcProduceFood = function ()
-		{
-			mcStoredFood += mcFoodProduction;
-		},
-		mcProduceMaterial = function ()
-		{
-			mcStoredMaterial += mcMaterialProduction;
-		},
 
 		//Build function(s)
-		mcBuildBuilding = function (buildingName, buildCost, maintCost)
+		mcBuildBuilding = function (buildingName, maintMatCost, maintFoodCost)
 		{
-			if ( mcCurBuildingCount < mcMaxBuildingCount )
+			if ( this.mcCurBuildingCount < this.mcBuildingCap )
 			{
 				if ( buildingName == "Farm" )
 				{
 					this.mcCurFarmCount++;
 					this.mcCurBuildingCount++;
+
 				}
 				if ( buildingName == "Mine" )
 				{
@@ -38,26 +31,43 @@
 				}
 				if ( buildingName == "ConstructionPlatform" )
 				{
-
-				}									
-				this.mcStoredMaterial -= buildCost;
+					this.mcCurBuildingCount+=2;
+				}
+				if ( buildingName == "ResearchFacility" )
+				{
+					this.mcCurBuildingCount++;
+				}
+				if ( buildingName == "MilitaryDepot" )
+				{
+					this.mcCurBuildingCount++;
+				}
+				if ( buildingName == "SpaceElevator" )
+				{
+					this.mcCurBuildingCount+=2;
+				}
+				objBuildings.buildingTotalFoodMaint += maintFoodCost;
+				objBuildings.buildingTotalMatMaint += maintMatCost;
 			}	
 			
 		}
 	
 
-
-	//constructor function for main colony, can duplicate this for every other colony
-	function MainColony( storedFood, storedMaterial ) //creates the Main Colony
+	function UpdateMainColony ( foodProduction, materialProduction, colonyLevel, scienceProduction )
 	{
-		this.mcStoredFood = storedFood;
-		this.mcStoredMaterial = storedMaterial;
-		this.mcLevel = 1;
-		this.mcBuildingCap = this.mcLevel * 3.2;
+		this.mcStoredFood += foodProduction;
+		this.mcStoredMaterial += materialProduction;
+		this.mcStoredScience += scienceProduction;
+		this.mcBuildingCap = colonyLevel * 3.2;
 
 	}
 
-	function update()
+	function EatMaintencance ( matMaint, foodMaint )
+	{
+		this.mcStoredFood -= foodMaint;
+		this.mcStoredMaterial -= matMaint;
+	}
+
+	function updateConstruction()
 	{
 		if ( objBuildings.buildingConstructionTime <= objBuildings.buildingCurBuildTime )
 		{
@@ -77,10 +87,10 @@
 		mcStoredMaterial: mcStoredMaterial,
 		mcStoredScience: mcStoredScience,
 		mcLevel: mcLevel,
-		mcProduceFood: mcProduceFood,
-		mcProduceMaterial: mcProduceMaterial,
 		mcBuildBuilding: mcBuildBuilding,
-		update: update
+		mcConstructionInProgress: mcConstructionInProgress,
+		UpdateMainColony: UpdateMainColony,
+		EatMaintencance: EatMaintencance
 
 	};
 })();

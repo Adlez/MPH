@@ -4,7 +4,7 @@
 		buildingSize = 0,
 		buildingProductionTypeAAmount = 0,
 		buildingProductionTypeBAmount = 0,
-		buildingProductoinTypeA = "",
+		buildingProductionTypeA = "",
 		buildingProductionTypeB = "",
 		buildingCostMat = 0,
 		buildingCostSci = 0,
@@ -13,6 +13,23 @@
 		buildingDeconstructSpeed = 0,
 		buildingConstructionTime = 0,
 		buildingCurBuildTime = 0,
+		buildingTotalMatMaint = 0,
+		buildingTotalFoodMaint = 0,
+
+		buildingFarmBuildTime = 15,
+		buildingMineBuildTime = 15,
+		buildingRFBuildTime = 30,
+		buildingMDBuildTime = 20,
+		buildingConPlatBuildTime = 25,
+		buildingSpaceElBuildTime = 60,
+
+
+		buildingFarmBuildCost = 50,
+		buildingMineBuildCost = 100,
+		buildingRFBuildCost = 250,
+		buildingMDBuildCost = 150,
+		buildingConPlatBuildCost = 200,
+		buildingSpaceElBuildCost = 210,
 
 		//Building Functions
 		buildingProduceResources = function ( resourceA, resourceB, resourceAamt, resourceBamt )
@@ -20,19 +37,26 @@
 
 		}
 
-	//constructor function 
-	function MainColony() //creates the Main Colony
-	{
-
-	}
 
 	return {
 		buildingName: buildingName,
-		buildingProductoinTypeA: buildingProductoinTypeA,
+		buildingProductionTypeA: buildingProductionTypeA,
 		buildingProductionTypeB: buildingProductionTypeB,
 		buildingProductionTypeAAmount: buildingProductionTypeAAmount,
 		buildingProductionTypeBAmount: buildingProductionTypeBAmount,
-		buildingSize: buildingSize
+		buildingSize: buildingSize,
+		buildingTotalMatMaint: buildingTotalMatMaint,
+		buildingTotalFoodMaint: buildingTotalFoodMaint,
+
+		buildingFarmBuildCost : buildingFarmBuildCost,
+		buildingMineBuildCost: buildingMineBuildCost,
+		buildingRFBuildCost : buildingRFBuildCost,
+		buildingMDBuildCost : buildingMDBuildCost,
+		buildingConPlatBuildCost : buildingConPlatBuildCost,
+		buildingSpaceElBuildCost: buildingSpaceElBuildCost,
+
+		buildingCurBuildTime: buildingCurBuildTime
+
 
 	};
-} );
+} ());
