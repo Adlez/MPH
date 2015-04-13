@@ -146,6 +146,7 @@ if (Modernizr.standalone) {
             "loader!scripts/screen.unit.js",
 		    "loader!scripts/MainColony.js",
 		    "loader!scripts/Buildings.js",
+            "loader!scripts/EnemyColony.js",
             "loader!images/jewels"
                 + mph.settings.mphSize + ".png"
         ]

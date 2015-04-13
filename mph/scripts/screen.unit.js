@@ -5,7 +5,8 @@ mph.screens["unit-screen"] = (function ()
         game = mph.game,
 		dom = mph.dom,
 	    $ = dom.$,
-	    firstRun = true,
+        enemy = mph.enemyColony,
+        firstRun = true,
 	    paused = false,
 	    pauseTime;
 
@@ -14,8 +15,10 @@ mph.screens["unit-screen"] = (function ()
     {
         window.requestAnimationFrame(gameLoop, display.canvas);
         update();
-
+       
     }
+
+    createUnits();
 
     function startGame()
     {
@@ -27,7 +30,16 @@ mph.screens["unit-screen"] = (function ()
             displayVelos: 0,
             displayTitav: 0,
             displayAegis: 0,
-            Units: []
+            displayPower: 0,
+            finalPower: 0,
+            victory: false,
+            loser: false,
+            Power: 100,
+            currMat: 1000,
+            //currFood: objMainColony.mcStoredFood,
+            //currMat: objMainColony.mcStoredMaterial,
+            Units: [],
+            isClicked: false
         };
 
 
@@ -44,7 +56,8 @@ mph.screens["unit-screen"] = (function ()
 
         //unitState.Velos += deltaTime;
         //createUnits();
-        //displayUnits();
+        totalPower();
+        displayUnits();
 
         //console.log(gameState.mcStoredFood);
 
@@ -68,22 +81,107 @@ mph.screens["unit-screen"] = (function ()
         }
     }
 
+    function createVelos() {
+        unitState.Units.push(unitState.Velos);
+    };
+
+    function createTitav() {
+       unitState.Units.push(unitState.Titav);
+    };
+
+    function createAegis() {
+       unitState.Units.push(unitState.Aegis);
+    };
+
     function createUnits () 
     {
-        dom.bind("#unit-screen button[name=CV]", "click",
+
+        var CVButton =
+            $("#unit-screen button[name=CreateVelos]")[0];
+        dom.bind(CVButton, "click", function (e) {
+            unitState.isClicked = true;
+            checkIfCanAffordVelos();
+        });
+
+        var CTButton =
+            $("#unit-screen button[name=CreateTitav]")[0];
+        dom.bind(CTButton, "click", function (e) {
+            checkIfCanAffordTitav();
+        });
+
+        var CAButton =
+            $("#unit-screen button[name=CreateAegis]")[0];
+        dom.bind(CAButton, "click", function (e) {
+            checkIfCanAffordAegis();
+        });
+
+         /*dom.bind("#unit-screen button[name=CreateVelos]", "click",
            function ()
            {
-               unitState.Units.push(Velos);
+               unitState.isClicked = true;
+               if (unitState.isClicked == true)
+               {
+                   unitState.Units.push(unitState.Velos);
+               }
+               unitState.isClicked = false;
+               
            }
            
-        );
+        );*/
+        
+        
     };
+
+    function checkIfCanAffordVelos()
+    {
+        if (unitState.currMat >= 100) {
+            createVelos();
+            unitState.displayVelos += 1;
+        }
+        else {
+            ifCantAfford();
+        }
+    };
+    function checkIfCanAffordTitav()
+    {
+        if(unitState.currMat >= 250)
+        {
+            createTitav();
+        }
+        else {
+            ifCantAfford();
+        }
+    };
+    function checkIfCanAffordAegis() {
+        if (unitState.currMat >= 500) {
+            createAegis();
+        }
+        else {
+            ifCantAfford();
+        }
+    };
+
+    function ifCantAfford()
+    {
+        var tooPoor = window.confirm(
+             "You can't afford this unit.....loser!");
+    }
 
     function displayUnits() {
         for (var index = 0; index < unitState.Units.length; index++)
         {
             if (unitState.Units[index] == 10) {
-                unitState.displayVelos = unitState.Units[index];
+                unitState.displayVelos = (unitState.Units[index] / 10);
+                //unitState.displayPower += unitState.Units[index];
+                index++;
+            }
+            if (unitState.Units[index] == 20) {
+                unitState.displayTitav = (unitState.Units[index] / 20);
+                //unitState.displayPower += unitState.Units[index];
+                index++;
+            }
+            if (unitState.Units[index] == 30) {
+                unitState.displayAegis = (unitState.Units[index] / 30);
                 index++;
             }
         }
@@ -98,10 +196,54 @@ mph.screens["unit-screen"] = (function ()
         }
     };
 
+    function totalPower()
+    {
+        unitState.displayPower = (unitState.displayVelos * 10) + (unitState.displayTitav * 20) + (unitState.displayAegis * 30);
+    }
+
+    Attack();
+
+    function Attack()
+    {
+        var attackButton =
+            $("#unit-screen button[name=Attack]")[0];
+        dom.bind(attackButton, "click", function (e) {
+            decideBattle();
+        });
+    }
+
+    function decideBattle() {
+        unitState.finalPower = unitState.displayPower;
+        unitState.finalPower - unitState.Power;
+        if (unitState.finalPower <= 0) {
+            unitState.victory = true;
+        }
+
+        if (unitState.finalPower >= 1) {
+            unitState.loser = true;
+        }
+
+        showAttackResult();
+    }
+
+    function showAttackResult()
+    {
+        if (unitState.victory == true) {
+            var victoryW = window.confirm(
+             "You are SUPER coolz! Oh and you defeated the enemy colony. Good job.");
+        }
+
+        if (unitState.loser == true) {
+            var loserW = window.confirm(
+             "You lost, everyone is dead....good job?");
+        }
+    }
+
     function updateGameInfo() {
        $("#unit-screen .Velos span")[0].innerHTML = Math.floor(unitState.displayVelos);
        $("#unit-screen .Titav span")[0].innerHTML = Math.floor(unitState.displayTitav);
        $("#unit-screen .Aegis span")[0].innerHTML = Math.floor(unitState.displayAegis);
+       $("#unit-screen .Power span")[0].innerHTML = Math.floor(unitState.displayPower);
 
     }
 
@@ -131,11 +273,18 @@ mph.screens["unit-screen"] = (function ()
 
     function setup() {
         
-        var backButton =
-           $("#unitscreen footer button[name=back]")[0];
-        dom.bind(backButton, "click", function(e) {
-            game.showScreen("game-screen");
-        });
+        dom.bind("#unit-screen button[name=back]", "click",
+		  function () {
+		      var exitGame = window.confirm(
+              "Do you want to go to the game screen?"
+           );
+		      
+		      if (exitGame) {
+		          
+		          mph.game.showScreen("game-screen")
+		      }
+		  }
+		);
     }
 
     return {
