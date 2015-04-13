@@ -61,7 +61,7 @@
 				<li><button name="exit-screen">Exit</button>
 			</ul>
 		</div>
-
+<!-- Game Screen-->
 		<div class="screen" id="game-screen">
 			<div class="game-board jewel-size">
 				<div class="announcement"></div>
@@ -79,9 +79,7 @@
 					<li><button name="offWolrdColonies">OffworldColonies<img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
 					<li><button name="buildings">Buildings</button>
 					<li><button name="mainColonyScreen">MainColony</button>
-					<li><button name="buildFarm">build Farm</button>
-					<li><button name="buildMine">build Mine</button>
-</ul>
+				</ul>
 			</div>
 
 			<div class="time progress"><div class="indicator"></div></div>
@@ -93,7 +91,34 @@
 			<div class="pause-overlay"></div>
 
 		</div>
+<!-- Switch to Colony Screen-->
+		<div class="screen" id="mainColony-screen">
+			<div class="game-board jewel-size">
+				<div class="announcement"></div>
+			</div>
 
+			<div class="colony-info">
+				<label class="Farms">Farms: <span></span></label>
+				<label class="Mines">Mines: <span></span></label>
+
+				<label class="mainColonyStoredFood">F: <span></span></label>
+				<label class="mainColonyStoredMat">M: <span></span></label>
+				<label class="mainColonyStoredScience">S: <span></span></label>
+
+				<ul class="buildingScreen">
+					<li><button name="buildFarm">build Farm</button>
+					<li><button name="buildMine">build Mine</button>
+				</ul>
+			</div>
+
+			<footer>
+				<button name="back">Back</button>
+			</footer>
+
+			<div class="pause-overlay"></div>
+		</div>
+
+<!-- Switch to Unit Screen-->
         <div class="screen" id="unit-screen">
             <div class="game-board jewel-size">
                 <div class="announcement"></div>

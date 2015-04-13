@@ -13,6 +13,7 @@ mph.screens["game-screen"] = ( function ()
 	buildingMine = false,
 	firstRun = true,
 	paused = false,
+	GameTimer = 0,
 
 	mineMatCost = objBuildings.buildingMineBuildCost,
 
@@ -23,6 +24,7 @@ mph.screens["game-screen"] = ( function ()
 	function gameLoop()
 	{
 		window.requestAnimationFrame( gameLoop, display.canvas );
+
 		update();
 
 	}
@@ -81,46 +83,55 @@ mph.screens["game-screen"] = ( function ()
 		var deltaTime = ( Date.now() - previousTime ) / 1000;
 		previousTime = Date.now();
 
-		objMainColony.mcFoodProduction = objMainColony.mcCurFarmCount * 15;
-		// both of these are incorrect amounts for now
-		objMainColony.mcMaterialProduction = objMainColony.mcCurMineCount * 20;
+		GameTimer += deltaTime;
+		//console.log( "GameTimer: " + GameTimer );
+
+		if ( GameTimer >= 1 )
+		{
+			objMainColony.mcFoodProduction = objMainColony.mcCurFarmCount * 15;
+			// both of these are incorrect amounts for now
+			objMainColony.mcMaterialProduction = objMainColony.mcCurMineCount * 20;
+
+			objMainColony.UpdateMainColony( objMainColony.mcFoodProduction, objMainColony.mcMaterialProduction, objMainColony.mcLevel, 0 );
+			objMainColony.EatMaintencance( objBuildings.buildingTotalFoodMaint, objBuildings.buildingTotalMatMaint );
+
+			//Construction Stuff
+			if ( objMainColony.mcConstructionInProgress )
+			{
+				console.log( "Time spent on Building so far: " + objBuildings.buildingCurBuildTime )
+			}
+
+			if ( buildingFarm )
+			{
+				objBuildings.buildingCurBuildTime++;
+				//console.log( objBuildings.buildingFarmBuildTime );
+				if ( objBuildings.buildingFarmBuildTime <= objBuildings.buildingCurBuildTime )
+				{
+					buildingFarm = false;
+					objBuildings.buildingCurBuildTime = 0;
+					//(buildingName, buildCost, maintCost)
+					objMainColony.mcBuildBuilding( "Farm", 2, 1 );
+					objMainColony.mcConstructionInProgress = false;
+				}
+			}
+			if ( buildingMine )
+			{
+				objBuildings.buildingCurBuildTime++;
+				//console.log( objBuildings.buildingConstructionTime );
+				if ( objBuildings.buildingMineBuildTime <= objBuildings.buildingCurBuildTime )
+				{
+					buildingMine = false;
+					objBuildings.buildingCurBuildTime = 0;
+					//(buildingName, buildCost, maintCost)
+					objMainColony.mcBuildBuilding( "Mine", 3, 2 );
+					objMainColony.mcConstructionInProgress = false;
+				}
+			}
+			GameTimer = 0;
+
+		}
+
 		
-		objMainColony.UpdateMainColony( objMainColony.mcFoodProduction, objMainColony.mcMaterialProduction, objMainColony.mcLevel, 0 );
-		objMainColony.EatMaintencance( objBuildings.buildingTotalFoodMaint, objBuildings.buildingTotalMatMaint );
-
-		//Construction Stuff
-		if ( objMainColony.mcConstructionInProgress )
-		{
-			console.log( "Time spent on Building so far: " + objBuildings.buildingCurBuildTime )
-		}
-
-		if ( buildingFarm)
-		{
-			objBuildings.buildingCurBuildTime++;
-			//console.log( objBuildings.buildingFarmBuildTime );
-			if ( objBuildings.buildingFarmBuildTime <= objBuildings.buildingCurBuildTime )
-			{
-				buildingFarm = false;
-				objBuildings.buildingCurBuildTime = 0;
-				//(buildingName, buildCost, maintCost)
-				objMainColony.mcBuildBuilding( "Farm", 2, 1 );
-				objMainColony.mcConstructionInProgress = false;
-			}
-		}
-		if ( buildingMine )
-		{
-			objBuildings.buildingCurBuildTime++;
-			//console.log( objBuildings.buildingConstructionTime );
-			if ( objBuildings.buildingMineBuildTime <= objBuildings.buildingCurBuildTime )
-			{
-				buildingMine = false;
-				objBuildings.buildingCurBuildTime = 0;
-				//(buildingName, buildCost, maintCost)
-				objMainColony.mcBuildBuilding( "Mine", 3, 2 );
-				objMainColony.mcConstructionInProgress = false;
-			}
-		}
-
 		window.requestAnimationFrame( update );
 		window.requestAnimationFrame( updateGameInfo );
 	}
@@ -152,8 +163,6 @@ mph.screens["game-screen"] = ( function ()
 	{
 		$( "#game-screen .mainColonyStoredFood span" )[0].innerHTML = Math.floor( objMainColony.mcStoredFood );
 		$( "#game-screen .mainColonyStoredMat span" )[0].innerHTML = Math.floor( objMainColony.mcStoredMaterial );
-
-
 
 	}
 
@@ -259,35 +268,55 @@ mph.screens["game-screen"] = ( function ()
 		  }
 		);
 
-		dom.bind( "#game-screen button[name=buildFarm]", "click",
+		dom.bind( "#game-screen button[name=mainColonyScreen]", "click",
+			function ()
+			{
+				togglePause( true );
+				var exitGame = window.confirm(
+				"View Main Colony?"
+			 );
+				togglePause( false );
+				if ( exitGame )
+				{
+					//saveGameData();
+					stopGame();
+					mph.game.showScreen( "mainColony-screen" )
+				}
+			}
+);
+
+		dom.bind( "#mainColony-screen button[name=buildFarm]", "click",
 		  function ()
 		  {
 		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingFarmBuildCost <= objMainColony.mcStoredMaterial )
 		  	{
-				//(buildingName, buildCost, constructionTime, maintCost)
+		  		//(buildingName, buildCost, constructionTime, maintCost)
 		  		buildingFarm = true;
 		  		objMainColony.mcConstructionInProgress = true;
 		  		objBuildings.buildingFarmBuildTime = 15;
 		  		objBuildings.buildingCurBuildTime = 0;
 
 		  		objMainColony.mcStoredFood -= objBuildings.buildingFarmBuildCost;
+
+		  		$( "#game-screen .mainColonyStoredMat span" )[0].innerHTML = Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingFarmBuildCost;
+		  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingFarmBuildCost;
 		  	}
 		  	else
 		  	{
 		  		if ( objMainColony.mcConstructionInProgress )
 		  		{
-					console.log("Already building something")
+		  			console.log( "Already building something" )
 		  		}
-		  		if(objBuildings.buildingFarmBuildCost >= objMainColony.mcStoredMaterial)
+		  		if ( objBuildings.buildingFarmBuildCost >= objMainColony.mcStoredMaterial )
 		  		{
-					console.log("Not enough Material to build Farm")
+		  			console.log( "Not enough Material to build Farm" )
 		  		}
-				//display warning that construction is already in progress
+		  		//display warning that construction is already in progress
 		  	}
 		  }
 		  );
 
-		dom.bind( "#game-screen button[name=buildMine]", "click",
+		dom.bind( "#mainColony-screen button[name=buildMine]", "click",
 		  function ()
 		  {
 		  	if ( !objMainColony.mcConstructionInProgress && mineMatCost <= objMainColony.mcStoredMaterial )
@@ -314,7 +343,8 @@ mph.screens["game-screen"] = ( function ()
 	}
 
 	return {
-		run: run
+		run: run,
+		update: update
 
 	};
 
