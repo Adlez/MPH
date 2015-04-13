@@ -30,9 +30,10 @@ mph.screens["unit-screen"] = (function ()
             displayPower: 0,
             finalPower: 0,
             unitRemove: 1,
+            startTimer: false,
+            arrived: false,
             victory: false,
             loser: false,
-            Power: 100,
             currMat: 1000,
             //currFood: objMainColony.mcStoredFood,
             //currMat: objMainColony.mcStoredMaterial,
@@ -49,11 +50,21 @@ mph.screens["unit-screen"] = (function ()
 
     function update() {
 
-        var deltaTime = (Date.now() - previousTime) / 1000;
+        deltaTime = (Date.now() - previousTime) / 1000;
         previousTime = Date.now();
 
         totalPower();
         displayUnits();
+
+        if (unitState.startTimer == true)
+        {
+            enemyColony.Distance -= deltaTime;
+            if (enemyColony.Distance <= 0) {
+                decideBattle();
+                unitState.startTimer = false;
+            }
+        }
+        
         
         //console.log(gameState.mcStoredFood);
 
@@ -77,18 +88,6 @@ mph.screens["unit-screen"] = (function ()
         }
     }
 
-    function createVelos() {
-        unitState.Units.push(unitState.Velos);
-    };
-
-    function createTitav() {
-       unitState.Units.push(unitState.Titav);
-    };
-
-    function createAegis() {
-       unitState.Units.push(unitState.Aegis);
-    };
-
     createUnits();
 
     function createUnits () 
@@ -97,7 +96,6 @@ mph.screens["unit-screen"] = (function ()
         var CVButton =
             $("#unit-screen button[name=CreateVelos]")[0];
         dom.bind(CVButton, "click", function (e) {
-            unitState.isClicked = true;
             checkIfCanAffordVelos();
         });
 
@@ -111,22 +109,7 @@ mph.screens["unit-screen"] = (function ()
             $("#unit-screen button[name=CreateAegis]")[0];
         dom.bind(CAButton, "click", function (e) {
             checkIfCanAffordAegis();
-        });
-
-         /*dom.bind("#unit-screen button[name=CreateVelos]", "click",
-           function ()
-           {
-               unitState.isClicked = true;
-               if (unitState.isClicked == true)
-               {
-                   unitState.Units.push(unitState.Velos);
-               }
-               unitState.isClicked = false;
-               
-           }
-           
-        );*/
-        
+        });      
         
     };
 
@@ -159,6 +142,18 @@ mph.screens["unit-screen"] = (function ()
         }
     };
 
+    function createVelos() {
+        unitState.Units.push(unitState.Velos);
+    };
+
+    function createTitav() {
+        unitState.Units.push(unitState.Titav);
+    };
+
+    function createAegis() {
+        unitState.Units.push(unitState.Aegis);
+    };
+
     function ifCantAfford()
     {
         var tooPoor = window.confirm(
@@ -166,19 +161,19 @@ mph.screens["unit-screen"] = (function ()
     }
 
     function displayUnits() {
+        unitState.displayVelos = 0;
+        unitState.displayTitav = 0;
+        unitState.displayAegis = 0;
         for (var index = 0; index < unitState.Units.length; index++)
         {
             if (unitState.Units[index] == 10) {
-                unitState.displayVelos = (unitState.Units[index] / 10);
-                index++;
+                unitState.displayVelos += (unitState.Units[index] / 10);
             }
             if (unitState.Units[index] == 20) {
-                unitState.displayTitav = (unitState.Units[index] / 20);
-                index++;
+                unitState.displayTitav += (unitState.Units[index] / 20);
             }
             if (unitState.Units[index] == 30) {
-                unitState.displayAegis = (unitState.Units[index] / 30);
-                index++;
+                unitState.displayAegis += (unitState.Units[index] / 30);
             }
         }
     };
@@ -219,21 +214,32 @@ mph.screens["unit-screen"] = (function ()
         var attackButton =
             $("#unit-screen button[name=Attack]")[0];
         dom.bind(attackButton, "click", function (e) {
-            decideBattle();
+            distanceTimer();
+            unitState.startTimer = true;
+           
         });
+        
+    }
+
+    function distanceTimer()
+    {
+        enemyColony.setRandDistance();
     }
 
     function decideBattle() {
-        unitState.finalPower = unitState.displayPower;
-        enemyColony.Power = enemyColony.setRandPower();
-        unitState.finalPower -= enemyColony.Power;
-        if (unitState.finalPower <= 0) {
-            unitState.loser = true;
-        }
-        else {
-            unitState.victory = true;
-        }
-       showAttackResult();
+       
+            unitState.finalPower = unitState.displayPower;
+            enemyColony.setRandPower();
+
+            if (unitState.finalPower <= 0) {
+                unitState.loser = true;
+            }
+            else {
+                unitState.victory = true;
+            }
+            showAttackResult();
+        
+        
     }
 
     function showAttackResult()
