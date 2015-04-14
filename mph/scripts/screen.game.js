@@ -355,7 +355,7 @@ mph.screens["game-screen"] = ( function ()
 		dom.bind( "#mainColony-screen button[name=buildFarm]", "click",
 		  function ()
 		  {
-		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingFarmBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 != objMainColony.mcBuildingCap )
+		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingFarmBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
 		  	{
 		  		//(buildingName, buildCost, constructionTime, maintCost)
 		  		buildingFarm = true;
@@ -380,6 +380,10 @@ mph.screens["game-screen"] = ( function ()
 		  		{
 		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build Farm";
 		  		}
+		  		if(objMainColony.mcCurBuildingCount + 1 > objMainColony.mcBuildingCap)
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
+		  		}
 		  		//display warning that construction is already in progress
 		  	}
 		  }
@@ -388,7 +392,7 @@ mph.screens["game-screen"] = ( function ()
 		dom.bind( "#mainColony-screen button[name=buildMine]", "click",
 		  function ()
 		  {
-		  	if ( !objMainColony.mcConstructionInProgress && mineMatCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 != objMainColony.mcBuildingCap )
+		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingFarmBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
 		  	{
 		  		//(buildingName, buildCost, constructionTime, maintCost)
 		  		buildingMine = true;
@@ -412,6 +416,10 @@ mph.screens["game-screen"] = ( function ()
 		  		if ( objBuildings.buildingFarmBuildCost >= objMainColony.mcStoredMaterial )
 		  		{
 		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build Mine";
+		  		}
+		  		if ( objMainColony.mcCurBuildingCount + 1 > objMainColony.mcBuildingCap )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
 		  		}
 		  	}
 		  }
