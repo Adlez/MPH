@@ -4,10 +4,12 @@
 		mcStoredMaterial = 0,
 		mcFoodProduction= 0,
 		mcMaterialProduction = 0,
+		mcScienceProduction = 0,
 		mcStoredScience = 0,
 		mcCurBuildingCount = 0,
 		mcCurFarmCount = 0,
 		mcCurMineCount = 0,
+		mcCurRFCount = 0,
 		mcBuildingCap = 0,
 		mcLevel = 0,
 		mcCurBuildingCount = 0,
@@ -34,8 +36,9 @@
 				{
 					this.mcCurBuildingCount+=2;
 				}
-				if ( buildingName == "ResearchFacility" )
+				if ( buildingName == "Lab" )
 				{
+					this.mcCurRFCount++;
 					this.mcCurBuildingCount++;
 				}
 				if ( buildingName == "MilitaryDepot" )
@@ -81,8 +84,10 @@
 		mcBuildingCap: mcBuildingCap,
 		mcCurFarmCount: mcCurFarmCount,
 		mcCurMineCount: mcCurMineCount,
+		mcCurRFCount: mcCurRFCount,
 		mcCurBuildingCount: mcCurBuildingCount,
 		mcFoodProduction: mcFoodProduction,
+		mcScienceProduction: mcScienceProduction,
 		mcMaterialProduction: mcMaterialProduction,
 		mcStoredFood: mcStoredFood,
 		mcStoredMaterial: mcStoredMaterial,
