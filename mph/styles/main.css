@@ -74,13 +74,13 @@ body {
 	}
 
 .logo {
-	font-family: Slackey;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 	margin: 0;
 	text-align: center;
-	color: rgb(70,120,20);
+	color: rgb(94,210,192);
 	font-size: 1.5em;
 	line-height: 0.9em;
-	text-shadow: 0.03em 0.03em 0.03em rgb(255,255,0), -0.03em -0.03em 0.03em rgb(255,255,0), 0.10em 0.15em 0.15em rgb(0,0,0);
+	text-shadow: 0.03em 0.03em 0.03em rgb(54,127,116), -0.03em -0.03em 0.03em rgb(54,127,116), 0.10em 0.15em 0.15em rgb(0,0,0);
 }
 
 .no-textshadow .logo {
@@ -129,12 +129,6 @@ ul.menu {
 /*BUTTONS for Context Screen Swapping*/
 
 ul.gameScreen li button {
-/*	background-image: url("/images/worldsButton32x32.png");
-	background-repeat: no-repeat;
-	background-position: center center;
-	height: 32px; /* make this the size of your image 
-	padding-left: 16px; /* make text start to the right of the image 
-	vertical-align: middle; */
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	font-size: 0.7em;
 	color: rgb(100,10,100);
@@ -250,6 +244,13 @@ ul.gameScreen li button {
 		background-color: rgba(225,235,255,0.15);
 	}
 
+
+#mainColony-screen .game-info{
+	width: 100%;
+	float: right;
+}
+
+
 /* Game screen - Game state */
 #game-screen .game-info {
 	width: 100%;
@@ -260,7 +261,7 @@ ul.gameScreen li button {
 		display: inline-block;
 		height: 1.5em;
 		float: left;
-		font-size: 0.6em;
+		font-size: 3.6em;
 		padding: 0.25em;
 	}
 
