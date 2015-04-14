@@ -68,18 +68,21 @@
 			</div>
 
 			<div class="game-info">
-				<label class="mainColonyHP">HP: <span></span></label>
-				<label class="mainColonyDefense">Defense: <span></span></label>
-				<label class="mainColonyStoredFood">storedFood: <span></span></label>
-				<label class="mainColonyStoredMat">storedMaterial: <span></span></label>
-				<label class="mainColonyStoredScience">storedScience: <span></span></label>
-				<ul class="gameScreen">
+				<label class="mainColonyHP">HP: <span></span></label><br />
+				<label class="mainColonyDefense">Defense: <span></span></label><br />
+				<label class="mainColonyStoredFood">storedFood: <span></span></label><br />
+				<label class="mainColonyStoredMat">storedMaterial: <span></span></label><br />
+				<label class="mainColonyStoredScience">storedScience: <span></span></label><br />
+				<ul class="screenSwapper">
 					<li><button name="Army">Army</button>
 					<li><button name="shipyard">Ships</button>
-					<li><button name="offWolrdColonies">OffworldColonies<img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
+					<li><button name="offWorldColonies"><img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
 					<li><button name="buildings">Buildings</button>
 					<li><button name="mainColonyScreen">MainColony</button>
 				</ul>
+				<br />
+				<br />
+				<label class="screenFeedBack"> <span></span></label><br />
 			</div>
 
 			<div class="time progress"><div class="indicator"></div></div>
@@ -91,23 +94,36 @@
 			<div class="pause-overlay"></div>
 
 		</div>
-<!-- Switch to Colony Screen-->
+<!-- Switch to MainColony Screen-->
 		<div class="screen" id="mainColony-screen">
 			<div class="game-board jewel-size">
 				<div class="announcement"></div>
 			</div>
 
 			<div class="colony-info">
-				<label class="Farms">Farms: <span></span></label>
-				<label class="Mines">Mines: <span></span></label>
+				<label class="Farms">Farms: <span></span></label> <br />
+				<label class="Mines">Mines: <span></span></label><br />
 
-				<label class="mainColonyStoredFood">F: <span></span></label>
-				<label class="mainColonyStoredMat">M: <span></span></label>
-				<label class="mainColonyStoredScience">S: <span></span></label>
+				<label class="mainColonyStoredFood">F: <span></span></label><br />
+				<label class="mainColonyStoredMat">M: <span></span></label><br />
+				<label class="mainColonyStoredScience">S: <span></span></label><br />
+
+
+				<br />
+				<br />
+				<label class="screenFeedBack"> <span></span></label><br />
+				<label class="BuildTimer"> <span></span></label>
 
 				<ul class="buildingScreen">
 					<li><button name="buildFarm">build Farm</button>
 					<li><button name="buildMine">build Mine</button>
+				</ul>
+				<ul class="screenSwapper">
+					<li><button name="Army">Army</button>
+					<li><button name="shipyard">Ships</button>
+					<li><button name="offWorldColonies"><img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
+					<li><button name="buildings">Buildings</button>
+					<li><button name="mainColonyScreen">MainColony</button>
 				</ul>
 			</div>
 
@@ -138,6 +154,14 @@
                             
                 </ul>
             </div>
+
+	   	<ul class="screenSwapper">
+	   		<li><button name="Army">Army</button>
+	   		<li><button name="shipyard">Ships</button>
+	   		<li><button name="offWorldColonies"><img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
+	   		<li><button name="buildings">Buildings</button>
+	   		<li><button name="mainColonyScreen">MainColony</button>
+	   	</ul>
 
             <footer>
                 <button name="back">Back</button>

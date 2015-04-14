@@ -1,8 +1,8 @@
 @media (orientation: landscape) {
     #splash-screen,
     #main-menu {
-        font-size : 1.0em;
-        padding-top : 0.75em;
+        font-size : 0.75em;
+        padding-top : 0.25em;
     }
     ul.menu li {
         display : inline-block;
@@ -13,7 +13,7 @@
         font-size : 0.5em;
     }
     .jewel-size {
-        font-size : 32px;
+        font-size : 16px;
     }
 }
 
@@ -29,16 +29,16 @@ body {
 	position: absolute;
 	left: 0;
 	top: 0;
-	font-size: 40px;
-	width: 8em;
-	height: 12em;
+	font-size: 35px;
+	width: 32em;
+	height: 24em;
 	background-color: rgb(30,30,30);
 	font-family: Geo;
 	color: rgb(200,200,100);
 }
 
 .jewel-size {
-	font-size: 40px;
+	font-size: 10px;
 }
 
 #jewel-proto {
