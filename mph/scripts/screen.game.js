@@ -96,7 +96,7 @@ mph.screens["game-screen"] = ( function ()
 			objMainColony.UpdateMainColony( objMainColony.mcFoodProduction, objMainColony.mcMaterialProduction, objMainColony.mcLevel, 0 );
 			objMainColony.EatMaintencance( objBuildings.buildingTotalFoodMaint, objBuildings.buildingTotalMatMaint );
 
-			//Construction Stuff
+		    //Construction Stuff
 			if ( buildingFarm )
 			{
 				objBuildings.buildingCurBuildTime++;

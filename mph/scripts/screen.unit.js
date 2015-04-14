@@ -7,7 +7,7 @@ mph.screens["unit-screen"] = (function ()
 	    $ = dom.$,
         firstRun = true,
 	    paused = false,
-	    pauseTime;
+        pauseTime;
 
 
     function gameLoop()
@@ -37,14 +37,12 @@ mph.screens["unit-screen"] = (function ()
             victory: false,
             loser: false,
             gameOver: false,
-            currFood: objMainColony.mcStoredFood,
-            currMat: objMainColony.mcStoredMaterial,
-            Units: [],
-            isClicked: false
+            Units: []
         };
 
         gameLoop();
         setEnemyPower();
+        setAttackTimer();
                
     }
 
@@ -71,6 +69,7 @@ mph.screens["unit-screen"] = (function ()
 
         if (unitState.attackTimer == true)
         {
+
             enemyColony.attackDelay -= deltaTime;
             if(enemyColony.attackDelay <= 0)
             {
@@ -112,50 +111,55 @@ mph.screens["unit-screen"] = (function ()
             $("#unit-screen button[name=CreateVelos]")[0];
         dom.bind(CVButton, "click", function (e) {
             checkIfCanAffordVelos();
+           
         });
 
         var CTButton =
             $("#unit-screen button[name=CreateTitav]")[0];
         dom.bind(CTButton, "click", function (e) {
             checkIfCanAffordTitav();
+            
         });
 
         var CAButton =
             $("#unit-screen button[name=CreateAegis]")[0];
         dom.bind(CAButton, "click", function (e) {
             checkIfCanAffordAegis();
-        });      
-        
+           
+        });       
     };
 
     function checkIfCanAffordVelos()
     {
-        if (unitState.currMat >= 100) {
+        if (objMainColony.mcStoredMaterial >= 100) {
             createVelos();
-            unitState.currMat -= 100;
+            objMainColony.mcStoredMaterial -= 100;
         }
         else {
             ifCantAfford();
+           
         }
     };
     function checkIfCanAffordTitav()
     {
-        if(unitState.currMat >= 250)
+        if (objMainColony.mcStoredMaterial >= 250)
         {
             createTitav();
-            unitState.currMat -= 2500;
+            objMainColony.mcStoredMaterial -= 250;
         }
         else {
             ifCantAfford();
+           
         }
     };
     function checkIfCanAffordAegis() {
-        if (unitState.currMat >= 500) {
+        if (objMainColony.mcStoredMaterial >= 500) {
             createAegis();
-            unitState.currMat -= 500;
+            objMainColony.mcStoredMaterial -= 500;
         }
         else {
             ifCantAfford();
+           
         }
     };
 
@@ -321,8 +325,6 @@ mph.screens["unit-screen"] = (function ()
         }
     }
 
-    setAttackTimer();
-
     function setAttackTimer()
     {
         enemyColony.setRandAttackDelay();
@@ -385,7 +387,7 @@ mph.screens["unit-screen"] = (function ()
 
     function setup() {
         
-        dom.bind("#unit-screen button[name=back]", "click",
+       /* dom.bind("#unit-screen button[name=back]", "click",
 		  function () {
 		      var exitGame = window.confirm(
               "Do you want to go to the game screen?"
@@ -396,11 +398,11 @@ mph.screens["unit-screen"] = (function ()
 		          mph.game.showScreen("game-screen")
 		      }
 		  }
-		);
+		);*/
     }
 
     return {
-        run: run
+        run: run,        
     };
 
 })();
