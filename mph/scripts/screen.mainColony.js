@@ -79,7 +79,11 @@
 		$( "#mainColony-screen .mainColonyStoredFood span" )[0].innerHTML = Math.floor( objMainColony.mcStoredFood );
 		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = Math.floor( objMainColony.mcStoredMaterial );
 		$( "#mainColony-screen .Farms span" )[0].innerHTML = Math.floor( objMainColony.mcCurFarmCount );
-		$( "#mainColony-screen .Mines span" )[0].innerHTML = Math.floor( objMainColony.mcCurMineCount );
+		$("#mainColony-screen .Mines span")[0].innerHTML = Math.floor(objMainColony.mcCurMineCount);
+		//$("#unit-screen .Velos span")[0].innerHTML = Math.floor(displayVelos);
+		//$("#unit-screen .Titav span")[0].innerHTML = Math.floor(unitState.displayTitav);
+		//$("#unit-screen .Aegis span")[0].innerHTML = Math.floor(unitState.displayAegis);
+		//$("#unit-screen .Power span")[0].innerHTML = Math.floor(unitState.displayPower);
 	}
 
 	function run()

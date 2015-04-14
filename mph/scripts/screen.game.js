@@ -186,7 +186,11 @@ mph.screens["game-screen"] = ( function ()
 			$( "#mainColony-screen .BuildTimer span" )[0].innerHTML = "Time Progressed: " + objBuildings.buildingCurBuildTime;
 		}
 		else
-		{ $( "#mainColony-screen .BuildTimer span" )[0].innerHTML = ""; }
+		{ $("#mainColony-screen .BuildTimer span")[0].innerHTML = ""; }
+		$("#unit-screen .Velos span")[0].innerHTML = Math.floor(unit-screen.displayVelos);
+		//$("#unit-screen .Titav span")[0].innerHTML = Math.floor(unitState.displayTitav);
+		//$("#unit-screen .Aegis span")[0].innerHTML = Math.floor(unitState.displayAegis);
+		//$("#unit-screen .Power span")[0].innerHTML = Math.floor(unitState.displayPower);
 
 	}
 

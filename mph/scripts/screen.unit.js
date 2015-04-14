@@ -7,6 +7,7 @@ mph.screens["unit-screen"] = (function ()
 	    $ = dom.$,
         firstRun = true,
 	    paused = false,
+        displayVelos = 0,
         pauseTime;
 
 
@@ -69,7 +70,6 @@ mph.screens["unit-screen"] = (function ()
 
         if (unitState.attackTimer == true)
         {
-
             enemyColony.attackDelay -= deltaTime;
             if(enemyColony.attackDelay <= 0)
             {
@@ -182,13 +182,13 @@ mph.screens["unit-screen"] = (function ()
     }
 
     function displayUnits() {
-        unitState.displayVelos = 0;
+        displayVelos = 0;
         unitState.displayTitav = 0;
         unitState.displayAegis = 0;
         for (var index = 0; index < unitState.Units.length; index++)
         {
             if (unitState.Units[index] == 10) {
-                unitState.displayVelos += (unitState.Units[index] / 10);
+                displayVelos += (unitState.Units[index] / 10);
             }
             if (unitState.Units[index] == 20) {
                 unitState.displayTitav += (unitState.Units[index] / 20);
@@ -211,7 +211,7 @@ mph.screens["unit-screen"] = (function ()
 
     function totalPower()
     {
-        unitState.displayPower = (unitState.displayVelos * 10) + (unitState.displayTitav * 20) + (unitState.displayAegis * 30);
+        unitState.displayPower = (displayVelos * 10) + (unitState.displayTitav * 20) + (unitState.displayAegis * 30);
     }
 
     displayEnemyPower();
@@ -351,7 +351,7 @@ mph.screens["unit-screen"] = (function ()
     }
 
     function updateGameInfo() {
-       $("#unit-screen .Velos span")[0].innerHTML = Math.floor(unitState.displayVelos);
+       $("#unit-screen .Velos span")[0].innerHTML = Math.floor(displayVelos);
        $("#unit-screen .Titav span")[0].innerHTML = Math.floor(unitState.displayTitav);
        $("#unit-screen .Aegis span")[0].innerHTML = Math.floor(unitState.displayAegis);
        $("#unit-screen .Power span")[0].innerHTML = Math.floor(unitState.displayPower);
