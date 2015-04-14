@@ -30,19 +30,22 @@ mph.screens["unit-screen"] = (function ()
             displayPower: 0,
             finalPower: 0,
             unitRemove: 1,
+            reset: 0,
             startTimer: false,
+            attackTimer: false,
             arrived: false,
             victory: false,
             loser: false,
-            currMat: 1000,
-            //currFood: objMainColony.mcStoredFood,
-            //currMat: objMainColony.mcStoredMaterial,
+            gameOver: false,
+            currFood: objMainColony.mcStoredFood,
+            currMat: objMainColony.mcStoredMaterial,
             Units: [],
             isClicked: false
         };
 
-
         gameLoop();
+        setEnemyPower();
+               
     }
 
     var previousTime = Date.now();
@@ -62,12 +65,24 @@ mph.screens["unit-screen"] = (function ()
             if (enemyColony.Distance <= 0) {
                 decideBattle();
                 unitState.startTimer = false;
+                enemyColony.Distance = reset;
             }
         }
-        
-        
-        //console.log(gameState.mcStoredFood);
 
+        if (unitState.attackTimer == true)
+        {
+            enemyColony.attackDelay -= deltaTime;
+            if(enemyColony.attackDelay <= 0)
+            {
+                decideRandBattle();
+                unitState.attackTimer = false;
+                enemyColony.attackDelay = reset;
+            }
+        }
+
+        enemyColony.difficultyIncrease += deltaTime;
+        increaseDifficultyz();
+        
         window.requestAnimationFrame(update);
         window.requestAnimationFrame(updateGameInfo);
     }
@@ -117,7 +132,7 @@ mph.screens["unit-screen"] = (function ()
     {
         if (unitState.currMat >= 100) {
             createVelos();
-            unitState.displayVelos += 1;
+            unitState.currMat -= 100;
         }
         else {
             ifCantAfford();
@@ -128,6 +143,7 @@ mph.screens["unit-screen"] = (function ()
         if(unitState.currMat >= 250)
         {
             createTitav();
+            unitState.currMat -= 2500;
         }
         else {
             ifCantAfford();
@@ -136,6 +152,7 @@ mph.screens["unit-screen"] = (function ()
     function checkIfCanAffordAegis() {
         if (unitState.currMat >= 500) {
             createAegis();
+            unitState.currMat -= 500;
         }
         else {
             ifCantAfford();
@@ -178,45 +195,52 @@ mph.screens["unit-screen"] = (function ()
         }
     };
 
-    function destroyUnits () {
+    function destroyUnitsLoss() {
 
-                for (var index = 0; index < unitState.Units.length; index++) {
-                if (unitState.Units[index] == 10) {
-                    unitState.Units.slice(index, 1);
-                    unitState.displayPower -= unitState.Velos;
-                    unitState.displayVelos -= unitState.unitRemove;
-                }
-
-                else if (unitState.Units[index] == unitState.Titav) {
-                    unitState.Units.slice(index, 1);
-                    unitState.displayPower -= unitState.Titav;
-                    unitState.displayVelos -= (unitState.unitRemove);
-                }
-
-                else if (unitState.Units[index] == unitState.Aegis) {
-                    unitState.Units.slice(index, 1);
-                    unitState.displayPower -= unitState.Aegis;
-                    unitState.displayVelos -= (unitState.unitRemove);
-                }
-                index++;
-            }
+        unitState.Units.splice(0, unitState.Units.length);
     };
+
+    function destroyUnitsWin()
+    {
+        unitState.Units.splice(0, (unitState.Units.length / 2));
+    }
 
     function totalPower()
     {
         unitState.displayPower = (unitState.displayVelos * 10) + (unitState.displayTitav * 20) + (unitState.displayAegis * 30);
     }
 
+    displayEnemyPower();
+
+    function displayEnemyPower() {
+        var viewButton =
+            $("#unit-screen button[name=Display]")[0];
+        dom.bind(viewButton, "click", function (e) {
+        });
+    }
+
+    function setEnemyPower()
+    {
+        enemyColony.setRandPower();
+        enemyColony.setRandParaPower();
+    }
+
     Attack();
 
     function Attack()
     {
-        var attackButton =
-            $("#unit-screen button[name=Attack]")[0];
-        dom.bind(attackButton, "click", function (e) {
+        var attack1Button =
+            $("#unit-screen button[name=EnemyColony]")[0];
+        dom.bind(attack1Button, "click", function (e) {
             distanceTimer();
             unitState.startTimer = true;
-           
+        });
+
+        var attack2Button =
+            $("#unit-screen button[name=ParasiteHive]")[0];
+        dom.bind(attack2Button, "click", function (e) {
+            distanceTimer();
+            unitState.startTimer = true;
         });
         
     }
@@ -229,31 +253,98 @@ mph.screens["unit-screen"] = (function ()
     function decideBattle() {
        
             unitState.finalPower = unitState.displayPower;
-            enemyColony.setRandPower();
+            unitState.finalPower -= enemyColony.Power;
 
             if (unitState.finalPower <= 0) {
                 unitState.loser = true;
+                destroyUnitsLoss();
+                showLossResult();
             }
-            else {
+            else if (unitState.finalPower >= 0.1 && unitState.finalPower <= 499)
+            {
                 unitState.victory = true;
+                destroyUnitsWin();
+                showWinResult();
             }
-            showAttackResult();
-        
-        
+            else if(unitState.finalPower >= 500)
+            {
+                unitState.victory = true;
+                showWinResult();
+            }
     }
 
-    function showAttackResult()
+    function decideRandBattle()
+    {
+        unitState.finalPower = unitState.displayPower;
+        enemyColony.setRandAttackerPower();
+        unitState.finalPower -= enemyColony.randAttackerPower;
+
+        if (unitState.finalPower <= 0) {
+            unitState.gameOver = true;
+            destroyUnitsLoss();
+            showGameOverResult();
+        }
+        else if (unitState.finalPower >= 0.1 && unitState.finalPower <= 499) {
+            unitState.victory = true;
+            destroyUnitsWin();
+            showWinResult();
+        }
+        else if (unitState.finalPower >= 500) {
+            unitState.victory = true;
+            showWinResult();
+        }
+    }
+
+    function showWinResult()
     {
         if (unitState.victory == true) {
             var victoryW = window.confirm(
              "You are SUPER coolz! Oh and you defeated the enemy colony. Good job.");
         }
+    }
+
+    function showLossResult(){
 
         if (unitState.loser == true) {
             var loserW = window.confirm(
              "You lost, everyone is dead....good job?");
+        }
+    }
 
-            destroyUnits();
+    function showGameOverResult()
+    {
+        if(unitState.gameOver == true)
+        {
+            var dead = window.confirm(
+             "You dead Bitch!");
+            //add more to end game
+        }
+    }
+
+    setAttackTimer();
+
+    function setAttackTimer()
+    {
+        enemyColony.setRandAttackDelay();
+        unitState.attackTimer == true;
+    }
+
+    function enemyAttacks()
+    {
+        var enemyAttack = window.confirm(
+             "An enemy is attacking you!");
+
+    }
+
+    function increaseDifficultyz()
+    {
+        if(enemyColony.attackTimer >= 300)
+        {
+            enemyColony.setDifficultyChangeLvl1();
+        }
+
+        if (enemyColony.attackTimer >= 600) {
+            enemyColony.setDifficultyChangeLvl2();
         }
     }
 
@@ -262,6 +353,9 @@ mph.screens["unit-screen"] = (function ()
        $("#unit-screen .Titav span")[0].innerHTML = Math.floor(unitState.displayTitav);
        $("#unit-screen .Aegis span")[0].innerHTML = Math.floor(unitState.displayAegis);
        $("#unit-screen .Power span")[0].innerHTML = Math.floor(unitState.displayPower);
+       $("#unit-screen .Timer span")[0].innerHTML = Math.floor(enemyColony.Distance);
+       $("#unit-screen .EnemyPower span")[0].innerHTML = Math.floor(enemyColony.Power);
+       $("#unit-screen .ParasitePower span")[0].innerHTML = Math.floor(enemyColony.ParaPower);
 
     }
 

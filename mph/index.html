@@ -136,22 +136,37 @@
 
 <!-- Switch to Unit Screen-->
         <div class="screen" id="unit-screen">
-            <div class="game-board jewel-size">
-                <div class="announcement"></div>
-            </div>
-
+            <style>
+                li.hidden {
+                    display: none;
+                }
+                li.show{
+                    display: normal;
+                }
+            </style>
+            <div class="announcement"></div>
             <div class="unit-info">
                 <label class="Power">Power: <span></span></label>
                 <label class="Velos">V: <span></span></label>
                 <label class="Titav">T: <span></span></label>
                 <label class="Aegis">A: <span></span></label>
+                <label class="Timer">Timer: <span></span></label>
                 
                 <ul class="unitScreen">
                     <li><button name="CreateVelos">CV</button>
                     <li><button name="CreateTitav">CT</button>
                     <li><button name="CreateAegis">CA</button>
-                    <li><button name="Attack">Attack</button>
-                            
+                    <li onclick="visible()"><button name="Display">ViewColonies</button>
+                    <li id="WHY!?" class="hidden"><button name="EnemyColony">AttackEC</button>
+                        <label class="EnemyPower">EPower: <span></span></label>
+                    <li id="WHYZ?" class="hidden"><button name="ParasiteHive">AttackPH</button>
+                        <label class="ParasitePower">PPower: <span></span></label>
+                        <script>
+                            function visible() {
+                                document.getElementById('WHY!?').style = 'li.show';
+                                document.getElementById('WHYZ?').style = 'li.show';
+                            }
+                        </script>
                 </ul>
             </div>
 
