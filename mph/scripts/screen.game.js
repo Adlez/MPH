@@ -186,20 +186,6 @@ mph.screens["game-screen"] = ( function ()
 
 	function updateGameInfo()
 	{
-		$( "#mainColony-screen .mainColonyStoredFood span" )[0].innerHTML = Math.floor( objMainColony.mcStoredFood ) + " + " + objMainColony.mcFoodProduction + " - " + objBuildings.buildingTotalFoodMaint;
-		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = Math.floor( objMainColony.mcStoredMaterial ) + " + " + objMainColony.mcMaterialProduction + " - " + objBuildings.buildingTotalMatMaint;
-
-		$( "#mainColony-screen .mainColonyStoredFood span" )[0].innerHTML +=" - " + objBuildings.buildingTotalFoodMaint;
-		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML += " - " + objBuildings.buildingTotalMatMaint;
-
-
-		$( "#mainColony-screen .mainColonyStoredScience span" )[0].innerHTML = Math.floor( objMainColony.mcStoredScience ) + " + " + objMainColony.mcScienceProduction;
-		if ( objMainColony.mcConstructionInProgress )
-		{
-			$( "#mainColony-screen .BuildTimer span" )[0].innerHTML = "Time Progressed: " + objBuildings.buildingCurBuildTime;
-		}
-		else
-		{ $("#mainColony-screen .BuildTimer span")[0].innerHTML = ""; }
 //		$("#unit-screen .Velos span")[0].innerHTML = Math.floor(unit-screen.displayVelos);
 		//$("#unit-screen .Titav span")[0].innerHTML = Math.floor(unitState.displayTitav);
 		//$("#unit-screen .Aegis span")[0].innerHTML = Math.floor(unitState.displayAegis);

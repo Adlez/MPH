@@ -12,6 +12,17 @@
 	firstRun = true,
 	paused = false,
 
+	buildingFarm = false,
+	buildingMine = false,
+	buildingRF = false,
+	firstRun = true,
+	paused = false,
+	firstLoop = false,
+	GameTimer = 0,
+	currentlyBuilding = "",
+
+	mineMatCost = objBuildings.buildingMineBuildCost,
+
 	pauseTime;
 	//Main Colony Object
 
@@ -32,7 +43,14 @@
 			endTime: 0 // time to game over
 		};
 
-		audio.initialize();
+
+
+		objMainColony.mcLevel = 1;
+
+		objMainColony.UpdateMainColony( objMainColony.mcFoodProduction, objMainColony.mcMaterialProduction, objMainColony.mcLevel, 0 );
+
+		objMainColony.mcBuildBuilding( "Farm", 2, 1 );
+		objMainColony.mcBuildBuilding( "Mine", 3, 2 );
 
 		gameLoop();
 
@@ -47,6 +65,68 @@
 
 		var deltaTime = ( Date.now() - previousTime ) / 1000;
 		previousTime = Date.now();
+
+		GameTimer += deltaTime;
+
+		if ( GameTimer >= 1 )
+		{
+			objMainColony.mcFoodProduction = objMainColony.mcCurFarmCount * 15;
+			// both of these are incorrect amounts for now
+			objMainColony.mcMaterialProduction = objMainColony.mcCurMineCount * 20;
+			objMainColony.mcScienceProduction = objMainColony.mcCurRFCount * 2;
+
+			objMainColony.UpdateMainColony( objMainColony.mcFoodProduction, objMainColony.mcMaterialProduction, objMainColony.mcLevel, objMainColony.mcScienceProduction );
+			objMainColony.EatMaintencance( objBuildings.buildingTotalFoodMaint, objBuildings.buildingTotalMatMaint );
+
+			//Construction Stuff
+			if ( buildingFarm )
+			{
+				objBuildings.buildingCurBuildTime++;
+				currentlyBuilding = "Farm";
+				//console.log( objBuildings.buildingFarmBuildTime );
+				if ( objBuildings.buildingFarmBuildTime <= objBuildings.buildingCurBuildTime )
+				{
+					buildingFarm = false;
+					objBuildings.buildingCurBuildTime = 0;
+					//(buildingName, buildCost, maintCost)
+					objMainColony.mcBuildBuilding( "Farm", 2, 1 );
+					objMainColony.mcConstructionInProgress = false;
+					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
+				}
+			}
+			if ( buildingMine )
+			{
+				objBuildings.buildingCurBuildTime++;
+				currentlyBuilding = "Mine";
+				//console.log( objBuildings.buildingConstructionTime );
+				if ( objBuildings.buildingMineBuildTime <= objBuildings.buildingCurBuildTime )
+				{
+					buildingMine = false;
+					objBuildings.buildingCurBuildTime = 0;
+					//(buildingName, buildCost, maintCost)
+					objMainColony.mcBuildBuilding( "Mine", 3, 2 );
+					objMainColony.mcConstructionInProgress = false;
+					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
+				}
+			}
+			if ( buildingRF )
+			{
+				objBuildings.buildingCurBuildTime++;
+				currentlyBuilding = "Lab";
+				//console.log( objBuildings.buildingConstructionTime );
+				if ( objBuildings.buildingRFBuildTime <= objBuildings.buildingCurBuildTime )
+				{
+					buildingRF = false;
+					objBuildings.buildingCurBuildTime = 0;
+					//(buildingName, buildCost, maintCost)
+					objMainColony.mcBuildBuilding( "Lab", 7, 3 );
+					objMainColony.mcConstructionInProgress = false;
+					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
+				}
+			}
+			GameTimer = 0;
+
+		}
 
 		window.requestAnimationFrame( update );
 		window.requestAnimationFrame( updateGameInfo );
@@ -76,14 +156,40 @@
 
 	function updateGameInfo()
 	{
-		$( "#mainColony-screen .mainColonyStoredFood span" )[0].innerHTML = Math.floor( objMainColony.mcStoredFood );
-		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = Math.floor( objMainColony.mcStoredMaterial );
-		$( "#mainColony-screen .Farms span" )[0].innerHTML = Math.floor( objMainColony.mcCurFarmCount );
-		$("#mainColony-screen .Mines span")[0].innerHTML = Math.floor(objMainColony.mcCurMineCount);
+		$( "#mainColony-screen .mainColonyStoredFood span" )[0].innerHTML = Math.floor( objMainColony.mcStoredFood ) + " + " + objMainColony.mcFoodProduction + " - " + objBuildings.buildingTotalFoodMaint;
+		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = Math.floor( objMainColony.mcStoredMaterial ) + " + " + objMainColony.mcMaterialProduction + " - " + objBuildings.buildingTotalMatMaint;
+
+		$( "#mainColony-screen .mainColonyStoredFood span" )[0].innerHTML += " - " + objBuildings.buildingTotalFoodMaint;
+		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML += " - " + objBuildings.buildingTotalMatMaint;
+
+
+		$( "#mainColony-screen .mainColonyStoredScience span" )[0].innerHTML = Math.floor( objMainColony.mcStoredScience ) + " + " + objMainColony.mcScienceProduction;
+		if ( objMainColony.mcConstructionInProgress )
+		{
+			$( "#mainColony-screen .BuildTimer span" )[0].innerHTML = "Time Progressed: " + objBuildings.buildingCurBuildTime;
+		}
+		else
+		{ $( "#mainColony-screen .BuildTimer span" )[0].innerHTML = ""; }
 		//$("#unit-screen .Velos span")[0].innerHTML = Math.floor(displayVelos);
 		//$("#unit-screen .Titav span")[0].innerHTML = Math.floor(unitState.displayTitav);
 		//$("#unit-screen .Aegis span")[0].innerHTML = Math.floor(unitState.displayAegis);
 		//$("#unit-screen .Power span")[0].innerHTML = Math.floor(unitState.displayPower);
+	}
+
+	function gameOver()
+	{
+		audio.play( "gameover" );
+		stopGame();
+		storage.set( "activeGameData", null );
+		display.gameOver( function ()
+		{
+			announce( "Game over" );
+			setTimeout( function ()
+			{
+				mph.game.showScreen(
+				   "hiscore", gameState.score );
+			}, 2500 );
+		} );
 	}
 
 	function run()
@@ -118,6 +224,183 @@
 	function setup()
 	{
 		input.initialize();
+
+		/////////Army ScreenSwapper Buttons///////////////////////////
+		dom.bind( "#unit-screen button[name=Army]", "click", //Army Screen
+		  function ()
+		  {
+		  	mph.game.showScreen( "unit-screen" );
+		  } );
+
+		dom.bind( "#unit-screen button[name=mainColonyScreen]", "click", //Main Colony Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
+			} );
+
+		dom.bind( "#unit-screen button[name=offWorldColonies]", "click", //Offworld Colonies Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
+			}
+			);
+		dom.bind( "#unit-screen button[name=buildings]", "click", //Buildings Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
+			}
+			);
+		dom.bind( "#unit-screen button[name=shipyard]", "click", //Shipyard Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
+			} );
+
+
+
+		//////////MainColony ScreenSwapper Buttons/////////////////////////
+		dom.bind( "#mainColony-screen button[name=Army]", "click", //Army Screen
+			function ()
+			{
+				mph.game.showScreen( "unit-screen" );
+			} );
+
+		dom.bind( "#mainColony-screen button[name=mainColonyScreen]", "click", //Main Colony Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
+			} );
+
+		dom.bind( "#mainColony-screen button[name=offWorldColonies]", "click", //Offworld Colonies Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
+			}
+			);
+		dom.bind( "#mainColony-screen button[name=buildings]", "click", //Buildings Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
+			}
+			);
+		dom.bind( "#mainColony-screen button[name=shipyard]", "click", //Shipyard Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
+			} );
+
+
+
+		////////////Main Colony Buildings Buttons///////////////////////
+		dom.bind( "#mainColony-screen button[name=buildFarm]", "click",
+		  function ()
+		  {
+		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingFarmBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
+		  	{
+		  		//(buildingName, buildCost, constructionTime, maintCost)
+		  		buildingFarm = true;
+		  		objMainColony.mcConstructionInProgress = true;
+		  		objBuildings.buildingFarmBuildTime = 15;
+		  		objBuildings.buildingCurBuildTime = 0;
+
+		  		objMainColony.mcStoredMaterial -= objBuildings.buildingFarmBuildCost;
+
+		  		$( "#game-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingFarmBuildCost;
+		  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingFarmBuildCost;
+		  		$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Farm. ";
+		  		//play audio
+		  	}
+		  	else
+		  	{
+		  		if ( objMainColony.mcConstructionInProgress )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
+		  		}
+		  		if ( objBuildings.buildingFarmBuildCost > objMainColony.mcStoredMaterial )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build Farm";
+		  		}
+		  		if ( objMainColony.mcCurBuildingCount + 1 > objMainColony.mcBuildingCap )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
+		  		}
+		  		//display warning that construction is already in progress
+		  	}
+		  }
+		  );
+
+		dom.bind( "#mainColony-screen button[name=buildMine]", "click",
+		  function ()
+		  {
+		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingFarmBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
+		  	{
+		  		//(buildingName, buildCost, constructionTime, maintCost)
+		  		buildingMine = true;
+		  		objMainColony.mcConstructionInProgress = true;
+		  		objBuildings.buildingMineBuildTime = 15;
+		  		objBuildings.buildingCurBuildTime = 0;
+
+		  		objMainColony.mcStoredMaterial -= objBuildings.buildingMineBuildCost;
+
+		  		$( "#game-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingMineBuildCost;
+		  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingMineBuildCost;
+		  		$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Mine. ";
+		  		//play audio
+		  	}
+		  	else
+		  	{
+		  		if ( objMainColony.mcConstructionInProgress )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
+		  		}
+		  		if ( objBuildings.buildingFarmBuildCost >= objMainColony.mcStoredMaterial )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build Mine";
+		  		}
+		  		if ( objMainColony.mcCurBuildingCount + 1 > objMainColony.mcBuildingCap )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
+		  		}
+		  	}
+		  }
+		  );
+
+		dom.bind( "#mainColony-screen button[name=buildRF]", "click",
+		  function ()
+		  {
+		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingFarmBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
+		  	{
+		  		//(buildingName, buildCost, constructionTime, maintCost)
+		  		buildingRF = true;
+		  		objMainColony.mcConstructionInProgress = true;
+		  		objBuildings.buildingRFBuildTime = 15;
+		  		objBuildings.buildingCurBuildTime = 0;
+
+		  		objMainColony.mcStoredMaterial -= objBuildings.buildingRFBuildCost;
+
+		  		$( "#game-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingRFBuildCost;
+		  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingRFBuildCost;
+		  		$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Lab. ";
+		  		//play audio
+		  	}
+		  	else
+		  	{
+		  		if ( objMainColony.mcConstructionInProgress )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
+		  		}
+		  		if ( objBuildings.buildingFarmBuildCost > objMainColony.mcStoredMaterial )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build a Lab";
+		  		}
+		  		if ( objMainColony.mcCurBuildingCount + 1 > objMainColony.mcBuildingCap )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
+		  		}
+		  		//display warning that construction is already in progress
+		  	}
+		  }
+		  );
 	}
 
 	return {
