@@ -3,7 +3,9 @@
 	var display = mph.display,
     dom = mph.dom,
 	$ = dom.$,
-    firstRun = true
+    firstRun = true,
+    paused = false,
+    pauseTime;
 	
 
     function gameLoop() {
@@ -32,7 +34,7 @@
         var deltaTime = (Date.now() - previousTime) / 1000;
         previousTime = Date.now();
 
-        displayShips();
+        //displayShips();
 
         if (shipState.startTimer == true)
         {
@@ -62,7 +64,9 @@
 
     function checkIfCanAffordSupplyShips() {
         //if (objMainColony.mcStoredMaterial >= objShips.supplyShipBuildCost) {
-            createSupplyShip();
+        createSupplyShip();
+        objShips.supplyShipDisplay += 1;
+        objShips.shipPower += objShips.supplyShipPower;
             //objMainColony.mcStoredMaterial -= objShips.supplyShipBuildCost;
             //objShips.supplyShipDisplay += 1;
         //}
@@ -81,9 +85,9 @@
              "You can't afford this unit.....loser!");
     };
 
-    function displayShips() {
-        objShips.supplyShipDisplay = 0;
-        objShips.shipPower = 0;
+    /*function displayShips() {
+        objShips.supplyShipDisplay = objShips.supplyShipDisplay;
+        objShips.shipPower = objShips.shipPower;
         for (var index = 0; index < shipState.ships.length; index++) {
             if (shipState.ships[index] == 1) {
                 objShips.supplyShipDisplay += 1;
@@ -91,7 +95,7 @@
             }
             
         }
-    };
+    };*/
 
     function announce(str) {
         var element = $("#game-screen .announcement")[0];
@@ -117,6 +121,22 @@
         $("#mainColony-screen .mainColonyStoredMat span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
         $("#mainColony-screen .Farms span")[0].innerHTML = Math.floor(objMainColony.mcCurFarmCount);
         $("#mainColony-screen .Mines span")[0].innerHTML = Math.floor(objMainColony.mcCurMineCount);
+    }
+
+    function togglePause(enable) {
+        if (enable == paused) return; // no change
+
+        var overlay = $("#unit-screen .pause-overlay")[0];
+        paused = enable;
+        overlay.style.display = paused ? "block" : "none";
+
+        if (paused) {
+
+            pauseTime = Date.now();
+        } else {
+
+            ;
+        }
     }
 
     function run() {

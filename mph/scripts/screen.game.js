@@ -186,7 +186,6 @@ mph.screens["game-screen"] = ( function ()
 
 	function updateGameInfo()
 	{
-<<<<<<< HEAD
 		$( "#mainColony-screen .mainColonyStoredFood span" )[0].innerHTML = Math.floor( objMainColony.mcStoredFood ) + " + " + objMainColony.mcFoodProduction + " - " + objBuildings.buildingTotalFoodMaint;
 		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = Math.floor( objMainColony.mcStoredMaterial ) + " + " + objMainColony.mcMaterialProduction + " - " + objBuildings.buildingTotalMatMaint;
 		$( "#mainColony-screen .mainColonyStoredScience span" )[0].innerHTML = Math.floor( objMainColony.mcStoredScience ) + " + " + objMainColony.mcScienceProduction;
@@ -196,14 +195,7 @@ mph.screens["game-screen"] = ( function ()
 		}
 		else
 		{ $("#mainColony-screen .BuildTimer span")[0].innerHTML = ""; }
-		//$("#unit-screen .Velos span")[0].innerHTML = Math.floor(unit-screen.displayVelos);
-=======
-//		$("#unit-screen .Velos span")[0].innerHTML = Math.floor(unit-screen.displayVelos);
->>>>>>> origin/master
-		//$("#unit-screen .Titav span")[0].innerHTML = Math.floor(unitState.displayTitav);
-		//$("#unit-screen .Aegis span")[0].innerHTML = Math.floor(unitState.displayAegis);
-		//$("#unit-screen .Power span")[0].innerHTML = Math.floor(unitState.displayPower);
-
+		
 	}
 
 	function gameOver()
@@ -275,7 +267,6 @@ mph.screens["game-screen"] = ( function ()
 		
 
 
-<<<<<<< HEAD
 		dom.bind( "#game-screen button[name=offWorldColonies]", "click", //Offworld Colonies Screen
 			function ()
 			{
@@ -293,8 +284,6 @@ mph.screens["game-screen"] = ( function ()
 			{
 				mph.game.showScreen( "ship-screen" );
 			} );
-=======
->>>>>>> origin/master
 
 		/////////Army ScreenSwapper Buttons///////////////////////////
 		dom.bind( "#unit-screen button[name=Army]", "click", //Army Screen

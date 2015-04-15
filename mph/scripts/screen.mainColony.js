@@ -253,7 +253,7 @@
 		dom.bind( "#unit-screen button[name=shipyard]", "click", //Shipyard Screen
 			function ()
 			{
-				mph.game.showScreen( "mainColony-screen" );
+				mph.game.showScreen( "ship-screen" );
 			} );
 
 
@@ -286,8 +286,34 @@
 		dom.bind( "#mainColony-screen button[name=shipyard]", "click", //Shipyard Screen
 			function ()
 			{
-				mph.game.showScreen( "mainColony-screen" );
-			} );
+			    mph.game.showScreen("ship-screen");
+			});
+
+	    //////////shipScreen ScreenSwapper Buttons/////////////////////////
+		dom.bind("#ship-screen button[name=Army]", "click", //Army Screen
+			function () {
+			    mph.game.showScreen("unit-screen");
+			});
+
+		dom.bind("#ship-screen button[name=mainColonyScreen]", "click", //Main Colony Screen
+			function () {
+			    mph.game.showScreen("mainColony-screen");
+			});
+
+		dom.bind("#ship-screen button[name=offWorldColonies]", "click", //Offworld Colonies Screen
+			function () {
+			    mph.game.showScreen("mainColony-screen");
+			}
+			);
+		dom.bind("#ship-screen button[name=buildings]", "click", //Buildings Screen
+			function () {
+			    mph.game.showScreen("mainColony-screen");
+			}
+			);
+		dom.bind("#ship-screen button[name=shipyard]", "click", //Shipyard Screen
+			function () {
+			    mph.game.showScreen("ship-screen");
+			});
 
 
 
