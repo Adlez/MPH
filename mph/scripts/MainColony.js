@@ -88,13 +88,16 @@
 		mcCurMineCount: mcCurMineCount,
 		mcCurRFCount: mcCurRFCount,
 		mcCurBuildingCount: mcCurBuildingCount,
+
 		mcFoodProduction: mcFoodProduction,
 		mcScienceProduction: mcScienceProduction,
 		mcMaterialProduction: mcMaterialProduction,
+
 		mcStoredFood: mcStoredFood,
 		mcStoredMaterial: mcStoredMaterial,
 		mcStoredScience: mcStoredScience,
 		mcLevel: mcLevel,
+
 		mcBuildBuilding: mcBuildBuilding,
 		mcConstructionInProgress: mcConstructionInProgress,
 		UpdateMainColony: UpdateMainColony,

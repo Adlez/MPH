@@ -15,6 +15,8 @@
 	buildingFarm = false,
 	buildingMine = false,
 	buildingRF = false,
+	buildingSpaceEl = false,
+	buildingConPlat = false,
 	paused = false,
 	firstLoop = false,
 	GameTimer = 0,
@@ -42,7 +44,7 @@
 			endTime: 0 // time to game over
 		};
 
-		
+
 		gameLoop();
 
 	}
@@ -117,6 +119,21 @@
 					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
 				}
 			}
+			if ( buildingSpaceEl )
+			{
+				objBuildings.buildingCurBuildTime++;
+				currentlyBuilding = "Space Elevator";
+				//console.log( objBuildings.buildingConstructionTime );
+				if ( objBuildings.buildingSpaceElBuildTime <= objBuildings.buildingCurBuildTime )
+				{
+					buildingRF = false;
+					objBuildings.buildingCurBuildTime = 0;
+					//(buildingName, buildCost, maintCost)
+					objMainColony.mcBuildBuilding( "Lab", 7, 3 );
+					objMainColony.mcConstructionInProgress = false;
+					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
+				}
+			}
 			GameTimer = 0;
 
 		}
@@ -155,12 +172,21 @@
 		$( "#mainColony-screen .mainColonyStoredFood span" )[0].innerHTML += " - " + objBuildings.buildingTotalFoodMaint;
 		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML += " - " + objBuildings.buildingTotalMatMaint;
 
-		$( "#mainColony-screen .Farms span" )[0].innerHTML = objMainColony.mcCurFarmCount ;
+		$( "#mainColony-screen .Farms span" )[0].innerHTML = objMainColony.mcCurFarmCount;
 		$( "#mainColony-screen .Mines span" )[0].innerHTML = objMainColony.mcCurMineCount;
 
 		$( "#mainColony-screen .Level span" )[0].innerHTML = objMainColony.mcLevel;
 		$( "#mainColony-screen .sciUpgradeReq span" )[0].innerHTML = objMainColony.mcLevelUpCostSci + " Science Needed";
-		$( "#mainColony-screen .matUpgradeReq span" )[0].innerHTML = objMainColony.mcLevelUpCostMat + "Material Needed";
+		$( "#mainColony-screen .matUpgradeReq span" )[0].innerHTML = objMainColony.mcLevelUpCostMat + "Material Cost";
+
+
+		$( "#mainColony-screen .matFarmReq span" )[0].innerHTML = objBuildings.buildingFarmBuildCost + " Material Cost";
+		$( "#mainColony-screen .matMineReq span" )[0].innerHTML = objBuildings.buildingMineBuildCost + " Material Cost";
+		$( "#mainColony-screen .matRFReq span" )[0].innerHTML = objBuildings.buildingRFBuildCost + " Material Cost";
+		$( "#mainColony-screen .matSpaceElReq span" )[0].innerHTML = objBuildings.buildingSpaceElBuildCost + " Material Cost";
+		$( "#mainColony-screen .matConPlatReq span" )[0].innerHTML = objBuildings.buildingConPlatBuildCost + " Material Cost";
+
+		$( "#mainColony-screen .BuildingCap span" )[0].innerHTML = +objMainColony.mcCurBuildingCount + "/" + Math.floor( objMainColony.mcBuildingCap );
 
 
 
@@ -295,34 +321,39 @@
 		dom.bind( "#mainColony-screen button[name=shipyard]", "click", //Shipyard Screen
 			function ()
 			{
-			    mph.game.showScreen("ship-screen");
-			});
+				mph.game.showScreen( "ship-screen" );
+			} );
 
-	    //////////shipScreen ScreenSwapper Buttons/////////////////////////
-		dom.bind("#ship-screen button[name=Army]", "click", //Army Screen
-			function () {
-			    mph.game.showScreen("unit-screen");
-			});
+		//////////shipScreen ScreenSwapper Buttons/////////////////////////
+		dom.bind( "#ship-screen button[name=Army]", "click", //Army Screen
+			function ()
+			{
+				mph.game.showScreen( "unit-screen" );
+			} );
 
-		dom.bind("#ship-screen button[name=mainColonyScreen]", "click", //Main Colony Screen
-			function () {
-			    mph.game.showScreen("mainColony-screen");
-			});
+		dom.bind( "#ship-screen button[name=mainColonyScreen]", "click", //Main Colony Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
+			} );
 
-		dom.bind("#ship-screen button[name=offWorldColonies]", "click", //Offworld Colonies Screen
-			function () {
-			    mph.game.showScreen("mainColony-screen");
+		dom.bind( "#ship-screen button[name=offWorldColonies]", "click", //Offworld Colonies Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
 			}
 			);
-		dom.bind("#ship-screen button[name=buildings]", "click", //Buildings Screen
-			function () {
-			    mph.game.showScreen("mainColony-screen");
+		dom.bind( "#ship-screen button[name=buildings]", "click", //Buildings Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
 			}
 			);
-		dom.bind("#ship-screen button[name=shipyard]", "click", //Shipyard Screen
-			function () {
-			    mph.game.showScreen("ship-screen");
-			});
+		dom.bind( "#ship-screen button[name=shipyard]", "click", //Shipyard Screen
+			function ()
+			{
+				mph.game.showScreen( "ship-screen" );
+			} );
 
 
 
@@ -372,7 +403,6 @@
 		  		//(buildingName, buildCost, constructionTime, maintCost)
 		  		buildingMine = true;
 		  		objMainColony.mcConstructionInProgress = true;
-		  		objBuildings.buildingMineBuildTime = 15;
 		  		objBuildings.buildingCurBuildTime = 0;
 
 		  		objMainColony.mcStoredMaterial -= objBuildings.buildingMineBuildCost;
@@ -403,12 +433,11 @@
 		dom.bind( "#mainColony-screen button[name=buildRF]", "click",
 		  function ()
 		  {
-		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingFarmBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
+		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingRFBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
 		  	{
 		  		//(buildingName, buildCost, constructionTime, maintCost)
 		  		buildingRF = true;
 		  		objMainColony.mcConstructionInProgress = true;
-		  		objBuildings.buildingRFBuildTime = 15;
 		  		objBuildings.buildingCurBuildTime = 0;
 
 		  		objMainColony.mcStoredMaterial -= objBuildings.buildingRFBuildCost;
@@ -436,13 +465,86 @@
 		  	}
 		  }
 		  );
+
+		dom.bind( "#mainColony-screen button[name=buildSpaceEl]", "click",
+		  function ()
+		  {
+		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingSpaceElBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
+		  	{
+		  		//(buildingName, buildCost, constructionTime, maintCost)
+		  		buildingSpaceEl = true;
+		  		objMainColony.mcConstructionInProgress = true;
+		  		objBuildings.buildingCurBuildTime = 0;
+
+		  		objMainColony.mcStoredMaterial -= objBuildings.buildingSpaceElBuildCost;
+
+		  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingSpaceElBuildCost;
+		  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingSpaceElBuildCost;
+		  		$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Space Elevator";
+		  		//play audio
+		  	}
+		  	else
+		  	{
+		  		if ( objMainColony.mcConstructionInProgress )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
+		  		}
+		  		if ( objBuildings.buildingSpaceElBuildCost > objMainColony.mcStoredMaterial )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build Space Elevator";
+		  		}
+		  		if ( objMainColony.mcCurBuildingCount + 1 > objMainColony.mcBuildingCap )
+		  		{
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
+		  		}
+		  		//display warning that construction is already in progress
+		  	}
+		  }
+		  );
+
+		dom.bind( "#mainColony-screen button[name=buildConPlat]", "click",
+  function ()
+  {
+  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingConPlatBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
+  	{
+  		//(buildingName, buildCost, constructionTime, maintCost)
+  		buildingConPlat = true;
+  		objMainColony.mcConstructionInProgress = true;
+  		objBuildings.buildingCurBuildTime = 0;
+
+  		objMainColony.mcStoredMaterial -= objBuildings.buildingConPlatBuildCost;
+
+  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingConPlatBuildCost;
+  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingConPlatBuildCost;
+  		$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Space Elevator";
+  		//play audio
+  	}
+  	else
+  	{
+  		if ( objMainColony.mcConstructionInProgress )
+  		{
+  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
+  		}
+  		if ( objBuildings.buildingConPlatBuildCost > objMainColony.mcStoredMaterial )
+  		{
+  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build Construction Platform";
+  		}
+  		if ( objMainColony.mcCurBuildingCount + 1 > objMainColony.mcBuildingCap )
+  		{
+  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
+  		}
+  		//display warning that construction is already in progress
+  	}
+  }
+  );
+
 		///////Level Up the MAin Colony
 		dom.bind( "#mainColony-screen button[name=upgradeMC]", "click",
 		  function ()
 		  {
 		  	if ( objMainColony.mcLevelUpCostMat <= objMainColony.mcStoredMaterial && objMainColony.mcStoredScience >= objMainColony.mcLevelUpCostSci )
 		  	{
-		  		
+
 		  		objMainColony.mcLevel++;
 		  		objMainColony.mcStoredMaterial -= objMainColony.mcLevelUpCostMat;
 
@@ -453,11 +555,11 @@
 		  	}
 		  	else
 		  	{
-		  		if ( objMainColony.mcLevelUpCostMat > objMainColony.mcStoredMaterial  )
+		  		if ( objMainColony.mcLevelUpCostMat > objMainColony.mcStoredMaterial )
 		  		{
 		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to Upgrade";
 		  		}
-		  		else if( objMainColony.mcStoredScience < objMainColony.mcLevelUpCostSci )
+		  		else if ( objMainColony.mcStoredScience < objMainColony.mcLevelUpCostSci )
 		  		{
 		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Science to Upgrade";
 		  		}
