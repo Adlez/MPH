@@ -1,4 +1,4 @@
-﻿    mph.world = (function()
+﻿    objWorld = (function()
 	{
 		h_WorldType: 0,
 		h_WorldHasRuins = false,

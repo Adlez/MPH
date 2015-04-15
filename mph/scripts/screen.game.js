@@ -14,6 +14,7 @@ mph.screens["game-screen"] = ( function ()
 	buildingRF = false,
 	firstRun = true,
 	paused = false,
+	firstLoop = false,
 	GameTimer = 0,
 	currentlyBuilding = "",
 
@@ -28,6 +29,12 @@ mph.screens["game-screen"] = ( function ()
 		window.requestAnimationFrame( gameLoop, display.canvas );
 
 		update();
+		if ( firstLoop )
+		{
+			firstLoop = false;
+			mph.game.showScreen( "mainColony-screen" );
+		}
+		
 
 	}
 
@@ -71,6 +78,7 @@ mph.screens["game-screen"] = ( function ()
 		objMainColony.mcBuildBuilding( "Farm", 2, 1 );
 		objMainColony.mcBuildBuilding( "Mine", 3, 2 );
 
+		firstLoop = true;
 		gameLoop();
 
 
@@ -178,6 +186,7 @@ mph.screens["game-screen"] = ( function ()
 
 	function updateGameInfo()
 	{
+<<<<<<< HEAD
 		$( "#mainColony-screen .mainColonyStoredFood span" )[0].innerHTML = Math.floor( objMainColony.mcStoredFood ) + " + " + objMainColony.mcFoodProduction + " - " + objBuildings.buildingTotalFoodMaint;
 		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = Math.floor( objMainColony.mcStoredMaterial ) + " + " + objMainColony.mcMaterialProduction + " - " + objBuildings.buildingTotalMatMaint;
 		$( "#mainColony-screen .mainColonyStoredScience span" )[0].innerHTML = Math.floor( objMainColony.mcStoredScience ) + " + " + objMainColony.mcScienceProduction;
@@ -188,6 +197,9 @@ mph.screens["game-screen"] = ( function ()
 		else
 		{ $("#mainColony-screen .BuildTimer span")[0].innerHTML = ""; }
 		//$("#unit-screen .Velos span")[0].innerHTML = Math.floor(unit-screen.displayVelos);
+=======
+//		$("#unit-screen .Velos span")[0].innerHTML = Math.floor(unit-screen.displayVelos);
+>>>>>>> origin/master
 		//$("#unit-screen .Titav span")[0].innerHTML = Math.floor(unitState.displayTitav);
 		//$("#unit-screen .Aegis span")[0].innerHTML = Math.floor(unitState.displayAegis);
 		//$("#unit-screen .Power span")[0].innerHTML = Math.floor(unitState.displayPower);
@@ -260,35 +272,10 @@ mph.screens["game-screen"] = ( function ()
 	{
 		input.initialize();
 
-		dom.bind( "#game-screen button[name=exit]", "click",
-		   function ()
-		   {
-		   	togglePause( true );
-		   	var exitGame = window.confirm(
-			"Do you want to return to the main menu?"
-		 );
-		   	togglePause( false );
-		   	if ( exitGame )
-		   	{
-		   		//saveGameData();
-		   		stopGame();
-		   		mph.game.showScreen( "main-menu" )
-		   	}
-		   });
+		
 
-		//////////Default ScreenSwapper Buttons/////////////////////////
-		dom.bind( "#game-screen button[name=Army]", "click", //Army Screen
-		  function ()
-		  {
-		  	mph.game.showScreen( "unit-screen" );
-		  } );
 
-		dom.bind( "#game-screen button[name=mainColonyScreen]", "click", //Main Colony Screen
-			function ()
-			{
-				mph.game.showScreen( "mainColony-screen" );
-			} );
-
+<<<<<<< HEAD
 		dom.bind( "#game-screen button[name=offWorldColonies]", "click", //Offworld Colonies Screen
 			function ()
 			{
@@ -306,6 +293,8 @@ mph.screens["game-screen"] = ( function ()
 			{
 				mph.game.showScreen( "ship-screen" );
 			} );
+=======
+>>>>>>> origin/master
 
 		/////////Army ScreenSwapper Buttons///////////////////////////
 		dom.bind( "#unit-screen button[name=Army]", "click", //Army Screen
