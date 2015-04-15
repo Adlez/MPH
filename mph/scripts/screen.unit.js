@@ -11,6 +11,7 @@ mph.screens["unit-screen"] = (function ()
         displayTitav = 0,
         displayAegis = 0,
         displayPower = 0,
+        attackTimer = false,
         pauseTime;
 
 
@@ -32,7 +33,6 @@ mph.screens["unit-screen"] = (function ()
             unitRemove: 1,
             reset: 0,
             startTimer: false,
-            attackTimer: false,
             arrived: false,
             victory: false,
             loser: false,
@@ -42,7 +42,6 @@ mph.screens["unit-screen"] = (function ()
 
         gameLoop();
         setEnemyPower();
-        setAttackTimer();
                
     }
 
@@ -54,9 +53,6 @@ mph.screens["unit-screen"] = (function ()
         deltaTime = (Date.now() - previousTime) / 1000;
         previousTime = Date.now();
 
-        //totalPower();
-       // displayUnits();
-
         if (unitState.startTimer == true)
         {
             enemyColony.Distance -= deltaTime;
@@ -67,20 +63,21 @@ mph.screens["unit-screen"] = (function ()
             }
         }
 
-        if (unitState.attackTimer == true)
+        if (attackTimer == true)
         {
             enemyColony.attackDelay -= deltaTime;
             if(enemyColony.attackDelay <= 0)
             {
                 decideRandBattle();
-                unitState.attackTimer = false;
+                attackTimer = false;
+                isRuuning = false;
                 enemyColony.attackDelay = reset;
             }
         }
 
         enemyColony.difficultyIncrease += deltaTime;
         increaseDifficultyz();
-        
+               
         window.requestAnimationFrame(update);
         window.requestAnimationFrame(updateGameInfo);
     }
@@ -117,7 +114,7 @@ mph.screens["unit-screen"] = (function ()
             $("#unit-screen button[name=CreateTitav]")[0];
         dom.bind(CTButton, "click", function (e) {
             checkIfCanAffordTitav();
-            
+                       
         });
 
         var CAButton =
@@ -225,7 +222,13 @@ mph.screens["unit-screen"] = (function ()
         var viewButton =
             $("#unit-screen button[name=Display]")[0];
         dom.bind(viewButton, "click", function (e) {
+            if (enemyColony.attackDelay <= 0) {
+                enemyColony.setRandAttackDelay();
+                attackTimer = true
+            }
+            
         });
+        
     }
 
     function setEnemyPower()
@@ -261,7 +264,7 @@ mph.screens["unit-screen"] = (function ()
 
     function decideBattle() {
        
-            unitState.finalPower = unitState.displayPower;
+            unitState.finalPower = displayPower;
             unitState.finalPower -= enemyColony.Power;
 
             if (unitState.finalPower <= 0) {
@@ -284,7 +287,7 @@ mph.screens["unit-screen"] = (function ()
 
     function decideRandBattle()
     {
-        unitState.finalPower = unitState.displayPower;
+        unitState.finalPower = displayPower;
         enemyColony.setRandAttackerPower();
         unitState.finalPower -= enemyColony.randAttackerPower;
 
@@ -330,12 +333,6 @@ mph.screens["unit-screen"] = (function ()
         }
     }
 
-    function setAttackTimer()
-    {
-        enemyColony.setRandAttackDelay();
-        unitState.attackTimer == true;
-    }
-
     function enemyAttacks()
     {
         var enemyAttack = window.confirm(
@@ -345,12 +342,12 @@ mph.screens["unit-screen"] = (function ()
 
     function increaseDifficultyz()
     {
-        if(enemyColony.attackTimer >= 300)
+        if(enemyColony.difficultyIncrease >= 300)
         {
             enemyColony.setDifficultyChangeLvl1();
         }
 
-        if (enemyColony.attackTimer >= 600) {
+        if (enemyColony.difficultyIncrease >= 600) {
             enemyColony.setDifficultyChangeLvl2();
         }
     }
@@ -363,6 +360,7 @@ mph.screens["unit-screen"] = (function ()
        $("#unit-screen .Timer span")[0].innerHTML = Math.floor(enemyColony.Distance);
        $("#unit-screen .EnemyPower span")[0].innerHTML = Math.floor(enemyColony.Power);
        $("#unit-screen .ParasitePower span")[0].innerHTML = Math.floor(enemyColony.ParaPower);
+       $("#unit-screen .AttackDelay span")[0].innerHTML = Math.floor(enemyColony.attackDelay);
 
     }
 
