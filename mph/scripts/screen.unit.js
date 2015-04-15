@@ -12,6 +12,7 @@ mph.screens["unit-screen"] = (function ()
         displayAegis = 0,
         displayPower = 0,
         attackTimer = false,
+        startTimer = false,
         pauseTime;
 
 
@@ -53,13 +54,13 @@ mph.screens["unit-screen"] = (function ()
         deltaTime = (Date.now() - previousTime) / 1000;
         previousTime = Date.now();
 
-        if (unitState.startTimer == true)
+        if (startTimer == true)
         {
             enemyColony.Distance -= deltaTime;
             if (enemyColony.Distance <= 0) {
                 decideBattle();
-                unitState.startTimer = false;
-                enemyColony.Distance = reset;
+                startTimer = false;
+                enemyColony.Distance = unitState.reset;
             }
         }
 
@@ -71,7 +72,7 @@ mph.screens["unit-screen"] = (function ()
                 decideRandBattle();
                 attackTimer = false;
                 isRuuning = false;
-                enemyColony.attackDelay = reset;
+                enemyColony.attackDelay = unitState.reset;
             }
         }
 
@@ -211,18 +212,13 @@ mph.screens["unit-screen"] = (function ()
         unitState.Units.splice(0, (unitState.Units.length / 2));
     }
 
-    /*function totalPower()
-    {
-        unitState.displayPower = (displayVelos * 10) + (unitState.displayTitav * 20) + (unitState.displayAegis * 30);
-    }*/
-
     displayEnemyPower();
 
     function displayEnemyPower() {
         var viewButton =
             $("#unit-screen button[name=Display]")[0];
         dom.bind(viewButton, "click", function (e) {
-            if (enemyColony.attackDelay <= 0) {
+            if (enemyColony.attackDelay <= 0 && displayPower >= 500) {
                 enemyColony.setRandAttackDelay();
                 attackTimer = true
             }
@@ -244,15 +240,19 @@ mph.screens["unit-screen"] = (function ()
         var attack1Button =
             $("#unit-screen button[name=EnemyColony]")[0];
         dom.bind(attack1Button, "click", function (e) {
-            distanceTimer();
-            unitState.startTimer = true;
+            if (enemyColony.Distance <= 0) {
+                distanceTimer();
+                startTimer = true;
+            }
         });
 
         var attack2Button =
             $("#unit-screen button[name=ParasiteHive]")[0];
         dom.bind(attack2Button, "click", function (e) {
-            distanceTimer();
-            unitState.startTimer = true;
+            if (enemyColony.Distance <= 0) {
+                distanceTimer();
+                startTimer = true;
+            }
         });
         
     }

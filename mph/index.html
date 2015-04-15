@@ -31,6 +31,14 @@
 
 	<script src="scripts/modernizr.js"></script>
 	<script src="scripts/loader.js"></script>
+
+    <script>
+        function visible() {
+            document.getElementById('one').style.display = "block";
+            document.getElementById('two').style.display = "Block";
+        }
+    </script>
+
 </head>
 <body>
 	<div id="game">
@@ -132,9 +140,6 @@
                 li.hidden {
                     display: none;
                 }
-                li.show{
-                    display: normal;
-                }
             </style>
             <div class="announcement"></div>
             <div class="unit-info">
@@ -150,16 +155,11 @@
                     <li><button name="CreateTitav">CT</button>
                     <li><button name="CreateAegis">CA</button>
                     <li onclick="visible()"><button name="Display">ViewColonies</button>
-                    <li id="WHY!?" class="hidden"><button name="EnemyColony">AttackEC</button>
+                    <li id="one" class="hidden"><button name="EnemyColony">AttackEC</button>
                         <label class="EnemyPower">EPower: <span></span></label>
-                    <li id="WHYZ?" class="hidden"><button name="ParasiteHive">AttackPH</button>
+                    <li id="two" class="hidden"><button name="ParasiteHive">AttackPH</button>
                         <label class="ParasitePower">PPower: <span></span></label>
-                        <script>
-                            function visible() {
-                                document.getElementById('WHY!?').class = 'show';
-                                document.getElementById('WHYZ?').class = 'show';
-                            }
-                        </script>
+                        
                 </ul>
             </div>
 
