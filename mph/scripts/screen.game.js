@@ -187,7 +187,7 @@ mph.screens["game-screen"] = ( function ()
 		}
 		else
 		{ $("#mainColony-screen .BuildTimer span")[0].innerHTML = ""; }
-		$("#unit-screen .Velos span")[0].innerHTML = Math.floor(unit-screen.displayVelos);
+		//$("#unit-screen .Velos span")[0].innerHTML = Math.floor(unit-screen.displayVelos);
 		//$("#unit-screen .Titav span")[0].innerHTML = Math.floor(unitState.displayTitav);
 		//$("#unit-screen .Aegis span")[0].innerHTML = Math.floor(unitState.displayAegis);
 		//$("#unit-screen .Power span")[0].innerHTML = Math.floor(unitState.displayPower);
@@ -304,7 +304,7 @@ mph.screens["game-screen"] = ( function ()
 		dom.bind( "#game-screen button[name=shipyard]", "click", //Shipyard Screen
 			function ()
 			{
-				mph.game.showScreen( "mainColony-screen" );
+				mph.game.showScreen( "ship-screen" );
 			} );
 
 		/////////Army ScreenSwapper Buttons///////////////////////////
@@ -335,7 +335,7 @@ mph.screens["game-screen"] = ( function ()
 		dom.bind( "#unit-screen button[name=shipyard]", "click", //Shipyard Screen
 			function ()
 			{
-				mph.game.showScreen( "mainColony-screen" );
+			    mph.game.showScreen( "ship-screen" );
 			} );
 
 
@@ -368,7 +368,7 @@ mph.screens["game-screen"] = ( function ()
 		dom.bind( "#mainColony-screen button[name=shipyard]", "click", //Shipyard Screen
 			function ()
 			{
-				mph.game.showScreen( "mainColony-screen" );
+			    mph.game.showScreen( "ship-screen" );
 			} );
 
 

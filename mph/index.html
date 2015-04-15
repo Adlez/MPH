@@ -55,7 +55,7 @@
 		<div class="screen" id="main-menu">
 			<h2 class="logo">MPH</h2>
 			<ul class="menu">
-				<li><button name="mainColony-screen">Play</button>
+				<li><button name="ship-screen">Play</button>
 				<li><button name="hiscore">Highscore</button>
 				<li><button name="about">About</button>
 				<li><button name="exit-screen">Exit</button>
@@ -173,7 +173,6 @@
             </div>
 
 	   	<ul class="screenSwapper">
-	   		<li><button name="Army">Army</button>
 	   		<li><button name="shipyard">Ships</button>
 	   		<li><button name="offWorldColonies"><img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
 	   		<li><button name="buildings">Buildings</button>
@@ -187,13 +186,34 @@
             <div class="pause-overlay"></div>
         </div>
 
-		<div class="screen" id="hiscore">
-			<h2 class="logo">High score</h2>
-			<ol class="score-list"></ol>
-			<footer>
-				<button name="back">Back</button>
-			</footer>
-		</div>
+        <!-- Switch to Ship Screen-->
+
+        <div class="screen" id="ship-screen">
+            
+            <div class="announcement"></div>
+            <div class="ship-info">
+                <label class="ShipPower">ShipPower: <span></span></label>
+                <label class="SupplyShips">SupplyShips: <span></span></label>
+                
+                <ul class="shipScreen">
+                    <li><button name="CreateSupply">CS</button>
+                    
+                </ul>
+            </div>
+
+            <ul class="screenSwapper">
+                <li><button name="Army">Army</button>
+                <li><button name="offWorldColonies"><img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
+                <li><button name="buildings">Buildings</button>
+                <li><button name="mainColonyScreen">MainColony</button>
+            </ul>
+
+            <footer>
+                <button name="back">Back</button>
+            </footer>
+
+            <div class="pause-overlay"></div>
+        </div>
 
 		<div id="jewel-proto" class="jewel-size"></div>
 	</div>

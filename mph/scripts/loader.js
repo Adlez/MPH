@@ -164,6 +164,8 @@ window.addEventListener( "load", function ()
 			    "loader!scripts/screen.unit.js",
 			    "loader!scripts/EnemyColony.js",
 			    "loader!scripts/screen.mainColony.js",
+                "loader!scripts/Ships.js",
+                "loader!scripts/screen.ships.js",
 			    "loader!images/jewels"
 				   + mph.settings.mphSize + ".png"
 			]
