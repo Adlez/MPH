@@ -15,7 +15,6 @@
 	buildingFarm = false,
 	buildingMine = false,
 	buildingRF = false,
-	firstRun = true,
 	paused = false,
 	firstLoop = false,
 	GameTimer = 0,
@@ -43,17 +42,8 @@
 			endTime: 0 // time to game over
 		};
 
-
-
-		objMainColony.mcLevel = 1;
-
-		objMainColony.UpdateMainColony( objMainColony.mcFoodProduction, objMainColony.mcMaterialProduction, objMainColony.mcLevel, 0 );
-
-		objMainColony.mcBuildBuilding( "Farm", 2, 1 );
-		objMainColony.mcBuildBuilding( "Mine", 3, 2 );
-
+		
 		gameLoop();
-
 
 	}
 
@@ -210,7 +200,12 @@
 	{
 		if ( firstRun )
 		{
+			objMainColony.mcLevel = 1;
+			objMainColony.UpdateMainColony( objMainColony.mcFoodProduction, objMainColony.mcMaterialProduction, objMainColony.mcLevel, 0 );
+			objMainColony.mcBuildBuilding( "Farm", 2, 1 );
+			objMainColony.mcBuildBuilding( "Mine", 3, 2 );
 			setup();
+
 			firstRun = false;
 		}
 		startGame();
