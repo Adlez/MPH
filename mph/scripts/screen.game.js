@@ -264,27 +264,6 @@ mph.screens["game-screen"] = ( function ()
 	{
 		input.initialize();
 
-		
-
-
-		dom.bind( "#game-screen button[name=offWorldColonies]", "click", //Offworld Colonies Screen
-			function ()
-			{
-				mph.game.showScreen( "mainColony-screen" );
-			}
-			);
-		dom.bind( "#game-screen button[name=buildings]", "click", //Buildings Screen
-			function ()
-			{
-				mph.game.showScreen( "mainColony-screen" );
-			}
-			);
-		dom.bind( "#game-screen button[name=shipyard]", "click", //Shipyard Screen
-			function ()
-			{
-				mph.game.showScreen( "ship-screen" );
-			} );
-
 		/////////Army ScreenSwapper Buttons///////////////////////////
 		dom.bind( "#unit-screen button[name=Army]", "click", //Army Screen
 		  function ()
@@ -365,7 +344,6 @@ mph.screens["game-screen"] = ( function ()
 
 		  		objMainColony.mcStoredMaterial -= objBuildings.buildingFarmBuildCost;
 
-		  		$( "#game-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingFarmBuildCost;
 		  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingFarmBuildCost;
 		  		$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Farm. ";
 		  		//play audio
@@ -402,7 +380,6 @@ mph.screens["game-screen"] = ( function ()
 
 		  		objMainColony.mcStoredMaterial -= objBuildings.buildingMineBuildCost;
 
-		  		$( "#game-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingMineBuildCost;
 		  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingMineBuildCost;
 		  		$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Mine. ";
 		  		//play audio
@@ -438,7 +415,6 @@ mph.screens["game-screen"] = ( function ()
 
 		  		objMainColony.mcStoredMaterial -= objBuildings.buildingRFBuildCost;
 
-		  		$( "#game-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingRFBuildCost;
 		  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingRFBuildCost;
 		  		$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Lab. ";
 		  		//play audio

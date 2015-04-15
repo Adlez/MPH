@@ -13,6 +13,8 @@
 		mcBuildingCap = 0,
 		mcLevel = 0,
 		mcCurBuildingCount = 0,
+		mcLevelUpCostMat = 0,
+		mcLevelUpCostSci = 0,
 		mcConstructionInProgress = false,
 		//Main Colony Functions
 
@@ -96,7 +98,9 @@
 		mcBuildBuilding: mcBuildBuilding,
 		mcConstructionInProgress: mcConstructionInProgress,
 		UpdateMainColony: UpdateMainColony,
-		EatMaintencance: EatMaintencance
+		EatMaintencance: EatMaintencance,
+		mcLevelUpCostMat: mcLevelUpCostMat,
+		mcLevelUpCostSci: mcLevelUpCostSci
 
 	};
 })();
