@@ -27,9 +27,9 @@ mph.screens["unit-screen"] = (function ()
     {
         unitState = 
         {
-            Aegis: 30,
-            Titav: 20,
-            Velos: 10,
+            Aegis: 50,
+            Titav: 30,
+            Velos: 20,
             finalPower: 0,
             unitRemove: 1,
             reset: 0,
@@ -128,9 +128,9 @@ mph.screens["unit-screen"] = (function ()
 
     function checkIfCanAffordVelos()
     {
-        if (objMainColony.mcStoredMaterial >= 100) {
+        if (objMainColony.mcStoredMaterial >= 50) {
             createVelos();
-            objMainColony.mcStoredMaterial -= 100;
+            objMainColony.mcStoredMaterial -= 50;
         }
         else {
             ifCantAfford();
@@ -163,19 +163,19 @@ mph.screens["unit-screen"] = (function ()
     function createVelos() {
         unitState.Units.push(unitState.Velos);
         displayVelos += 1;
-        displayPower += (displayVelos * 10);
+        displayPower += 20;
     };
 
     function createTitav() {
         unitState.Units.push(unitState.Titav);
         displayTitav += 1;
-        displayPower += (displayTitav * 20);
+        displayPower += 30;
     };
 
     function createAegis() {
         unitState.Units.push(unitState.Aegis);
         displayAegis += 1;
-        displayPower += (displayAegis * 30);
+        displayPower += 50;
     };
 
     function ifCantAfford()

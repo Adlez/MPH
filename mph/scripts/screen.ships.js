@@ -141,13 +141,13 @@
         var ACButton =
            $("#ship-screen button[name=AddCargo]")[0];
         dom.bind(ACButton, "click", function (e) {
-            if (objShips.currentCargo < objShips.maxCargo) {
+            if (objShips.currentCargo < objShips.maxCargo && objMainColony.mcStoredMaterial > 50) {
                 objMainColony.mcStoredMaterial -= 50;
                 objShips.currentCargo += 50;
             }
             else {
-                var noSpace = window.confirm(
-             "No space left Sir!");
+                    var noSpace = window.confirm(
+                 "No space left or not enough stored materials sir!");
             }
         });
     }
