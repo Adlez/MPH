@@ -168,6 +168,7 @@ window.addEventListener( "load", function ()
 			    "loader!scripts/screen.mainColony.js",
 			    "loader!scripts/Ships.js",
 			    "loader!scripts/screen.ships.js",
+                "loader!scripts/screen.worlds.js",
 			    "loader!images/jewels"
 				   + mph.settings.mphSize + ".png"
 			]

@@ -144,12 +144,10 @@
 
 	function setup()
 	{
-		input.initialize();
-
-		
+			
 		////////////World Colony  Buttons///////////////////////
 		///////Level Up the Colony
-		dom.bind( "#worlds-screen button[name=upgradeColony]", "click",
+		/*dom.bind( "#worlds-screen button[name=upgradeColony]", "click",
 		  function ()
 		  {
 		  	if ( objWorlds.mcLevel < 100 )
@@ -182,7 +180,7 @@
 		  	}
 
 		  }
-		  );
+		  );*/
 	}
 
 	return {

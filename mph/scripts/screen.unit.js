@@ -116,7 +116,7 @@ mph.screens["unit-screen"] = (function ()
 
     function createUnits () 
     {
-        if (objBuildings.buildingMDIsBuilt == true) {
+        
             var CVButton =
                 $("#unit-screen button[name=CreateVelos]")[0];
             dom.bind(CVButton, "click", function (e) {
@@ -137,12 +137,12 @@ mph.screens["unit-screen"] = (function ()
                 checkIfCanAffordAegis();
 
             });
-        }
+        
     };
 
     function checkIfCanAffordVelos()
     {
-        if (objMainColony.mcStoredMaterial >= 50) {
+        if (objMainColony.mcStoredMaterial >= 50 && objBuildings.buildingMDIsBuilt == true){
             createVelos();
             objMainColony.mcStoredMaterial -= 50;
         }
@@ -153,7 +153,7 @@ mph.screens["unit-screen"] = (function ()
     };
     function checkIfCanAffordTitav()
     {
-        if (objMainColony.mcStoredMaterial >= 250)
+        if (objMainColony.mcStoredMaterial >= 250 && objBuildings.buildingMDIsBuilt == true)
         {
             createTitav();
             objMainColony.mcStoredMaterial -= 250;
@@ -164,7 +164,7 @@ mph.screens["unit-screen"] = (function ()
         }
     };
     function checkIfCanAffordAegis() {
-        if (objMainColony.mcStoredMaterial >= 500) {
+        if (objMainColony.mcStoredMaterial >= 500 && objBuildings.buildingMDIsBuilt == true) {
             createAegis();
             objMainColony.mcStoredMaterial -= 500;
         }
