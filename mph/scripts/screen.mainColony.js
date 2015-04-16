@@ -514,7 +514,7 @@
 		  		{
 		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
 		  		}
-		  		else if ( objMainColony.mcCurBuildingCount + 1 > objMainColony.mcBuildingCap )
+		  		else if ( objMainColony.mcCurBuildingCount + 2 > objMainColony.mcBuildingCap )
 		  		{
 		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
 		  		}
@@ -551,7 +551,7 @@
 					{
 						$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
 					}
-					else if ( objMainColony.mcCurBuildingCount + 1 > objMainColony.mcBuildingCap )
+					else if ( objMainColony.mcCurBuildingCount + 2 > objMainColony.mcBuildingCap )
 					{
 						$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
 					}
