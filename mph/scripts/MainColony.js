@@ -36,7 +36,9 @@
 				}
 				if ( buildingName == "ConstructionPlatform" )
 				{
-					this.mcCurBuildingCount+=2;
+					this.mcCurBuildingCount += 2;
+					objBuildings.buildingConPlatIsBuilt = true;
+
 				}
 				if ( buildingName == "Lab" )
 				{
@@ -46,10 +48,12 @@
 				if ( buildingName == "MilitaryDepot" )
 				{
 					this.mcCurBuildingCount++;
+					objBuildings.buildingMDIsBuilt = true;
 				}
 				if ( buildingName == "SpaceElevator" )
 				{
-					this.mcCurBuildingCount+=2;
+					this.mcCurBuildingCount += 2;
+					objBuildings.buildingSpaceElIsBuilt = true;
 				}
 				objBuildings.buildingTotalFoodMaint += maintFoodCost;
 				objBuildings.buildingTotalMatMaint += maintMatCost;

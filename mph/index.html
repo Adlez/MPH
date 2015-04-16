@@ -103,6 +103,15 @@
 				<label class="mainColonyStoredMat"><img src="images/materialIcon16x16.png" width="16" height="16" alt="mat" /> <span></span></label><br />
 				<label class="mainColonyStoredScience"><img src="images/scienceIcon16x16.png" width="16" height="16" alt="sci" /> <span></span></label><br />
 			</div>
+
+			<ul class="screenSwapper">
+				<li><button name="Army">Army</button>
+				<li><button name="shipyard">Ships</button>
+				<li><button name="offWorldColonies"><img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
+				<li><button name="buildings">Buildings</button>
+				<li><button name="mainColonyScreen">MainColony</button>
+			</ul>
+
 			<div class="colony-info">
 				<label class="Level">Level: <span></span></label> <button name="upgradeMC">Upgrade</button><label class="matUpgradeReq"> <span></span></label><label class="sciUpgradeReq"> <span></span></label> <br />
 				<label class="Farms">Farms: <span></span></label> <br />
@@ -112,26 +121,15 @@
 				<br /><br /><label class="screenFeedBack"> <span></span></label><br />
 				<label class="BuildTimer"> <span></span></label>
 
-				<ul class="buildingScreenButtons">
-					<li><button name="buildFarm">build Farm</button><label class="matFarmReq"> <span></span></label>
-					<li><button name="buildMine">build Mine</button><label class="matMineReq"> <span></span></label>
-					<li><button name="buildRF">build Lab</button><label class="matRFReq"> <span></span></label>
-					<li><button name="buildConPlat">build Platform</button><label class="matConPlatReq"> <span></span></label>
-					<li><button name="buildSpaceEl">build Elevator</button><label class="matSpaceElReq"> <span></span></label>
-					<li><button name="buildMD">build Military Depot</button><label class="matMDReq"> <span></span></label>
-</ul>
-				<ul class="screenSwapper">
-					<li><button name="Army">Army</button>
-					<li><button name="shipyard">Ships</button>
-					<li><button name="offWorldColonies"><img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
-					<li><button name="buildings">Buildings</button>
-					<li><button name="mainColonyScreen">MainColony</button>
-				</ul>
+				<div class="buildingScreenButtons">
+					<button name="buildFarm">build Farm</button><label class="matFarmReq"> <span></span></label>
+					<button name="buildMine">build Mine</button><label class="matMineReq"> <span></span></label>
+					<button name="buildRF">build Lab</button><label class="matRFReq"> <span></span></label>
+					<button name="buildConPlat">build Platform</button><label class="matConPlatReq"> <span></span></label>
+					<button name="buildSpaceEl">build Elevator</button><label class="matSpaceElReq"> <span></span></label>
+					<button name="buildMD">build Military Depot</button><label class="matMDReq"> <span></span></label>
+				</div>
 			</div>
-
-			<footer>
-				<button name="back">Back</button>
-			</footer>
 
 			<div class="pause-overlay"></div>
 		</div>

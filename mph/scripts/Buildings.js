@@ -30,6 +30,10 @@
 		buildingConPlatBuildCost = 200,
 		buildingSpaceElBuildCost = 210,
 
+		buildingSpaceElIsBuilt = false,
+		buildingMDIsBuilt = false,
+		buildingConPlatIsBuilt = false,
+
 		//Building Functions
 		buildingProduceResources = function ( resourceA, resourceB, resourceAamt, resourceBamt )
 		{
@@ -61,7 +65,11 @@
 		buildingConPlatBuildTime: buildingConPlatBuildTime,
 		buildingSpaceElBuildTime: buildingSpaceElBuildTime,
 
-		buildingCurBuildTime: buildingCurBuildTime
+		buildingCurBuildTime: buildingCurBuildTime,
+
+		buildingSpaceElIsBuilt : buildingSpaceElIsBuilt,
+		buildingMDIsBuilt : buildingMDIsBuilt,
+		buildingConPlatIsBuilt : buildingConPlatIsBuilt
 
 
 	};

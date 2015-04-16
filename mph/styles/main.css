@@ -1,20 +1,23 @@
 @media (orientation: landscape) {
-    #splash-screen,
-    #main-menu {
-        font-size : 0.75em;
-        padding-top : 0.25em;
-    }
-    ul.menu li {
-        display : inline-block;
-        margin : 0;
-    }
-    ul.menu li button {
-        margin : 0.5em;
-        font-size : 0.5em;
-    }
-    .jewel-size {
-        font-size : 16px;
-    }
+	#splash-screen,
+	#main-menu {
+		font-size: 0.75em;
+		padding-top: 0.25em;
+	}
+
+	ul.menu li {
+		display: inline-block;
+		margin: 0;
+	}
+
+		ul.menu li button {
+			margin: 0.5em;
+			font-size: 0.5em;
+		}
+
+	.jewel-size {
+		font-size: 16px;
+	}
 }
 
 body {
@@ -126,6 +129,36 @@ ul.menu {
 				color: rgb(255,255,0);
 				background: rgb(30,40,0);
 			}
+
+#mainColony-screen {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 0.25em;
+	color: rgb(79,255,232);
+}
+
+/*Class Name, to access just the class*/
+.colony-info {
+	position: absolute;
+	left: 50%;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 1.0em;
+	color: rgb(231,54,0);
+}
+/*unordered list ul. li = list*/
+.buildingScreenButtons  button{
+	
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 0.7em;
+	color: rgb(50,10,50);
+	width: 2.5em;
+	height: 1.5em;
+	background: rgb(50,10,50);
+	border: 0.02em solid rgb(0,0,0);
+	border-radius: 1.5em;
+	-webkit-box-shadow: 0.2em 0.2em 0.3em rgb(0,0,10);
+	-moz-box-shadow: 0.2em 0.2em 0.3em rgb(0,0,10);
+	box-shadow: 0.2em 0.2em 0.3em rgb(0,0,10);
+}
 /*BUTTONS for Context Screen Swapping*/
 
 ul.gameScreen li button {
@@ -245,7 +278,7 @@ ul.gameScreen li button {
 	}
 
 
-#mainColony-screen .game-info{
+#mainColony-screen .game-info {
 	width: 100%;
 	float: right;
 }

@@ -144,7 +144,7 @@
 				//console.log( objBuildings.buildingConstructionTime );
 				if ( objBuildings.buildingSpaceElBuildTime <= objBuildings.buildingCurBuildTime )
 				{
-					buildingRF = false;
+					buildingSpaceEl = false;
 					objBuildings.buildingCurBuildTime = 0;
 					//(buildingName, buildCost, maintCost)
 					objMainColony.mcBuildBuilding( "Lab", 7, 3 );
@@ -494,7 +494,7 @@
 		dom.bind( "#mainColony-screen button[name=buildSpaceEl]", "click",
 		  function ()
 		  {
-		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingSpaceElBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
+		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingSpaceElBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 2 < objMainColony.mcBuildingCap )
 		  	{
 		  		//(buildingName, buildCost, constructionTime, maintCost)
 		  		buildingSpaceEl = true;
@@ -532,7 +532,7 @@
 		dom.bind( "#mainColony-screen button[name=buildConPlat]", "click",
 			function ()
 			{
-				if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingConPlatBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
+				if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingConPlatBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 2 < objMainColony.mcBuildingCap )
 				{
 					//(buildingName, buildCost, constructionTime, maintCost)
 					buildingConPlat = true;
