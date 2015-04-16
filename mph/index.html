@@ -37,7 +37,7 @@
             document.getElementById('one').style.display = "block";
             document.getElementById('two').style.display = "Block";
             
-        }
+       }
     </script>
 
 </head>
@@ -106,11 +106,11 @@
 			</div>
 
 			<ul class="screenSwapper">
-				<li><button name="Army">Army</button>
-				<li><button name="shipyard">Ships</button>
+				<li><button name="Army"><img src="images/armyButton32x32.png" width="32" height="32" alt="army" /></button>
+				<li><button name="shipyard"><img src="images/shipYardButton32x32.png" width="32" height="32" alt="shipyard" /></button>
 				<li><button name="offWorldColonies"><img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
-				<li><button name="buildings">Buildings</button>
-				<li><button name="mainColonyScreen">MainColony</button>
+				<li><button name="buildings"><img src="images/buildingsButton32x32.png" width="32" height="32" alt="buildings" /></button>
+				<li><button name="mainColonyScreen"><img src="images/mainColonyButton32x32.png" width="32" height="32" alt="colony" /></button>
 			</ul>
 
 			<div class="colony-info">
@@ -123,12 +123,16 @@
 				<label class="BuildTimer"> <span></span></label>
 
 				<div class="buildingScreenButtons">
-					<button name="buildFarm">build Farm</button><label class="matFarmReq"> <span></span></label>
-					<button name="buildMine">build Mine</button><label class="matMineReq"> <span></span></label>
-					<button name="buildRF">build Lab</button><label class="matRFReq"> <span></span></label>
-					<button name="buildConPlat">build Platform</button><label class="matConPlatReq"> <span></span></label>
-					<button name="buildSpaceEl">build Elevator</button><label class="matSpaceElReq"> <span></span></label>
-					<button name="buildMD">build Military Depot</button><label class="matMDReq"> <span></span></label>
+					<ul>
+						<li><button name="buildFarm">build Farm</button><label class="matFarmReq"> <span></span></label></li>
+						<li><button name="buildMine">build Mine</button><label class="matMineReq"> <span></span></label></li>
+						<li><button name="buildRF">build Lab</button><label class="matRFReq"> <span></span></label></li>
+						<li><button name="buildConPlat">build Platform</button><label class="matConPlatReq"> <span></span></label></li>
+						<li><button name="buildSpaceEl">build Elevator</button><label class="matSpaceElReq"> <span></span></label></li>
+						<li><button name="buildMD">build Military Depot</button><label class="matMDReq"> <span></span></label></li>
+						
+					</ul>
+				
 				</div>
 			</div>
 
@@ -143,6 +147,13 @@
                 }
             </style>
             <div class="announcement"></div>
+	   	<div class="MainColonyStats">
+	   		<label class="mainColonyHP"><img src="images/hpIcon16x16.png" width="16" height="16" alt="hp" /> <span></span></label><br />
+	   		<label class="mainColonyDefense"><img src="images/defenseIcon16x16.png" width="16" height="16" alt="def" /> <span></span></label><br />
+	   		<label class="mainColonyStoredFood"><img src="images/foodIcon16x16.png" width="16" height="16" alt="food" /> <span></span></label><br />
+	   		<label class="mainColonyStoredMat"><img src="images/materialIcon16x16.png" width="16" height="16" alt="mat" /> <span></span></label><br />
+	   		<label class="mainColonyStoredScience"><img src="images/scienceIcon16x16.png" width="16" height="16" alt="sci" /> <span></span></label><br />
+	   	</div>
             <div class="unit-info">
                 <label class="Power">Power: <span></span></label>
                 <label class="Velos">V: <span></span></label>
@@ -158,26 +169,21 @@
                     <li><button name="CreateVelos">CV</button>
                     <li><button name="CreateTitav">CT</button>
                     <li><button name="CreateAegis">CA</button>
+
                     <li onclick="visible()"><button name="Display">ViewColonies</button>
-                    <li id="one" class="hidden"><button name="EnemyColony">AttackHippies</button>
+<                    <li id="one" class="hidden"><button name="EnemyColony">AttackHippies</button>
                         <label class="EnemyPower">HippyPower: <span></span></label>
                     <li id="two" class="hidden"><button name="ParasiteHive">AttackParasites</button>
                         <label class="ParasitePower">ParasitePower: <span></span></label>
-                        
                 </ul>
             </div>
-
 	   	<ul class="screenSwapper">
-            <li><button name="Army">Army</button>
-            <li><button name="shipyard">Ships</button>
+	   		<li><button name="Army"><img src="images/armyButton32x32.png" width="32" height="32" alt="army" /></button>
+	   		<li><button name="shipyard"><img src="images/shipYardButton32x32.png" width="32" height="32" alt="shipyard" /></button>
 	   		<li><button name="offWorldColonies"><img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
-	   		<li><button name="buildings">Buildings</button>
-	   		<li><button name="mainColonyScreen">MainColony</button>
+	   		<li><button name="buildings"><img src="images/buildingsButton32x32.png" width="32" height="32" alt="buildings" /></button>
+	   		<li><button name="mainColonyScreen"><img src="images/mainColonyButton32x32.png" width="32" height="32" alt="colony" /></button>
 	   	</ul>
-
-            <footer>
-                <button name="back">Back</button>
-            </footer>
 
             <div class="pause-overlay"></div>
         </div>
@@ -205,25 +211,53 @@
                     <li><button name="CreateColony">ColonyShip</button>
                     <li><button name="AddCargo">Add50Cargo</button>
                     <li><button name="FTL">ColonizeNewPlanet</button>
-</ul>
+			 </ul>
             </div>
-
-            <ul class="screenSwapper">
-                <li><button name="Army">Army</button>
-                <li><button name="offWorldColonies"><img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
-                <li><button name="buildings">Buildings</button>
-                <li><button name="mainColonyScreen">MainColony</button>
-                <li><button name="shipyard">Ships</button>
-            </ul>
-
-            <footer>
-                <button name="back">Back</button>
-            </footer>
+	   	<ul class="screenSwapper">
+	   		<li><button name="Army"><img src="images/armyButton32x32.png" width="32" height="32" alt="army" /></button>
+	   		<li><button name="shipyard"><img src="images/shipYardButton32x32.png" width="32" height="32" alt="shipyard" /></button>
+	   		<li><button name="offWorldColonies"><img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
+	   		<li><button name="buildings"><img src="images/buildingsButton32x32.png" width="32" height="32" alt="buildings" /></button>
+	   		<li><button name="mainColonyScreen"><img src="images/mainColonyButton32x32.png" width="32" height="32" alt="colony" /></button>
+	   	</ul>
 
             <div class="pause-overlay"></div>
-        </div>
 
 		<div id="jewel-proto" class="jewel-size"></div>
 	</div>
+
+	<!-- Switch to Worlds Screen-->
+	<div class="screen" id="worlds-screen">
+		<div class="game-board jewel-size">
+			<div class="announcement"></div>
+		</div>
+		<div class="MainColonyStats">
+			<label class="mainColonyHP"><img src="images/hpIcon16x16.png" width="16" height="16" alt="hp" /> <span></span></label><br />
+			<label class="mainColonyDefense"><img src="images/defenseIcon16x16.png" width="16" height="16" alt="def" /> <span></span></label><br />
+			<label class="mainColonyStoredFood"><img src="images/foodIcon16x16.png" width="16" height="16" alt="food" /> <span></span></label><br />
+			<label class="mainColonyStoredMat"><img src="images/materialIcon16x16.png" width="16" height="16" alt="mat" /> <span></span></label><br />
+			<label class="mainColonyStoredScience"><img src="images/scienceIcon16x16.png" width="16" height="16" alt="sci" /> <span></span></label><br />
+		</div>
+
+		<ul class="screenSwapper">
+			<li><button name="Army"><img src="images/armyButton32x32.png" width="32" height="32" alt="army" /></button>
+			<li><button name="shipyard"><img src="images/shipYardButton32x32.png" width="32" height="32" alt="shipyard" /></button>
+			<li><button name="offWorldColonies"><img src="images/worldsButton32x32.png" width="32" height="32" alt="worlds" /></button>
+			<li><button name="buildings"><img src="images/buildingsButton32x32.png" width="32" height="32" alt="buildings" /></button>
+			<li><button name="mainColonyScreen"><img src="images/mainColonyButton32x32.png" width="32" height="32" alt="colony" /></button>
+		</ul>
+
+		<div class="colony-info">
+			<label class="Level">Level: <span></span></label> <button name="upgradeColony">Upgrade</button><label class="matUpgradeReq"> <span></span></label><label class="sciUpgradeReq"> <span></span></label> <br />
+			<label class="colonyStoredMat">Food: <span></span></label> <br />
+			<label class="colonyStoredMat">Material: <span></span></label><br />
+
+			<br /><br /><label class="screenFeedBack"> <span></span></label><br />
+			<label class="BuildTimer"> <span></span></label>
+		</div>
+
+		<div class="pause-overlay"></div>
+	</div>
+
 </body>
 </html>

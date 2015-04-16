@@ -159,13 +159,14 @@ window.addEventListener( "load", function ()
 			    "loader!scripts/screen.hiscore.js",
 			    "loader!scripts/screen.main-menu.js",
 			    "loader!scripts/MainColony.js",
-				 "loader!scripts/Buildings.js",
+			    "loader!scripts/WorldClass.js",
+			    "loader!scripts/Buildings.js",
 			    "loader!scripts/screen.game.js",
 			    "loader!scripts/screen.unit.js",
 			    "loader!scripts/EnemyColony.js",
 			    "loader!scripts/screen.mainColony.js",
-                "loader!scripts/Ships.js",
-                "loader!scripts/screen.ships.js",
+			    "loader!scripts/Ships.js",
+			    "loader!scripts/screen.ships.js",
 			    "loader!images/jewels"
 				   + mph.settings.mphSize + ".png"
 			]

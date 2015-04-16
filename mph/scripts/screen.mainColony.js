@@ -328,7 +328,7 @@
 		dom.bind( "#mainColony-screen button[name=offWorldColonies]", "click", //Offworld Colonies Screen
 			function ()
 			{
-				mph.game.showScreen( "mainColony-screen" );
+				mph.game.showScreen( "worlds-screen" );
 			}
 			);
 		dom.bind( "#mainColony-screen button[name=buildings]", "click", //Buildings Screen
@@ -359,7 +359,7 @@
 		dom.bind( "#ship-screen button[name=offWorldColonies]", "click", //Offworld Colonies Screen
 			function ()
 			{
-				mph.game.showScreen( "mainColony-screen" );
+				mph.game.showScreen( "worlds-screen" );
 			}
 			);
 		dom.bind( "#ship-screen button[name=buildings]", "click", //Buildings Screen
@@ -374,6 +374,36 @@
 				mph.game.showScreen( "ship-screen" );
 			} );
 
+		//////////world ScreenSwapper Buttons/////////////////////////
+		dom.bind( "#worlds-screen button[name=Army]", "click", //Army Screen
+			function ()
+			{
+				mph.game.showScreen( "unit-screen" );
+			} );
+
+		dom.bind( "#worlds-screen button[name=mainColonyScreen]", "click", //Main Colony Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
+			} );
+
+		dom.bind( "#worlds-screen button[name=offWorldColonies]", "click", //Offworld Colonies Screen
+			function ()
+			{
+				mph.game.showScreen( "worlds-screen" );
+			}
+			);
+		dom.bind( "#worlds-screen button[name=buildings]", "click", //Buildings Screen
+			function ()
+			{
+				mph.game.showScreen( "mainColony-screen" );
+			}
+			);
+		dom.bind( "#worlds-screen button[name=shipyard]", "click", //Shipyard Screen
+			function ()
+			{
+				mph.game.showScreen( "ship-screen" );
+			} );
 
 
 		////////////Main Colony Buildings Buttons///////////////////////

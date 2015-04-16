@@ -130,41 +130,86 @@ ul.menu {
 				background: rgb(30,40,0);
 			}
 
-#mainColony-screen {
+			/*Default Screen Formatting*/
+#mainColony-screen, #unit-screen, #ship-screen, #worlds-screen{
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	font-size: 0.25em;
 	color: rgb(79,255,232);
 }
 
-/*Class Name, to access just the class*/
+/*Class Name, 
+	Colony Screen */
 .colony-info {
 	position: absolute;
-	left: 50%;
+	left: 35%;
+	top: 5%;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	font-size: 1.0em;
+	font-size: 2.0em;
 	color: rgb(231,54,0);
 }
-/*unordered list ul. li = list*/
+.matFarmReq, .matMineReq, .matRFReq, .matConPlatReq, .matSpaceElReq, .matMDReq
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 1.0em;
+	color: rgb(100,100,255);
+
+   -webkit-stroke-width: 0.3px;
+
+   -webkit-stroke-color: #FFFFFF;
+
+   -webkit-fill-color: #FFFFFF;
+
+   text-shadow: 1px 0px 10px silver;
+
+   -webkit-transition: width 0.3s; /*Safari & Chrome*/
+
+   transition: width 0.3s;
+
+   -moz-transition: width 0.3s; /* Firefox 4 */
+
+   -o-transition: width 0.3s; /* Opera */
+}
+ul
+{
+    list-style-type: none;
+}
+/*unordered list ul. li = list
+	Colony Screen Buttons
+*/
 .buildingScreenButtons  button{
-	
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	font-size: 0.7em;
-	color: rgb(50,10,50);
-	width: 2.5em;
-	height: 1.5em;
+	color: rgb(0,137,146);
+	width: 3.5em;
+	height: 3.5em;
 	background: rgb(50,10,50);
-	border: 0.02em solid rgb(0,0,0);
+	border: 0.09em solid rgb(200,160,0);
 	border-radius: 1.5em;
 	-webkit-box-shadow: 0.2em 0.2em 0.3em rgb(0,0,10);
 	-moz-box-shadow: 0.2em 0.2em 0.3em rgb(0,0,10);
 	box-shadow: 0.2em 0.2em 0.3em rgb(0,0,10);
 }
 /*BUTTONS for Context Screen Swapping*/
+ul.screenSwapper li button {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 1.2em;
+	color: rgb(0,0,0);
+	width: 3.5em;
+	height: 3.5em;
+	background-color: Transparent;
+	border: none;
+	border-radius: 0em;
+	-webkit-box-shadow: 0.2em 0.2em 0.3em rgb(0,0,10);
+	-moz-box-shadow: 0.2em 0.2em 0.3em rgb(0,0,10);
+	box-shadow: 0.2em 0.2em 0.3em rgb(0,0,10);
+}
 
 ul.gameScreen li button {
+	list-style-type: none;
+	padding-left: 0;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	font-size: 0.7em;
-	color: rgb(100,10,100);
+	color: rgb(0,0,0);
 	width: 1.5em;
 	height: 1.5em;
 	background: rgb(255,250,10);
