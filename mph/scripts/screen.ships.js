@@ -39,10 +39,13 @@
         if (shipState.startTimer == true)
         {
             objShips.travelTime -= deltaTime;
-            if(obj.travelTime <= 0)
+            if(objShips.travelTime <= 0)
             {
                 //do whatever for arrival
+                decideArrivelOutcome();
+
                 shipState.startTimer = false;
+                objShips.travelTime = 0;
             }
         }
 
@@ -60,24 +63,72 @@
             checkIfCanAffordSupplyShips();
         });
 
+        var SSButton =
+            $("#ship-screen button[name=CreateEscort]")[0];
+        dom.bind(SSButton, "click", function (e) {
+            checkIfCanAffordEscortShips();
+        });
+
+        var SSButton =
+            $("#ship-screen button[name=CreateColony]")[0];
+        dom.bind(SSButton, "click", function (e) {
+            checkIfCanAffordColonyShips();
+        });
+
     };
 
     function checkIfCanAffordSupplyShips() {
-        //if (objMainColony.mcStoredMaterial >= objShips.supplyShipBuildCost) {
-        createSupplyShip();
-        objShips.supplyShipDisplay += 1;
-        objShips.shipPower += objShips.supplyShipPower;
-            //objMainColony.mcStoredMaterial -= objShips.supplyShipBuildCost;
-            //objShips.supplyShipDisplay += 1;
-        //}
-        //else {
-           // ifCantAfford();
-
-        //}
+        if (objMainColony.mcStoredMaterial >= objShips.supplyShipBuildCost) {
+            createSupplyShip();
+            objShips.supplyShipDisplay += 1;
+            objShips.maxCargo += objShips.supplyShipCargoSpace;
+            objShips.shipPower += objShips.supplyShipPower;
+            objMainColony.mcStoredMaterial -= objShips.supplyShipBuildCost;
+           
+        }
+        else {
+            ifCantAfford();
+        }
     };
 
     function createSupplyShip() {
         shipState.ships.push(objShips.supplyShip);
+    };
+
+    function checkIfCanAffordEscortShips() {
+        if (objMainColony.mcStoredMaterial >= objShips.escortShipBuildCost) {
+            createEscortShip();
+            objShips.escortFighterDisplay += 1;
+            objShips.shipPower += objShips.escortShipPower;
+            objMainColony.mcStoredMaterial -= objShips.escortShipBuildCost;
+
+        }
+        else {
+            ifCantAfford();
+
+        }
+    };
+
+    function createEscortShip() {
+        shipState.ships.push(objShips.escortFighter);
+    };
+
+    function checkIfCanAffordColonyShips() {
+        if (objMainColony.mcStoredMaterial >= objShips.colonyShipBuildCost) {
+            createColonyShip();
+            objShips.colonyShipDisplay += 1;
+            objShips.maxCargo += objShips.colonyShipCargoSpace;
+            objShips.shipPower += objShips.colonyShipPower;
+            objMainColony.mcStoredMaterial -= objShips.colonyShipBuildCost;
+
+        }
+        else {
+            ifCantAfford();
+        }
+    };
+
+    function createColonyShip() {
+        shipState.ships.push(objShips.colonyShip);
     };
 
     function ifCantAfford() {
@@ -85,17 +136,64 @@
              "You can't afford this unit.....loser!");
     };
 
-    /*function displayShips() {
-        objShips.supplyShipDisplay = objShips.supplyShipDisplay;
-        objShips.shipPower = objShips.shipPower;
-        for (var index = 0; index < shipState.ships.length; index++) {
-            if (shipState.ships[index] == 1) {
-                objShips.supplyShipDisplay += 1;
-                objShips.shipPower += objShips.supplyShipPower;
+    AddCargo();
+    function AddCargo() {
+        var ACButton =
+           $("#ship-screen button[name=AddCargo]")[0];
+        dom.bind(ACButton, "click", function (e) {
+            if (objShips.currentCargo < objShips.maxCargo) {
+                objMainColony.mcStoredMaterial -= 50;
+                objShips.currentCargo += 50;
             }
-            
+            else {
+                var noSpace = window.confirm(
+             "No space left Sir!");
+            }
+        });
+    }
+
+    travelToNewColony();
+    function travelToNewColony()
+    {
+        var FLButton =
+          $("#ship-screen button[name=FTL]")[0];
+        dom.bind(FLButton, "click", function (e) {
+            if(objShips.colonyShipDisplay >= 1 && objShips.travelTime <= 0)
+            {
+                destroyShips();
+                objShips.setRandTravelTime();
+                objShips.setRandEnemyPower();
+                shipState.startTimer = true;
+            }
+        });
+    }
+
+    function destroyShips()
+    {
+        objShips.supplyShipDisplay -= objShips.supplyShipDisplay;
+        objShips.escortFighterDisplay -= objShips.escortFighterDisplay;
+        objShips.colonyShipDisplay -= objShips.colonyShipDisplay;
+        objShips.shipPower -= objShips.shipPower;
+        objShips.maxCargo -= objShips.maxCargo;
+    }
+
+    function decideArrivelOutcome()
+    {
+        if(objShips.shipPower >= objShips.enemenemyShipPower)
+        {
+            Arrived();
         }
-    };*/
+        else {
+            var destroyed = window.confirm(
+            "Your fleet was wiped out by the enemy! :(");
+        }
+    }
+
+    function Arrived()
+    {
+        var arrived = window.confirm(
+            "You have arrived at the planet!");
+    }
 
     function announce(str) {
         var element = $("#game-screen .announcement")[0];
@@ -116,7 +214,13 @@
 
     function updateGameInfo() {
         $("#ship-screen .SupplyShips span")[0].innerHTML = Math.floor(objShips.supplyShipDisplay);
+        $("#ship-screen .EscortShips span")[0].innerHTML = Math.floor(objShips.escortFighterDisplay);
+        $("#ship-screen .ColonyShips span")[0].innerHTML = Math.floor(objShips.colonyShipDisplay);
         $("#ship-screen .ShipPower span")[0].innerHTML = Math.floor(objShips.shipPower);
+        $("#ship-screen .MaxCargo span")[0].innerHTML = Math.floor(objShips.maxCargo);
+        $("#ship-screen .CurrentCargo span")[0].innerHTML = Math.floor(objShips.currentCargo);
+        $("#ship-screen .Travel span")[0].innerHTML = Math.floor(objShips.travelTime);
+        $("#ship-screen .MainMat span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
         $("#mainColony-screen .mainColonyStoredFood span")[0].innerHTML = Math.floor(objMainColony.mcStoredFood);
         $("#mainColony-screen .mainColonyStoredMat span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
         $("#mainColony-screen .Farms span")[0].innerHTML = Math.floor(objMainColony.mcCurFarmCount);

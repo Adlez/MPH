@@ -29,14 +29,26 @@
         exoCargoSpace = 60,
 
         shipPower = 0,
-        travelTime = 0
+        travelTime = 0,
+        maxCargo = 0,
+        currentCargo = 0,
+        enemyShipPower = 0
 
         
+        setRandTravelTime = function ()
+        {
+            this.travelTime = Math.floor((Math.random() * 20) + 10);
+        }
 
+        setRandEnemyPower = function()
+        {
+            this.enemyShipPower = Math.floor((Math.random() * 1000) + 500);
+        }
     
     return {
         supplyShip: supplyShip,
         supplyShipDisplay: supplyShipDisplay,
+        supplyShipBuildCost: supplyShipBuildCost,
         supplyShipFoodUpkeep: supplyShipFoodUpkeep,
         supplyShipPower: supplyShipPower,
         supplyShipCargoSpace: supplyShipCargoSpace,
@@ -47,6 +59,7 @@
         escortShipPower: escortShipPower,
 
         colonyShip: colonyShip,
+        colonyShipPower: colonyShipPower,
         colonyShipDisplay: colonyShipDisplay,
         colonyShipBuildCost: colonyShipBuildCost,
         colonyShipFoodUpkeep: colonyShipFoodUpkeep,
@@ -60,7 +73,13 @@
         exoCargoSpace: exoCargoSpace,
 
         travelTime: travelTime,
-        shipPower: shipPower
+        shipPower: shipPower,
+        maxCargo: maxCargo,
+        currentCargo: currentCargo,
+        enemyShipPower: enemyShipPower,
+
+        setRandTravelTime: setRandTravelTime,
+        setRandEnemyPower: setRandEnemyPower
         
     };
 

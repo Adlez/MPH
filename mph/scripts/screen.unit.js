@@ -184,32 +184,21 @@ mph.screens["unit-screen"] = (function ()
              "You can't afford this unit.....loser!");
     }
 
-    /*function displayUnits() {
-        displayVelos = 0;
-        unitState.displayTitav = 0;
-        unitState.displayAegis = 0;
-        for (var index = 0; index < unitState.Units.length; index++)
-        {
-            if (unitState.Units[index] == 10) {
-                displayVelos += (unitState.Units[index] / 10);
-            }
-            if (unitState.Units[index] == 20) {
-                unitState.displayTitav += (unitState.Units[index] / 20);
-            }
-            if (unitState.Units[index] == 30) {
-                unitState.displayAegis += (unitState.Units[index] / 30);
-            }
-        }
-    };*/
-
     function destroyUnitsLoss() {
-
-        unitState.Units.splice(0, unitState.Units.length);
+        displayAegis -= displayAegis;
+        displayVelos -= displayVelos;
+        displayTitav -= displayTitav;
+        displayPower -= displayPower;
+        //unitState.Units.splice(0, unitState.Units.length);
     };
 
     function destroyUnitsWin()
     {
-        unitState.Units.splice(0, (unitState.Units.length / 2));
+        displayAegis -= (displayAegis / 2);
+        displayVelos -= (displayVelos / 2);
+        displayTitav -= (displayTitav / 2);
+        displayPower -= (displayPower / 2);
+        //unitState.Units.splice(0, (unitState.Units.length / 2));
     }
 
     displayEnemyPower();
@@ -361,6 +350,7 @@ mph.screens["unit-screen"] = (function ()
        $("#unit-screen .EnemyPower span")[0].innerHTML = Math.floor(enemyColony.Power);
        $("#unit-screen .ParasitePower span")[0].innerHTML = Math.floor(enemyColony.ParaPower);
        $("#unit-screen .AttackDelay span")[0].innerHTML = Math.floor(enemyColony.attackDelay);
+       $("#unit-screen .MainMat2 span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
 
     }
 
