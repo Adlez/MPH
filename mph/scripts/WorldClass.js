@@ -9,6 +9,9 @@
 	h_DistanceFromMainColony = 0.0,
 	h_DistanceFromCapital = 0.0,
 	h_WorldHasColony = false,
+
+
+	h_WorldColonyLevelUpCostMat = 0,
 	h_WorldColonyLevel = 0,
 
 	h_ColonyFoodOutput = 0,
@@ -24,33 +27,29 @@
 
 	function NameWorld()
 	{
-		arrayOfSyllables.Push( "ka" );
-		arrayOfSyllables.Push( "zu" );
-		arrayOfSyllables.Push( "zei" );
-		arrayOfSyllables.Push( "ash" );
-		arrayOfSyllables.Push( "ri" );
-		arrayOfSyllables.Push( "BX" );
-		arrayOfSyllables.Push( "mo" );
-		arrayOfSyllables.Push( "ja" );
-		arrayOfSyllables.Push( "el" );
-		arrayOfSyllables.Push( "ich" );
-		arrayOfSyllables.Push( "en" );
+		arrayOfSyllables.push( "ka" );
+		arrayOfSyllables.push( "zu" );
+		arrayOfSyllables.push( "zei" );
+		arrayOfSyllables.push( "ash" );
+		arrayOfSyllables.push( "ri" );
+		arrayOfSyllables.push( "BX" );
+		arrayOfSyllables.push( "mo" );
+		arrayOfSyllables.push( "ja" );
+		arrayOfSyllables.push( "el" );
+		arrayOfSyllables.push( "ich" );
+		arrayOfSyllables.push( "en" );
 	}
 
 	function CreateNewName()
 	{
 		//Creates a first name with 2-3 syllables
 		var h_WorldID = String = "";
-		var numberOfSyllablesInFirstName= int = Random.Range(2, 4);
+		var numberOfSyllablesInFirstName = int = ((Math.random() * 4) + 2);
 		for (var i= int = 0; i < numberOfSyllablesInFirstName; i++)
 		{
-			firstName += firstNameSyllables[Random.Range(0, firstNameSyllables.length)];
+			h_WorldID += arrayOfSyllables[(( Math.random() * arrayOfSyllables.length ) )];
 		}
 		var h_WorldIDLetter = String = "";
-		h_WorldIDLetter = h_WorldID.Substring( 0, 1 );
-		h_WorldID = h_WorldID.Remove( 0, 1 );
-		h_WorldIDLetter = h_WorldIDLetter.ToUpper();
-		h_WorldID = h_WorldIDLetter + h_WorldID;
 	}
 
 	function CreateWorld(  )
@@ -129,7 +128,9 @@
 		h_DistanceFromCapital: h_DistanceFromCapital,
 		h_WorldHasColony: h_WorldHasColony,
 		h_WorldColonyLevel: h_WorldColonyLevel,
-		h_WorldID: h_WorldID
+		h_WorldID: h_WorldID,
+
+		CreateWorld: CreateWorld
 
 	};
 } )();

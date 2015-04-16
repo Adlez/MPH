@@ -110,11 +110,11 @@
 	{
 		if ( firstRun )
 		{
-			CreateWorld();
-			CreateWorld();
-			CreateWorld();
-			CreateWorld();
-			CreateWorld();
+			objWorlds.CreateWorld();
+			objWorlds.CreateWorld();
+			objWorlds.CreateWorld();
+			objWorlds.CreateWorld();
+			objWorlds.CreateWorld();
 
 			setup();
 
@@ -154,35 +154,31 @@
 		  {
 		  	if ( objWorlds.mcLevel < 100 )
 		  	{
-		  		if ( objWorlds.mcLevelUpCostMat <= objWorlds.mcStoredMaterial && objWorlds.mcStoredScience >= objWorlds.mcLevelUpCostSci )
+		  		if ( objWorlds.h_WorldColonyLevelUpCostMat <= objWorlds.mcStoredMaterial )
 		  		{
 
-		  			objWorlds.mcLevel++;
-		  			objWorlds.mcStoredMaterial -= objWorlds.mcLevelUpCostMat;
+		  			objWorlds.h_WorldColonyLevel++;
+		  			objWorlds.mcStoredMaterial -= objWorlds.h_WorldColonyLevelUpCostMat;
 
-		  			$( "#worlds-screen .colonyStoredMat span" )[0].innerHTML = + " + " + Math.floor( objWorlds.mcStoredMaterial ) + " - " + objBuildings.buildingMineBuildCost;
-		  			$( "#worlds-screen .colonyStoredMat span" )[0].innerHTML = + " + " + Math.floor( objWorlds.mcStoredMaterial ) + " - " + objBuildings.buildingMineBuildCost;
-		  			$( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Colony Upgraded. ";
+	//	  			$( "#worlds-screen .colonyStoredMat span" )[0].innerHTML = + " + " + Math.floor( objWorlds.mcStoredMaterial ) + " - " + objBuildings.buildingMineBuildCost;
+	//	  			$( "#worlds-screen .colonyStoredMat span" )[0].innerHTML = + " + " + Math.floor( objWorlds.mcStoredMaterial ) + " - " + objBuildings.buildingMineBuildCost;
+	//	  			$( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Colony Upgraded. ";
 		  			//play audio
 		  		}
 		  		else
 		  		{
-		  			if ( objWorlds.mcLevelUpCostMat > objWorlds.mcStoredMaterial )
+		  			if ( objWorlds.h_WorldColonyLevelUpCostMat > objWorlds.mcStoredMaterial )
 		  			{
-		  				$( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to Upgrade";
+//		  				$( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to Upgrade";
 		  			}
-		  			else if ( objWorlds.mcStoredScience < objWorlds.mcLevelUpCostSci )
-		  			{
-		  				$( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Not enough Science to Upgrade";
-		  			}
-		  			else
-		  			{ $( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Need more Material and Science to Upgrade"; }
+		  			else{}
+//		  			{ $( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Need more Material and Science to Upgrade"; }
 
 		  		}
 		  	}
 		  	else
 		  	{
-		  		$( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Colony cannot be upgraded further.";
+//		  		$( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Colony cannot be upgraded further.";
 		  	}
 
 		  }

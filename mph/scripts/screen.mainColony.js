@@ -17,6 +17,8 @@
 	buildingRF = false,
 	buildingSpaceEl = false,
 	buildingConPlat = false,
+	buildingMD = false,
+
 	paused = false,
 	firstLoop = false,
 	GameTimer = 0,
@@ -63,8 +65,6 @@
 
 		var Level_Max = 100;
 		var Level_Min = 1;
-			
-		console.log("Growth Number:"+ Atyne );
 
 		for ( var i = 0; i < objMainColony.mcLevel; ++i )
 		{
@@ -149,6 +149,40 @@
 					//(buildingName, buildCost, maintCost)
 					objMainColony.mcBuildBuilding( "Lab", 7, 3 );
 					objMainColony.mcConstructionInProgress = false;
+					objBuildings.buildingSpaceElIsBuilt = true;
+					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
+				}
+			}
+			if ( buildingMD )
+			{
+				objBuildings.buildingCurBuildTime++;
+				currentlyBuilding = "Military Depot";
+				//console.log( objBuildings.buildingConstructionTime );
+				if ( objBuildings.buildingMDBuildTime <= objBuildings.buildingCurBuildTime )
+				{
+					buildingMD = false;
+					objBuildings.buildingCurBuildTime = 0;
+					//(buildingName, buildCost, maintCost)
+					objMainColony.mcBuildBuilding( "MilitaryDepot", 7, 3 );
+					objMainColony.mcConstructionInProgress = false;
+					objBuildings.buildingMDIsBuilt = true;
+					
+					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
+				}
+			}
+			if ( buildingConPlat )
+			{
+				objBuildings.buildingCurBuildTime++;
+				currentlyBuilding = "Construstion Platform";
+				//console.log( objBuildings.buildingConstructionTime );
+				if ( objBuildings.buildingConPlatBuildTime <= objBuildings.buildingCurBuildTime )
+				{
+					buildingConPlat = false;
+					objBuildings.buildingCurBuildTime = 0;
+					//(buildingName, buildCost, maintCost)
+					objMainColony.mcBuildBuilding( "ConstructionPlatform", 7, 3 );
+					objMainColony.mcConstructionInProgress = false;
+					objBuildings.buildingConPlatIsBuilt = true;
 					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
 				}
 			}
@@ -600,14 +634,14 @@
 				if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingMDBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
 				{
 					//(buildingName, buildCost, constructionTime, maintCost)
-					buildingConPlat = true;
+					buildingMD = true;
 					objMainColony.mcConstructionInProgress = true;
 					objBuildings.buildingCurBuildTime = 0;
 
 					objMainColony.mcStoredMaterial -= objBuildings.buildingMDBuildCost;
 					$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingMDBuildCost;
 					$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingMDBuildCost;
-					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Space Elevator";
+					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Military Depot";
 					//play audio
 				}
 				else
