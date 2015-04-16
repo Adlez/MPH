@@ -6,8 +6,6 @@
 		buildingProductionTypeBAmount = 0,
 		buildingProductionTypeA = "",
 		buildingProductionTypeB = "",
-		buildingCostMat = 0,
-		buildingCostSci = 0,
 		buildingMaintFood = 0,
 		buildingMaintMat = 0,
 		buildingDeconstructSpeed = 0,
@@ -16,6 +14,7 @@
 		buildingTotalMatMaint = 0,
 		buildingTotalFoodMaint = 0,
 
+		//Build Times
 		buildingFarmBuildTime = 15,
 		buildingMineBuildTime = 15,
 		buildingRFBuildTime = 30,
@@ -23,7 +22,7 @@
 		buildingConPlatBuildTime = 25,
 		buildingSpaceElBuildTime = 60,
 
-
+		//Material Costs
 		buildingFarmBuildCost = 50,
 		buildingMineBuildCost = 100,
 		buildingRFBuildCost = 250,
@@ -54,6 +53,13 @@
 		buildingMDBuildCost : buildingMDBuildCost,
 		buildingConPlatBuildCost : buildingConPlatBuildCost,
 		buildingSpaceElBuildCost: buildingSpaceElBuildCost,
+
+		buildingFarmBuildTime: buildingFarmBuildTime,
+		buildingMineBuildTime: buildingMineBuildTime,
+		buildingRFBuildTime: buildingRFBuildTime,
+		buildingMDBuildTime: buildingMDBuildTime,
+		buildingConPlatBuildTime: buildingConPlatBuildTime,
+		buildingSpaceElBuildTime: buildingSpaceElBuildTime,
 
 		buildingCurBuildTime: buildingCurBuildTime
 
