@@ -5,15 +5,18 @@ enemyColony = ( function ()
         Distance = 0,
         attackDelay = 0,
         randAttackerPower = 0,
-        difficultyIncrease = 0
+        difficultyIncrease = 0,
+        enemyReset = 10,
+        lowerShipPower1 = false,
+        lowerShipPower2 = false
                 
     setRandPower = function ()
     {
-        this.Power = Math.floor((Math.random() * 1000) + 300);
+        this.Power = Math.floor((Math.random() * 100) + 50);
     }
 
     setRandParaPower = function () {
-        this.ParaPower = Math.floor((Math.random() * 1300) + 100);
+        this.ParaPower = Math.floor((Math.random() * 100) + 50);
     }
 
     setRandAttackerPower = function () {
@@ -46,6 +49,7 @@ enemyColony = ( function ()
         ParaPower: ParaPower,
         Distance: Distance,
         attackDelay: attackDelay,
+        enemyReset: enemyReset,
         randAttackerPower: randAttackerPower,
         setRandPower: setRandPower,
         setRandParaPower: setRandParaPower,

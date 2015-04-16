@@ -13,6 +13,8 @@ mph.screens["unit-screen"] = (function ()
         displayPower = 0,
         attackTimer = false,
         startTimer = false,
+        hippyDefeated = false,
+        parasiteDefeated = false,
         pauseTime;
 
 
@@ -76,6 +78,17 @@ mph.screens["unit-screen"] = (function ()
             }
         }
 
+        if (hippyDefeated == true)
+        {
+            enemyColony.enemyReset -= deltaTime;
+            if(enemyColony.enemyReset <= 0)
+            {
+                hippyDefeated = false;
+                whenResetEnemyPower();
+                enemyColony.enemyReset = 10;
+            }
+        }
+
         enemyColony.difficultyIncrease += deltaTime;
         increaseDifficultyz();
                
@@ -103,27 +116,28 @@ mph.screens["unit-screen"] = (function ()
 
     function createUnits () 
     {
+        if (objBuildings.buildingMDIsBuilt == true) {
+            var CVButton =
+                $("#unit-screen button[name=CreateVelos]")[0];
+            dom.bind(CVButton, "click", function (e) {
+                checkIfCanAffordVelos();
 
-        var CVButton =
-            $("#unit-screen button[name=CreateVelos]")[0];
-        dom.bind(CVButton, "click", function (e) {
-            checkIfCanAffordVelos();
-           
-        });
+            });
 
-        var CTButton =
-            $("#unit-screen button[name=CreateTitav]")[0];
-        dom.bind(CTButton, "click", function (e) {
-            checkIfCanAffordTitav();
-                       
-        });
+            var CTButton =
+                $("#unit-screen button[name=CreateTitav]")[0];
+            dom.bind(CTButton, "click", function (e) {
+                checkIfCanAffordTitav();
 
-        var CAButton =
-            $("#unit-screen button[name=CreateAegis]")[0];
-        dom.bind(CAButton, "click", function (e) {
-            checkIfCanAffordAegis();
-           
-        });       
+            });
+
+            var CAButton =
+                $("#unit-screen button[name=CreateAegis]")[0];
+            dom.bind(CAButton, "click", function (e) {
+                checkIfCanAffordAegis();
+
+            });
+        }
     };
 
     function checkIfCanAffordVelos()
@@ -226,24 +240,26 @@ mph.screens["unit-screen"] = (function ()
 
     function Attack()
     {
-        var attack1Button =
-            $("#unit-screen button[name=EnemyColony]")[0];
-        dom.bind(attack1Button, "click", function (e) {
-            if (enemyColony.Distance <= 0) {
-                distanceTimer();
-                startTimer = true;
-            }
-        });
+        if (displayPower >= 20) {
+            var attack1Button =
+                $("#unit-screen button[name=EnemyColony]")[0];
+            dom.bind(attack1Button, "click", function (e) {
+                if (enemyColony.Distance <= 0 && hippyDefeated == false) {
+                    distanceTimer();
+                    startTimer = true;
+                }
+            });
 
-        var attack2Button =
-            $("#unit-screen button[name=ParasiteHive]")[0];
-        dom.bind(attack2Button, "click", function (e) {
-            if (enemyColony.Distance <= 0) {
-                distanceTimer();
-                startTimer = true;
-            }
-        });
-        
+            var attack2Button =
+                $("#unit-screen button[name=ParasiteHive]")[0];
+            dom.bind(attack2Button, "click", function (e) {
+                if (enemyColony.Distance <= 0) {
+                    distanceTimer();
+                    startTimer = true;
+                }
+            });
+        }
+               
     }
 
     function distanceTimer()
@@ -264,14 +280,28 @@ mph.screens["unit-screen"] = (function ()
             else if (unitState.finalPower >= 0.1 && unitState.finalPower <= 499)
             {
                 unitState.victory = true;
+                hippyDefeated = true;
+                enemyColony.Power = 0;
+                enemyColony.ParaPower = 0;
+                enemyColony.lowerShipPower1 = true;
                 destroyUnitsWin();
                 showWinResult();
             }
             else if(unitState.finalPower >= 500)
             {
                 unitState.victory = true;
+                hippyDefeated = true;
+                enemyColony.Power = 0;
+                enemyColony.ParaPower = 0;
+                enemyColony.lowerShipPower1 = true;
                 showWinResult();
             }
+    }
+
+    function whenResetEnemyPower() {
+        if (enemyColony.enemyReset <= 0) {
+            setEnemyPower();
+        }
     }
 
     function decideRandBattle()
@@ -331,12 +361,12 @@ mph.screens["unit-screen"] = (function ()
 
     function increaseDifficultyz()
     {
-        if(enemyColony.difficultyIncrease >= 300)
+        if (enemyColony.difficultyIncrease >= 300 && enemyColony.difficultyIncrease <= 301)
         {
             enemyColony.setDifficultyChangeLvl1();
         }
 
-        if (enemyColony.difficultyIncrease >= 600) {
+        if (enemyColony.difficultyIncrease >= 600 && enemyColony.difficultyIncrease <= 601) {
             enemyColony.setDifficultyChangeLvl2();
         }
     }
@@ -351,7 +381,8 @@ mph.screens["unit-screen"] = (function ()
        $("#unit-screen .ParasitePower span")[0].innerHTML = Math.floor(enemyColony.ParaPower);
        $("#unit-screen .AttackDelay span")[0].innerHTML = Math.floor(enemyColony.attackDelay);
        $("#unit-screen .MainMat2 span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
-
+       $("#unit-screen .EnemyReset span")[0].innerHTML = Math.floor(enemyColony.enemyReset);
+       $("#unit-screen .Diff span")[0].innerHTML = Math.floor(enemyColony.difficultyIncrease);
     }
 
     function togglePause(enable) {

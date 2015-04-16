@@ -36,6 +36,7 @@
         function visible() {
             document.getElementById('one').style.display = "block";
             document.getElementById('two').style.display = "Block";
+            
         }
     </script>
 
@@ -150,16 +151,18 @@
                 <label class="Timer">Timer: <span></span></label>
                 <label class="AttackDelay">AttackTimer: <span></span></label>
                 <label class="MainMat2">ColonyMaterials: <span></span></label>
+                <label class="EnemyReset">EnemyReset: <span></span></label>
+                <label class="Diff">DifficultyIncrease: <span></span></label>
                 
                 <ul class="unitScreen">
                     <li><button name="CreateVelos">CV</button>
                     <li><button name="CreateTitav">CT</button>
                     <li><button name="CreateAegis">CA</button>
                     <li onclick="visible()"><button name="Display">ViewColonies</button>
-                    <li id="one" class="hidden"><button name="EnemyColony">AttackEC</button>
-                        <label class="EnemyPower">EPower: <span></span></label>
-                    <li id="two" class="hidden"><button name="ParasiteHive">AttackPH</button>
-                        <label class="ParasitePower">PPower: <span></span></label>
+                    <li id="one" class="hidden"><button name="EnemyColony">AttackHippies</button>
+                        <label class="EnemyPower">HippyPower: <span></span></label>
+                    <li id="two" class="hidden"><button name="ParasiteHive">AttackParasites</button>
+                        <label class="ParasitePower">ParasitePower: <span></span></label>
                         
                 </ul>
             </div>
@@ -185,7 +188,7 @@
             
             <div class="announcement"></div>
             <div class="ship-info">
-                <label class="ShipPower">ShipPower: <span></span></label>
+                <label class="ShipPower">FleetPower: <span></span></label>
                 <label class="SupplyShips">SupplyShips: <span></span></label>
                 <label class="EscortShips">EscortFighters: <span></span></label>
                 <label class="ColonyShips">ColonyShips: <span></span></label>
@@ -193,6 +196,8 @@
                 <label class="CurrentCargo">CurrentCargo: <span></span></label>
                 <label class="MainMat">MainColonyMaterials: <span></span></label>
                 <label class="Travel">ArrivalTime: <span></span></label>
+                <label class="FoodCost">FoodCost: <span></span></label>
+                <label class="MainFood">MainStoredFood: <span></span></label>
                 
                 <ul class="shipScreen">
                     <li><button name="CreateSupply">SupplyShip</button>

@@ -34,7 +34,7 @@
         var deltaTime = (Date.now() - previousTime) / 1000;
         previousTime = Date.now();
 
-        //displayShips();
+        objMainColony.mcStoredFood -= (deltaTime * objShips.foodMaintCost);
 
         if (shipState.startTimer == true)
         {
@@ -56,24 +56,31 @@
     createShips();
 
     function createShips() {
+        //if (objBuildings.buildingSpaceElIsBuilt == true) {
 
-        var SSButton =
-            $("#ship-screen button[name=CreateSupply]")[0];
-        dom.bind(SSButton, "click", function (e) {
-            checkIfCanAffordSupplyShips();
-        });
+            var SSButton =
+                $("#ship-screen button[name=CreateSupply]")[0];
+            dom.bind(SSButton, "click", function (e) {
+                checkIfCanAffordSupplyShips();
+            });
 
-        var SSButton =
-            $("#ship-screen button[name=CreateEscort]")[0];
-        dom.bind(SSButton, "click", function (e) {
-            checkIfCanAffordEscortShips();
-        });
+            var SSButton =
+                $("#ship-screen button[name=CreateEscort]")[0];
+            dom.bind(SSButton, "click", function (e) {
+                checkIfCanAffordEscortShips();
+            });
 
-        var SSButton =
-            $("#ship-screen button[name=CreateColony]")[0];
-        dom.bind(SSButton, "click", function (e) {
-            checkIfCanAffordColonyShips();
-        });
+            var SSButton =
+                $("#ship-screen button[name=CreateColony]")[0];
+            dom.bind(SSButton, "click", function (e) {
+                checkIfCanAffordColonyShips();
+            });
+       // }
+        /*else
+        {
+            var NoElve = window.confirm(
+             "You need a Space Elevator sir!");
+        }*/
 
     };
 
@@ -83,6 +90,7 @@
             objShips.supplyShipDisplay += 1;
             objShips.maxCargo += objShips.supplyShipCargoSpace;
             objShips.shipPower += objShips.supplyShipPower;
+            objShips.foodMaintCost += objShips.supplyShipFoodUpkeep;
             objMainColony.mcStoredMaterial -= objShips.supplyShipBuildCost;
            
         }
@@ -119,6 +127,7 @@
             objShips.colonyShipDisplay += 1;
             objShips.maxCargo += objShips.colonyShipCargoSpace;
             objShips.shipPower += objShips.colonyShipPower;
+            objShips.foodMaintCost += objShips.colonyShipFoodUpkeep;
             objMainColony.mcStoredMaterial -= objShips.colonyShipBuildCost;
 
         }
@@ -162,7 +171,14 @@
             {
                 destroyShips();
                 objShips.setRandTravelTime();
-                objShips.setRandEnemyPower();
+                if (enemyColony.lowerShipPower1 == true)
+                {
+                    objShips.setRandEnemyPowerLower1();
+                }
+                else {
+                    objShips.setRandEnemyPower();
+                }
+                
                 shipState.startTimer = true;
             }
         });
@@ -221,6 +237,8 @@
         $("#ship-screen .CurrentCargo span")[0].innerHTML = Math.floor(objShips.currentCargo);
         $("#ship-screen .Travel span")[0].innerHTML = Math.floor(objShips.travelTime);
         $("#ship-screen .MainMat span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
+        $("#ship-screen .FoodCost span")[0].innerHTML = Math.floor(objShips.foodMaintCost);
+        $("#ship-screen .MainFood span")[0].innerHTML = Math.floor(objMainColony.mcStoredFood);
         $("#mainColony-screen .mainColonyStoredFood span")[0].innerHTML = Math.floor(objMainColony.mcStoredFood);
         $("#mainColony-screen .mainColonyStoredMat span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
         $("#mainColony-screen .Farms span")[0].innerHTML = Math.floor(objMainColony.mcCurFarmCount);

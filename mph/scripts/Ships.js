@@ -32,7 +32,8 @@
         travelTime = 0,
         maxCargo = 0,
         currentCargo = 0,
-        enemyShipPower = 0
+        enemyShipPower = 0,
+        foodMaintCost = 0
 
         
         setRandTravelTime = function ()
@@ -43,6 +44,14 @@
         setRandEnemyPower = function()
         {
             this.enemyShipPower = Math.floor((Math.random() * 1000) + 500);
+        }
+
+        setRandEnemyPowerLower1 = function () {
+            this.enemyShipPower = Math.floor((Math.random() * 800) + 400);
+        }
+
+        setRandEnemyPowerLower2 = function () {
+            this.enemyShipPower = Math.floor((Math.random() * 750) + 350);
         }
     
     return {
@@ -77,9 +86,12 @@
         maxCargo: maxCargo,
         currentCargo: currentCargo,
         enemyShipPower: enemyShipPower,
+        foodMaintCost: foodMaintCost,
 
         setRandTravelTime: setRandTravelTime,
-        setRandEnemyPower: setRandEnemyPower
+        setRandEnemyPower: setRandEnemyPower,
+        setRandEnemyPowerLower1: setRandEnemyPowerLower1,
+        setRandEnemyPowerLower2: setRandEnemyPowerLower2
         
     };
 
