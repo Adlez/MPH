@@ -56,7 +56,6 @@
     createShips();
 
     function createShips() {
-        //if (objBuildings.buildingSpaceElIsBuilt == true) {
 
             var SSButton =
                 $("#ship-screen button[name=CreateSupply]")[0];
@@ -75,17 +74,10 @@
             dom.bind(SSButton, "click", function (e) {
                 checkIfCanAffordColonyShips();
             });
-       // }
-        /*else
-        {
-            var NoElve = window.confirm(
-             "You need a Space Elevator sir!");
-        }*/
-
     };
 
     function checkIfCanAffordSupplyShips() {
-        if (objMainColony.mcStoredMaterial >= objShips.supplyShipBuildCost) {
+        if (objMainColony.mcStoredMaterial >= objShips.supplyShipBuildCost && objBuildings.buildingSpaceElIsBuilt == true) {
             createSupplyShip();
             objShips.supplyShipDisplay += 1;
             objShips.maxCargo += objShips.supplyShipCargoSpace;
@@ -104,7 +96,7 @@
     };
 
     function checkIfCanAffordEscortShips() {
-        if (objMainColony.mcStoredMaterial >= objShips.escortShipBuildCost) {
+        if (objMainColony.mcStoredMaterial >= objShips.escortShipBuildCost && objBuildings.buildingSpaceElIsBuilt == true) {
             createEscortShip();
             objShips.escortFighterDisplay += 1;
             objShips.shipPower += objShips.escortShipPower;
@@ -122,7 +114,7 @@
     };
 
     function checkIfCanAffordColonyShips() {
-        if (objMainColony.mcStoredMaterial >= objShips.colonyShipBuildCost) {
+        if (objMainColony.mcStoredMaterial >= objShips.colonyShipBuildCost && objBuildings.buildingSpaceElIsBuilt == true) {
             createColonyShip();
             objShips.colonyShipDisplay += 1;
             objShips.maxCargo += objShips.colonyShipCargoSpace;
@@ -142,7 +134,7 @@
 
     function ifCantAfford() {
         var tooPoor = window.confirm(
-             "You can't afford this unit.....loser!");
+             "You can't afford this unit.....loser! or you need to build a Space Elevator");
     };
 
     AddCargo();
@@ -249,6 +241,9 @@
         $("#mainColony-screen .mainColonyStoredMat span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
         $("#mainColony-screen .Farms span")[0].innerHTML = Math.floor(objMainColony.mcCurFarmCount);
         $("#mainColony-screen .Mines span")[0].innerHTML = Math.floor(objMainColony.mcCurMineCount);
+        $("#ship-screen .matCSReq span")[0].innerHTML = "Costs 100 Material & +1 food upkeep";
+        $("#ship-screen .matCEReq span")[0].innerHTML = "Costs 70 Material";
+        $("#ship-screen .matCCReq span")[0].innerHTML = "Costs 500 Material & +10 food upkeep";
     }
 
     function togglePause(enable) {

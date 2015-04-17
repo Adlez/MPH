@@ -175,26 +175,20 @@
 		objWorlds.CreateWorld();
 		objWorlds.CreateWorld();
 
+		
+		////////////World Colony  Buttons///////////////////////
+		///////Level Up the Colony
 		dom.bind("#worlds-screen button[name=upgradeColony]", "click",
 		  function () {
+
 		      mph.screens["ship-screen"].travelToNewColony();
 		      if (objShips.arrivedAtWorld == true) {
 		          objWorlds.h_WorldColonyLevel++;
 		      }
-		      else {
-		          var destroyed = window.confirm(
-                    "Your fleet was wiped out by the enemy on route! :(");
-		      }
-		      console.log("Ouch Fucker");
-
+		     
+		      //console.log("Ouch Fucker")
 		  });
-
-		////////////World Colony  Buttons///////////////////////
-		///////Level Up the Colony
-		dom.bind( "#worlds-screen button[name=upgradeColony]", "click",
-		  function ()
-		  {
-		  	if ( objWorlds.mcLevel < 100 )
+		  	/*if ( objWorlds.mcLevel < 100 )
 		  	{
 		  		if ( objWorlds.h_WorldColonyLevelUpCostMat <= objWorlds.mcStoredMaterial )
 		  		{
@@ -202,7 +196,7 @@
 		  			objWorlds.h_WorldColonyLevel++;
 		  			objWorlds.mcStoredMaterial -= objWorlds.h_WorldColonyLevelUpCostMat;
 
-	//	  			$( "#worlds-screen .colonyStoredMat span" )[0].innerHTML = + " + " + Math.floor( objWorlds.mcStoredMaterial ) + " - " + objBuildings.buildingMineBuildCost;
+		  			//	  			$( "#worlds-screen .colonyStoredMat span" )[0].innerHTML = + " + " + Math.floor( objWorlds.mcStoredMaterial ) + " - " + objBuildings.buildingMineBuildCost;
 	//	  			$( "#worlds-screen .colonyStoredMat span" )[0].innerHTML = + " + " + Math.floor( objWorlds.mcStoredMaterial ) + " - " + objBuildings.buildingMineBuildCost;
 	//	  			$( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Colony Upgraded. ";
 		  			//play audio
@@ -221,7 +215,9 @@
 		  	}
 
 		  }
-		  );
+		  );*/
+
+		
 	}
 
 	return {

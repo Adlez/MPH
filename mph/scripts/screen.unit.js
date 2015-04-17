@@ -195,7 +195,7 @@ mph.screens["unit-screen"] = (function ()
     function ifCantAfford()
     {
         var tooPoor = window.confirm(
-             "You can't afford this unit.....loser!");
+             "You can't afford this unit.....loser or you need to build a Military Depot!");
     }
 
     function destroyUnitsLoss() {
@@ -382,6 +382,9 @@ mph.screens["unit-screen"] = (function ()
        $("#unit-screen .MainMat2 span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
        $("#unit-screen .EnemyReset span")[0].innerHTML = Math.floor(enemyColony.enemyReset);
        $("#unit-screen .Diff span")[0].innerHTML = Math.floor(enemyColony.difficultyIncrease);
+       $("#unit-screen .matCVReq span")[0].innerHTML = "Costs 100 Material";
+       $("#unit-screen .matCTReq span")[0].innerHTML = "Costs 250 Material";
+       $("#unit-screen .matCAReq span")[0].innerHTML = "Costs 500 Material";
     }
 
     function togglePause(enable) {
