@@ -28,6 +28,8 @@
 	mineMatCost = objBuildings.buildingMineBuildCost,
 
 	pauseTime;
+
+	myAudio = new Audio( "sounds/12 Status Quo Show.ogg" || "sounds/12 Status Quo Show.mp3" );
 	//Main Colony Object
 
 
@@ -39,6 +41,7 @@
 	}
 
 
+	
 	function startGame()
 	{
 		gameState = {
@@ -46,8 +49,12 @@
 			startTime: 0, // time at start of level
 			endTime: 0 // time to game over
 		};
+		mph.audio.initialize();
 
+		
 
+//		mph.audio.play( "12 Status Quo Show" )
+//		audio.play(12 Status Quo Show.mp3);
 		gameLoop();
 
 	}
@@ -60,6 +67,13 @@
 
 		var deltaTime = ( Date.now() - previousTime ) / 1000;
 		previousTime = Date.now();
+
+//		mph.audio.play( "12 Status Quo Show" )
+		myAudio.addEventListener( 'ended', function ()
+		{
+			this.currentTime = 0;
+			this.play();
+		}, false );
 
 		GameTimer += deltaTime;
 
@@ -104,6 +118,7 @@
 					objMainColony.mcBuildBuilding( "Farm", 2, 1 );
 					objMainColony.mcConstructionInProgress = false;
 					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
+					mph.audio.play( "inf-BuildingComplete" )
 				}
 			}
 			if ( buildingMine )
@@ -119,6 +134,7 @@
 					objMainColony.mcBuildBuilding( "Mine", 3, 2 );
 					objMainColony.mcConstructionInProgress = false;
 					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
+					mph.audio.play( "inf-BuildingComplete" )
 				}
 			}
 			if ( buildingRF )
@@ -138,6 +154,7 @@
 					objMainColony.mcBuildBuilding( "Lab", 7, 3 );
 					objMainColony.mcConstructionInProgress = false;
 					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
+					mph.audio.play( "inf-BuildingComplete" )
 				}
 			}
 			if ( buildingSpaceEl )
@@ -154,6 +171,7 @@
 					objMainColony.mcConstructionInProgress = false;
 					objBuildings.buildingSpaceElIsBuilt = true;
 					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
+					mph.audio.play( "inf-BuildingComplete" )
 				}
 			}
 			if ( buildingMD )
@@ -171,6 +189,7 @@
 					objBuildings.buildingMDIsBuilt = true;
 					
 					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
+					mph.audio.play( "inf-BuildingComplete" )
 				}
 			}
 			if ( buildingConPlat )
@@ -187,6 +206,7 @@
 					objMainColony.mcConstructionInProgress = false;
 					objBuildings.buildingConPlatIsBuilt = true;
 					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
+					mph.audio.play( "inf-BuildingComplete" )
 				}
 			}
 			GameTimer = 0;
@@ -294,6 +314,7 @@
 	{
 		if ( firstRun )
 		{
+			myAudio.play();
 			objMainColony.mcLevel = 1;
 			objMainColony.UpdateMainColony( objMainColony.mcFoodProduction, objMainColony.mcMaterialProduction, objMainColony.mcLevel, 0 );
 			objMainColony.mcBuildBuilding( "Farm", 2, 1 );
@@ -327,7 +348,6 @@
 	function setup()
 	{
 		input.initialize();
-
 		/////////Army ScreenSwapper Buttons///////////////////////////
 		dom.bind( "#unit-screen button[name=Army]", "click", //Army Screen
 		  function ()
