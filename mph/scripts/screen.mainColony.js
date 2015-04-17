@@ -148,7 +148,7 @@
 					buildingSpaceEl = false;
 					objBuildings.buildingCurBuildTime = 0;
 					//(buildingName, buildCost, maintCost)
-					objMainColony.mcBuildBuilding( "Lab", 7, 3 );
+					objMainColony.mcBuildBuilding("SpaceElevator", 10, 0);
 					objMainColony.mcConstructionInProgress = false;
 					objBuildings.buildingSpaceElIsBuilt = true;
 					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Completed: " + currentlyBuilding;
@@ -164,7 +164,7 @@
 					buildingMD = false;
 					objBuildings.buildingCurBuildTime = 0;
 					//(buildingName, buildCost, maintCost)
-					objMainColony.mcBuildBuilding( "MilitaryDepot", 7, 3 );
+					objMainColony.mcBuildBuilding( "MilitaryDepot", 2, 4 );
 					objMainColony.mcConstructionInProgress = false;
 					objBuildings.buildingMDIsBuilt = true;
 					
@@ -174,7 +174,7 @@
 			if ( buildingConPlat )
 			{
 				objBuildings.buildingCurBuildTime++;
-				currentlyBuilding = "Construstion Platform";
+				currentlyBuilding = "Construction Platform";
 				//console.log( objBuildings.buildingConstructionTime );
 				if ( objBuildings.buildingConPlatBuildTime <= objBuildings.buildingCurBuildTime )
 				{
@@ -195,6 +195,15 @@
 
 		window.requestAnimationFrame( update );
 		window.requestAnimationFrame( updateGameInfo );
+	}
+
+    
+
+	
+	function DestroyBUildings()
+	{
+	       
+	   
 	}
 
 	function announce( str )
@@ -228,7 +237,8 @@
 		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML += " - " + objBuildings.buildingTotalMatMaint;
 
 		$( "#mainColony-screen .Farms span" )[0].innerHTML = objMainColony.mcCurFarmCount;
-		$( "#mainColony-screen .Mines span" )[0].innerHTML = objMainColony.mcCurMineCount;
+		$("#mainColony-screen .Mines span")[0].innerHTML = objMainColony.mcCurMineCount;
+		$("#mainColony-screen .Labs span")[0].innerHTML = objMainColony.mcCurRFCount;
 
 		$( "#mainColony-screen .Level span" )[0].innerHTML = objMainColony.mcLevel;
 		$( "#mainColony-screen .sciUpgradeReq span" )[0].innerHTML = Math.floor(objMainColony.mcLevelUpCostSci)  + " Science Needed";
@@ -703,9 +713,44 @@
 		  	{
 		  		$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony cannot be upgraded further.";
 		  	}
+
 		  	
-		  }
-		  );
+		  	
+		  });
+
+		dom.bind("#mainColony-screen button[name=DestroyFarm]", "click",
+             function () {
+                 if (objMainColony.mcCurFarmCount > 0) {
+                     objMainColony.mcCurFarmCount--;
+                     objMainColony.mcCurBuildingCount--;
+                     objMainColony.mcStoredMaterial += 25;
+                     $("#mainColony-screen .screenFeedBack span")[0].innerHTML = "Farm destroyed.";
+                 }
+             });
+
+
+
+		dom.bind("#mainColony-screen button[name=DestroyMine]", "click",
+          function () {
+              if (objMainColony.mcCurMineCount > 0) {
+                  objMainColony.mcCurMineCount--;
+                  objMainColony.mcCurBuildingCount--;
+                  objMainColony.mcStoredMaterial += 50;
+                  $("#mainColony-screen .screenFeedBack span")[0].innerHTML = "Mine destroyed.";
+              }
+          });
+
+		dom.bind("#mainColony-screen button[name=DestroyRF]", "click",
+          function () {
+              if (objMainColony.mcCurRFCount > 0) {
+                  objMainColony.mcCurRFCount--;
+                  objMainColony.mcCurBuildingCount--;
+                  objMainColony.mcStoredMaterial += 100;
+                  $("#mainColony-screen .screenFeedBack span")[0].innerHTML = "Lab destroyed.";
+              }
+          });
+		  
+			
 	}
 
 	return {

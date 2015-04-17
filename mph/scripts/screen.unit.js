@@ -240,7 +240,6 @@ mph.screens["unit-screen"] = (function ()
 
     function Attack()
     {
-        if (displayPower >= 20) {
             var attack1Button =
                 $("#unit-screen button[name=EnemyColony]")[0];
             dom.bind(attack1Button, "click", function (e) {
@@ -258,7 +257,7 @@ mph.screens["unit-screen"] = (function ()
                     startTimer = true;
                 }
             });
-        }
+        
                
     }
 

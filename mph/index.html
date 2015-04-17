@@ -117,6 +117,7 @@
 				<label class="Level">Level: <span></span></label> <button name="upgradeMC">Upgrade</button><label class="matUpgradeReq"> <span></span></label><label class="sciUpgradeReq"> <span></span></label> <br />
 				<label class="Farms">Farms: <span></span></label> <br />
 				<label class="Mines">Mines: <span></span></label><br />
+                <label class="Labs">Labs: <span></span></label><br />
 				<label class="BuildingCap">"Buildings: " <span></span></label><br />
 				
 				<br /><br /><label class="screenFeedBack"> <span></span></label><br />
@@ -130,8 +131,11 @@
 						<li><button name="buildConPlat">build Platform</button><label class="matConPlatReq"> <span></span></label></li>
 						<li><button name="buildSpaceEl">build Elevator</button><label class="matSpaceElReq"> <span></span></label></li>
 						<li><button name="buildMD">build Military Depot</button><label class="matMDReq"> <span></span></label></li>
-						
-					</ul>
+                        <li><button name="DestroyFarm">Destroy Farm</button>
+                        <li><button name="DestroyMine">Destroy Mine</button>
+                        <li><button name="DestroyRF">Destroy Lab</button>
+
+</ul>
 				
 				</div>
 			</div>
@@ -166,9 +170,9 @@
                 <label class="Diff">DifficultyIncrease: <span></span></label>
                 
                 <ul class="unitScreen">
-                    <li><button name="CreateVelos">CV</button>
-                    <li><button name="CreateTitav">CT</button>
-                    <li><button name="CreateAegis">CA</button>
+                    <li><button name="CreateVelos">CreateVelos</button>
+                    <li><button name="CreateTitav">CreateTitav</button>
+                    <li><button name="CreateAegis">CreateAegis</button>
 
                     <li onclick="visible()"><button name="Display">ViewColonies</button>
 <                    <li id="one" class="hidden"><button name="EnemyColony">AttackHippies</button>

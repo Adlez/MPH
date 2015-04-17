@@ -108,6 +108,7 @@
 		EatMaintencance: EatMaintencance,
 		mcLevelUpCostMat: mcLevelUpCostMat,
 		mcLevelUpCostSci: mcLevelUpCostSci
+		
 
 	};
 })();
