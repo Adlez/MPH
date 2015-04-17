@@ -195,11 +195,16 @@
 
     function decideArrivelOutcome()
     {
-        if(objShips.shipPower >= objShips.enemenemyShipPower)
+        if(objShips.shipPower >= objShips.enemyShipPower)
         {
             Arrived();
+            objShips.arrivedAtWorld = true;
+            objWorlds.recieveCargo();
+            objShips.currentCargo = 0;
         }
         else {
+            objShips.currentCargo = 0;
+            objShips.arrivedAtWorld = false;
             var destroyed = window.confirm(
             "Your fleet was wiped out by the enemy! :(");
         }

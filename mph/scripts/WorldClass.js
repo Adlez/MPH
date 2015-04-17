@@ -23,8 +23,13 @@
 
 	arrayOfWorlds = [],
 	arrayOfColonies = [],
-	arrayOfSyllables=[]
+	arrayOfSyllables=[],
 
+    displayWorldName = "",
+    worldMatCargo = 0,
+    worldFoodCargo = 0
+
+	NameWorld();
 	function NameWorld()
 	{
 		arrayOfSyllables.push( "ka" );
@@ -47,7 +52,7 @@
 		var numberOfSyllablesInFirstName = int = ((Math.random() * 4) + 2);
 		for (var i= int = 0; i < numberOfSyllablesInFirstName; i++)
 		{
-			h_WorldID += arrayOfSyllables[(( Math.random() * arrayOfSyllables.length ) )];
+			h_WorldID += arrayOfSyllables[Math.random() * arrayOfSyllables.length];
 		}
 		var h_WorldIDLetter = String = "";
 	}
@@ -108,11 +113,20 @@
 
 		//this.h_WorldID = "";
 
-		arrayOfWorlds.push();
-		NameWorld();
-		CreateNewName();
+		//arrayOfWorlds.push();
 
-		arrayOfWorlds.push( h_WorldID );
+		//for (index = 0; index < arrayOfWorlds.length; index++) {
+		    
+		    //h_WorldID = CreateNewName();
+		    arrayOfWorlds.push(h_WorldID);
+		//}
+		
+		
+
+	}
+
+	function nameWorld()
+	{
 
 	}
 
@@ -130,7 +144,13 @@
 		h_WorldColonyLevel: h_WorldColonyLevel,
 		h_WorldID: h_WorldID,
 
-		CreateWorld: CreateWorld
+		CreateWorld: CreateWorld,
+		displayWorldName: displayWorldName,
+		arrayOfWorlds: arrayOfWorlds,
+		worldMatCargo: worldMatCargo,
+		worldFoodCargo: worldFoodCargo,
+		h_ColonyFoodOutput: h_ColonyFoodOutput,
+		h_ColonyMaterialOutput: h_ColonyMaterialOutput
 
 	};
 } )();
