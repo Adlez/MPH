@@ -158,6 +158,7 @@ window.addEventListener( "load", function ()
 			    "loader!scripts/input.js",
 			    "loader!scripts/screen.hiscore.js",
 			    "loader!scripts/screen.main-menu.js",
+			    "loader!scripts/screen.about.js",
 			    "loader!scripts/MainColony.js",
 			    "loader!scripts/WorldClass.js",
 			    "loader!scripts/Buildings.js",
