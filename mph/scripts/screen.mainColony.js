@@ -80,12 +80,13 @@
 		if ( GameTimer >= 1 )
 		{
 			objMainColony.mcFoodProduction = objMainColony.mcCurFarmCount * 15;
-			// both of these are incorrect amounts for now
 			objMainColony.mcMaterialProduction = objMainColony.mcCurMineCount * 20;
 			objMainColony.mcScienceProduction = (objMainColony.mcCurRFCount * 2) + (objMainColony.mcLevel * 0.5);
 
 			objMainColony.UpdateMainColony( objMainColony.mcFoodProduction, objMainColony.mcMaterialProduction, objMainColony.mcLevel, objMainColony.mcScienceProduction );
 			objMainColony.EatMaintencance( objBuildings.buildingTotalFoodMaint, objBuildings.buildingTotalMatMaint );
+
+			objWorlds.UpdateOffWorldColony();
 
 			//Construction Stuff
 			if ( buildingFarm )
@@ -189,6 +190,8 @@
 			GameTimer = 0;
 
 		}
+
+		
 
 		window.requestAnimationFrame( update );
 		window.requestAnimationFrame( updateGameInfo );

@@ -1,8 +1,8 @@
 ﻿objWorlds = ( function ()
 {
 	var temp = 0;
-	var h_WorldType= 0,
-	h_WorldTypeName= "",
+	var h_WorldType = 0,
+	h_WorldTypeName = "",
 	h_WorldFertilityLevel = 0, //1:20%, 2:50%,3:20%,4:10%
 	h_WorldMineralLevel = 0, //1:45%, 2:25%, 3:25%, 4:5%
 	h_WorldHasRuins = false, //false:80%, true:20%
@@ -16,6 +16,10 @@
 
 	h_ColonyFoodOutput = 0,
 	h_ColonyMaterialOutput = 0,
+	h_ColonyStoredFood = 0,
+	h_ColonyStoredMat = 0,
+	h_ColonyStoredFoodMax = 0,
+	h_ColonyStoredMatMax = 0,
 
 	h_ColonyDefense = 0,
 
@@ -23,7 +27,9 @@
 
 	arrayOfWorlds = [],
 	arrayOfColonies = [],
-	arrayOfSyllables=[]
+	arrayOfSyllables = [];
+
+	NameWorld();
 
 	function NameWorld()
 	{
@@ -108,14 +114,41 @@
 
 		//this.h_WorldID = "";
 
+		//Determine if World has Ruins or not
+		var RuinOdds = Math.floor(( Math.random() * 10 ) + 1 );	
+		if ( RuinOdds >= 2 )
+		{
+			this.h_WorldHasRuins = true;
+		}
+
+		//determine world's Travel Time/Distance from the Main Colony
+		this.h_DistanceFromMainColony = Math.floor(( Math.random() * 42 ) + 12 );
+
 		arrayOfWorlds.push();
-		NameWorld();
 		CreateNewName();
 
 		arrayOfWorlds.push( h_WorldID );
 
 	}
 
+	function ColonizeWorld()
+	{
+		this.h_WorldHasColony = true;
+		this.h_WorldColonyLevel = 1;
+	}
+
+	function UpdateOffWorldColony()
+	{
+		this.h_ColonyStoredFood += this.h_ColonyFoodOutput;
+		this.h_ColonyStoredMat += this.h_ColonyMaterialOutput;
+		if ( this.h_ColonyStoredFood >= this.h_ColonyStoredFoodMax ) { this.h_ColonyStoredFood = this.h_ColonyStoredFood; }
+		if ( this.h_ColonyStoredMat >= this.h_ColonyStoredMatMax ) { this.h_ColonyStoredMat = this.h_ColonyStoredMat; }
+	}
+
+	function SendResourcesToMainColony()
+	{
+
+	}
 
 
 	//	MainColonyWorld : WorldClass;
@@ -130,7 +163,11 @@
 		h_WorldColonyLevel: h_WorldColonyLevel,
 		h_WorldID: h_WorldID,
 
-		CreateWorld: CreateWorld
+		arrayOfWorlds: arrayOfWorlds,
+
+		CreateWorld: CreateWorld,
+		ColonizeWorld: ColonizeWorld,
+		UpdateOffWorldColony: UpdateOffWorldColony
 
 	};
 } )();

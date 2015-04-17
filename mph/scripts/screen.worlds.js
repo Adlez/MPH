@@ -87,7 +87,12 @@
 	function updateGameInfo()
 	{
 		$( "#worlds-screen .Level span" )[0].innerHTML = "Level of Colony: " + objWorlds.h_WorldColonyLevel;
-		$( "#worlds-screen .nearbyWorlds span" )[0].innerHTML = objWorlds.arrayOfWorlds;
+		for ( var i = 0; i < objWorlds.arrayOfWorlds.length ; ++i )
+		{
+			$( "#worlds-screen .nearbyWorlds span" )[0].innerHTML += objWorlds.arrayOfWorlds[i];
+		}
+		$( "worlds-screen .screenFeedBack span" )[0].innerHTML = objWorlds.h_WorldID;
+		
 	}
 
 	function gameOver()
