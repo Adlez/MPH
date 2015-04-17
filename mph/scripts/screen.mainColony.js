@@ -86,7 +86,9 @@
 			objMainColony.UpdateMainColony( objMainColony.mcFoodProduction, objMainColony.mcMaterialProduction, objMainColony.mcLevel, objMainColony.mcScienceProduction );
 			objMainColony.EatMaintencance( objBuildings.buildingTotalFoodMaint, objBuildings.buildingTotalMatMaint );
 
-			objWorlds.UpdateOffWorldColony();
+			//			objWorlds.up
+			objWorlds.UpdateWorlds();
+//			objWorlds.UpdateOffWorldColony();
 
 			//Construction Stuff
 			if ( buildingFarm )
