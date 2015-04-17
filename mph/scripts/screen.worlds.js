@@ -24,7 +24,7 @@
 	{
 		window.requestAnimationFrame( gameLoop, display.canvas );
 		update();
-
+		UpdateWorlds();
 	}
 
 
@@ -34,9 +34,7 @@
 			
 		};
 
-
 		gameLoop();
-
 	}
 
 	var previousTime = Date.now();
@@ -44,29 +42,14 @@
 
 	function update()
 	{
-
 		var deltaTime = ( Date.now() - previousTime ) / 1000;
 		previousTime = Date.now();
 
-		GameTimer += deltaTime;
-		displayWorlds();
-		
+		GameTimer += deltaTime;		
 
 		window.requestAnimationFrame( update );
 		window.requestAnimationFrame( updateGameInfo );
-	}
 
-	function displayWorlds()
-	{
-	    if (objShips.arrivedAtWorld == true) {
-	        objWorlds.displayWorldName = "FuckADuck";
-	        objWorlds.h_ColonyMaterialOutput += (deltaTime * 0.5);
-	        objWorlds.h_ColonyFoodOutput += (deltaTime * 0.75);
-	    }
-	    /*for(index = 0; index < objWorlds.arrayOfWorlds.length; index++)
-	    {
-	        objWorlds.displayWorldName = objWorlds.arrayOfWorlds[index];
-	    }*/
 	}
 
 	function recieveCargo()
@@ -92,21 +75,49 @@
 
 	function UpdateWorlds()
 	{
-		$( "#worlds-screen .Level span" )[0].innerHTML = "Level of Colony: " + objWorlds.h_WorldColonyLevel;
-		for ( var i = 0; i < objWorlds.arrayOfWorlds.length ; ++i )
-		{
-			$( "#worlds-screen .nearbyWorlds span" )[0].innerHTML += objWorlds.arrayOfWorlds[i];
-		}
-		$( "worlds-screen .screenFeedBack span" )[0].innerHTML = objWorlds.h_WorldID;
+		
+		objWorlds.UpdateWorldsDisplays();
+
+		//World 1
+		$( "#worlds-screen .W1Name span" )[0].innerHTML = objWorlds.arrayOfWorlds[0].h_WorldID;
+		$( "#worlds-screen .colony1Level span" )[0].innerHTML = "Level of Colony: " + objWorlds.arrayOfWorlds[0].h_WorldColonyLevel;
+		$( "#worlds-screen .colony1StoredFood span" )[0].innerHTML = "Food Stored: " + objWorlds.arrayOfWorlds[0].h_ColonyStoredFood + " +" + objWorlds.arrayOfWorlds[0].h_ColonyFoodOutput;
+		$( "#worlds-screen .colony1StoredMat span" )[0].innerHTML = "Material Stored: " + objWorlds.arrayOfWorlds[0].h_ColonyStoredMat + " +" + objWorlds.arrayOfWorlds[0].h_ColonyMaterialOutput;
+		$( "#worlds-screen .world1Fertility span" )[0].innerHTML = "Fertility: " + objWorlds.arrayOfWorlds[0].h_WorldFertilityLevel;
+		$( "#worlds-screen .world1Mineral span" )[0].innerHTML = "Mineral Tier: " + objWorlds.arrayOfWorlds[0].h_WorldMineralLevel;
+
+		//World 2
+		$( "#worlds-screen .W2Name span" )[0].innerHTML = objWorlds.arrayOfWorlds[1].h_WorldID;
+		$( "#worlds-screen .colony2Level span" )[0].innerHTML = "Level of Colony: " + objWorlds.arrayOfWorlds[1].h_WorldColonyLevel;
+		$( "#worlds-screen .colony2StoredFood span" )[0].innerHTML = "Food Stored: " + objWorlds.arrayOfWorlds[1].h_ColonyStoredFood + " +" + objWorlds.arrayOfWorlds[1].h_ColonyFoodOutput;
+		$( "#worlds-screen .colony2StoredMat span" )[0].innerHTML = "Material Stored: " + objWorlds.arrayOfWorlds[1].h_ColonyStoredMat + " +" + objWorlds.arrayOfWorlds[1].h_ColonyMaterialOutput;
+		$( "#worlds-screen .world2Fertility span" )[0].innerHTML = "Fertility: " + objWorlds.arrayOfWorlds[1].h_WorldFertilityLevel;
+		$( "#worlds-screen .world2Mineral span" )[0].innerHTML = "Mineral Tier: " + objWorlds.arrayOfWorlds[1].h_WorldMineralLevel;
+
+
+		//World 3
+		$( "#worlds-screen .W3Name span" )[0].innerHTML = objWorlds.arrayOfWorlds[2].h_WorldID;
+		$( "#worlds-screen .colony3Level span" )[0].innerHTML = "Level of Colony: " + objWorlds.arrayOfWorlds[2].h_WorldColonyLevel;
+		$( "#worlds-screen .colony3StoredFood span" )[0].innerHTML = "Food Stored: " + objWorlds.arrayOfWorlds[2].h_ColonyStoredFood + " +" + objWorlds.arrayOfWorlds[2].h_ColonyFoodOutput;
+		$( "#worlds-screen .colony3StoredMat span" )[0].innerHTML = "Material Stored: " + objWorlds.arrayOfWorlds[2].h_ColonyStoredMat + " +" + objWorlds.arrayOfWorlds[2].h_ColonyMaterialOutput;
+		$( "#worlds-screen .world3Fertility span" )[0].innerHTML = "Fertility: " + objWorlds.arrayOfWorlds[2].h_WorldFertilityLevel;
+		$( "#worlds-screen .world3Mineral span" )[0].innerHTML = "Mineral Tier: " + objWorlds.arrayOfWorlds[2].h_WorldMineralLevel;
+
+		
+
+		
+
+		
+
+		
+
+//		$( "#worlds-screen .SShips span" )[0].innerHTML = Math.floor( objWorlds.arrayOfWorlds[i].supplyShipDisplay );
+//		$( "#worlds-screen .colonyStoredMat span" )[0].innerHTML = Math.floor( objWorlds.arrayOfWorlds[i].h_ColonyMaterialOutput );
+//		$( "#worlds-screen .colonyStoredFood span" )[0].innerHTML = Math.floor( objWorlds.arrayOfWorlds[i].h_ColonyFoodOutput );
 	}
 
 	function updateGameInfo()
 	{
-	    $("#worlds-screen .Level span")[0].innerHTML = "Level of Colony: " + objWorlds.h_WorldColonyLevel;
-	    $("#worlds-screen .WName span")[0].innerHTML = objWorlds.displayWorldName;
-	    $("#worlds-screen .SShips span")[0].innerHTML = Math.floor(objShips.supplyShipDisplay);
-	    $("#worlds-screen .colonyStoredMat span")[0].innerHTML = Math.floor(objWorlds.h_ColonyMaterialOutput);
-	    $("#worlds-screen .colonyStoredFood span")[0].innerHTML = Math.floor(objWorlds.h_ColonyFoodOutput);
 
 	}
 
@@ -114,12 +125,6 @@
 	{
 		if ( firstRun )
 		{
-			objWorlds.CreateWorld();
-			objWorlds.CreateWorld();
-			objWorlds.CreateWorld();
-			objWorlds.CreateWorld();
-			objWorlds.CreateWorld();
-
 			setup();
 
 			firstRun = false;
@@ -164,7 +169,10 @@
 
 	function setup()
 	{
-	   
+		objWorlds.CreateWorld();
+		objWorlds.CreateWorld();
+		objWorlds.CreateWorld();
+
 		////////////World Colony  Buttons///////////////////////
 		///////Level Up the Colony
 		dom.bind( "#worlds-screen button[name=upgradeColony]", "click",
@@ -187,11 +195,8 @@
 		  		{
 		  			if ( objWorlds.h_WorldColonyLevelUpCostMat > objWorlds.mcStoredMaterial )
 		  			{
-//		  				$( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to Upgrade";
+		  				$( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to Upgrade";
 		  			}
-		  			else{}
-//		  			{ $( "#worlds-screen .screenFeedBack span" )[0].innerHTML = "Need more Material and Science to Upgrade"; }
-
 		  		}
 		  	}
 		  	else

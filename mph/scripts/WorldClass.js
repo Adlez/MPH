@@ -29,135 +29,217 @@
 	arrayOfColonies = [],
 	arrayOfSyllables = [];
 
-	NameWorld();
-
-    displayWorldName = "",
     worldMatCargo = 0,
     worldFoodCargo = 0
 
-	NameWorld();
-	function NameWorld()
+/*	function CreateNewName()
 	{
-		arrayOfSyllables.push( "ka" );
-		arrayOfSyllables.push( "zu" );
-		arrayOfSyllables.push( "zei" );
-		arrayOfSyllables.push( "ash" );
-		arrayOfSyllables.push( "ri" );
-		arrayOfSyllables.push( "BX" );
-		arrayOfSyllables.push( "mo" );
-		arrayOfSyllables.push( "ja" );
-		arrayOfSyllables.push( "el" );
-		arrayOfSyllables.push( "ich" );
-		arrayOfSyllables.push( "en" );
-	}
-
-	function CreateNewName()
-	{
-		//Creates a first name with 2-3 syllables
-		var h_WorldID = String = "";
-		var numberOfSyllablesInFirstName = int = ((Math.random() * 4) + 2);
-		for (var i= int = 0; i < numberOfSyllablesInFirstName; i++)
+		var ID = ( Math.floor(( Math.random() * 3 ) + 1 ) );
+		var IDtype;
+		var IDpre;
+		var IDsuff;
+		if(ID == 1)
 		{
-			h_WorldID += arrayOfSyllables[Math.random() * arrayOfSyllables.length];
+			IDtype = "Px";
 		}
-		var h_WorldIDLetter = String = "";
-	}
+		else if(ID == 2)
+		{
+			IDtype = "Mg";
+		}
+		else if(ID == 3)
+		{
+			IDtype = "As";
+		}
+		ID = ( Math.floor(( Math.random() * 8 ) + 1 ) );
+		for(var i = 0; i < ID; ++i)
+		{
+			IDpre = i;
+		}
+		ID = ( Math.floor(( Math.random() * 20 ) + 1 ) );
+		for ( var i = 0; i < ID; ++i )
+		{
+			if ( ID > 0 && ID < 5 )
+			{
+				IDsuff = "Gf";
+			}
+			else if ( ID > 4 && ID < 10 )
+			{
+				IDsuff = "Sm";
+			}
+			else if ( ID > 9 && ID < 21 )
+			{
+				IDsuff = "Au";
+			}
+		}
+		this.h_WorldID = IDtype + IDpre +IDsuff;
+	}*/
 
 	function CreateWorld(  )
 	{
-
-
+		var NewWorld = Object.create( objWorlds );
+	
 		//decide the WorldType, 1 = Planet, 2 = Moon, 3 = Asteroid
-		this.h_WorldType = Math.floor(( Math.random() * 3 ) + 1 );		
+		NewWorld.h_WorldType = Math.floor(( Math.random() * 3 ) + 1 );
 
 		//Next Assign the World's Fertility And Mineral Level based on the world type
-		if(this.h_WorldType == 1)
+		if ( NewWorld.h_WorldType == 1 )
 		{
-			this.h_WorldFertilityLevel = ( Math.floor(( Math.random() * 3 ) + 1 ) );
+			NewWorld.h_WorldFertilityLevel = ( Math.floor(( Math.random() * 3 ) + 1 ) );
 			//Planets Get +1 Fertility Level:
-			this.h_WorldFertilityLevel++;
+			NewWorld.h_WorldFertilityLevel++;
 			//Foodoutput determined by Ferility and Level
-			this.h_ColonyFoodOutput = h_WorldFertilityLevel * h_WorldColonyLevel;
-			this.h_WorldTypeName = "Planet";
+			NewWorld.h_ColonyFoodOutput = h_WorldFertilityLevel * h_WorldColonyLevel;
+			NewWorld.h_WorldTypeName = "Planet";
 
 
-			this.h_WorldMineralLevel = ( Math.floor(( Math.random() * 3 ) + 1 ) );
-			this.h_ColonyMaterialOutput = h_WorldMineralLevel * h_WorldColonyLevel;
+			NewWorld.h_WorldMineralLevel = ( Math.floor(( Math.random() * 3 ) + 1 ) );
+			NewWorld.h_ColonyMaterialOutput = h_WorldMineralLevel * h_WorldColonyLevel;
 			//Planets can have ruins:
 			temp = ( ( Math.random() * 100 ) + 1 );
 			if ( temp >= 50 )
 			{
-				this.h_WorldHasRuins = true;
+				NewWorld.h_WorldHasRuins = true;
 			}
 
 		}
-		else if ( this.h_WorldType == 2 )
+		else if ( NewWorld.h_WorldType == 2 )
 		{
-			this.h_WorldFertilityLevel = Math.floor(( Math.random() * 3 ) + 1 );
+			NewWorld.h_WorldFertilityLevel = Math.floor(( Math.random() * 3 ) + 1 );
 			//Moons are not as fertile as Planets so their output is halved
-			this.h_ColonyFoodOutput = Math.floor(( this.h_WorldFertilityLevel * this.h_WorldColonyLevel ) * 0.5 );
-			this.h_WorldTypeName = "Moon";
+			NewWorld.h_ColonyFoodOutput = Math.floor(( NewWorld.h_WorldFertilityLevel * NewWorld.h_WorldColonyLevel ) * 0.5 );
+			NewWorld.h_WorldTypeName = "Moon";
 
-			this.h_WorldMineralLevel = ( Math.floor(( Math.random() * 3 ) + 1 ) );
-			this.h_ColonyMaterialOutput = h_WorldMineralLevel * h_WorldColonyLevel;
+			NewWorld.h_WorldMineralLevel = ( Math.floor(( Math.random() * 3 ) + 1 ) );
+			NewWorld.h_ColonyMaterialOutput = h_WorldMineralLevel * h_WorldColonyLevel;
 
 		}
-		else if (this.h_WorldType == 3)
+		else if ( NewWorld.h_WorldType == 3 )
 		{
 			//Asteroids cannot be fertile
-			this.h_WorldFertilityLevel = 0;
-			this.h_ColonyFoodOutput = this.h_WorldFertilityLevel * h_WorldColonyLevel;
-			this.h_WorldTypeName = "Asteroid";
+			NewWorld.h_WorldFertilityLevel = 0;
+			NewWorld.h_ColonyFoodOutput = NewWorld.h_WorldFertilityLevel * h_WorldColonyLevel;
+			NewWorld.h_WorldTypeName = "Asteroid";
 
-			this.h_WorldMineralLevel = ( Math.floor(( Math.random() * 3 ) + 1 ) );
-			this.h_ColonyMaterialOutput = h_WorldMineralLevel * h_WorldColonyLevel;
+			NewWorldh_WorldMineralLevel = ( Math.floor(( Math.random() * 3 ) + 1 ) );
+			NewWorld.h_ColonyMaterialOutput = h_WorldMineralLevel * h_WorldColonyLevel;
 			//Asteroids produce Material Much faster
-			this.h_ColonyMaterialOutput *= 2;
+			NewWorld.h_ColonyMaterialOutput *= 2;
 		}
 		else
-		{ console.log( "Error, no World Type" ) }
-
-		//this.h_WorldID = "";
+		{
+			console.log( "Error, no World Type" )
+		}
 
 		//Determine if World has Ruins or not
 		var RuinOdds = Math.floor(( Math.random() * 10 ) + 1 );	
 		if ( RuinOdds >= 2 )
 		{
-			this.h_WorldHasRuins = true;
+			NewWorld.h_WorldHasRuins = true;
 		}
 
 		//determine world's Travel Time/Distance from the Main Colony
-		this.h_DistanceFromMainColony = Math.floor(( Math.random() * 42 ) + 12 );
+		NewWorld.h_DistanceFromMainColony = Math.floor(( Math.random() * 42 ) + 12 );
+//		NewWorld.CreateNewName();
 
-		arrayOfWorlds.push();
-		CreateNewName();
-		//arrayOfWorlds.push();
+		//CREATE NAME:::::::::::::
+		var ID = ( Math.floor(( Math.random() * 3 ) + 1 ) );
+		var IDtype;
+		var IDpre;
+		var IDsuff;
+		if ( ID == 1 )
+		{
+			IDtype = "Px";
+		}
+		else if ( ID == 2 )
+		{
+			IDtype = "Mg";
+		}
+		else if ( ID == 3 )
+		{
+			IDtype = "As";
+		}
+		ID = ( Math.floor(( Math.random() * 8 ) + 1 ) );
+		for ( var i = 0; i < ID; ++i )
+		{
+			IDpre = i;
+		}
+		ID = ( Math.floor(( Math.random() * 20 ) + 1 ) );
+		for ( var i = 0; i < ID; ++i )
+		{
+			if ( ID > 0 && ID < 5 )
+			{
+				IDsuff = "Gf";
+			}
+			else if ( ID > 4 && ID < 10 )
+			{
+				IDsuff = "Sm";
+			}
+			else if ( ID > 9 && ID < 21 )
+			{
+				IDsuff = "Au";
+			}
+		}
+		NewWorld.h_WorldID = IDtype + IDpre + IDsuff;
 
-		//for (index = 0; index < arrayOfWorlds.length; index++) {
-		    
-		    //h_WorldID = CreateNewName();
-		    arrayOfWorlds.push(h_WorldID);
-		//}
+		NewWorld.h_WorldHasColony = false;
+
+		arrayOfWorlds.push( NewWorld );
 
 	}
 
-	function nameWorld()
+	//Colonize World
+	function ColonizeWorld(indexNumber)
 	{
+		var index = indexNumber;
+
+		if ( !this.arrayOfWorlds[index].h_WorldHasColony )
+		{
+
+			this.arrayOfWorlds[index].h_WorldHasColony = true;
+			this.arrayOfWorlds[index].h_WorldColonyLevel = 1;
+		}
+		else
+		{
+			return;
+		}
+	}
+
+
+	function UpdateOffWorldColony( indexNumber )
+	{
+		var index = indexNumber;
+		
+		for ( var i = 0; i < arrayOfWorlds.length; ++i )
+		{
+
+			this.arrayOfWorlds[index].h_ColonyStoredFood += this.arrayOfWorlds[index].h_ColonyFoodOutput;
+			this.arrayOfWorlds[index].h_ColonyStoredMat += this.arrayOfWorlds[index].h_ColonyMaterialOutput;
+
+			if ( this.arrayOfWorlds[index].h_ColonyStoredFood >= this.arrayOfWorlds[index].h_ColonyStoredFoodMax )
+			{
+				this.arrayOfWorlds[index].h_ColonyStoredFood = this.arrayOfWorlds[index].h_ColonyStoredFood;
+			}
+			if ( this.arrayOfWorlds[index].h_ColonyStoredMat >= this.arrayOfWorlds[index].h_ColonyStoredMatMax )
+			{
+				this.arrayOfWorlds[index].h_ColonyStoredMat = this.arrayOfWorlds[index].h_ColonyStoredMat;
+			}
+		}
+	}
+
+	function UpdateWorlds()
+	{
+		for ( var i = 0; i < arrayOfWorlds.length; ++i )
+		{
+			if ( this.arrayOfWorlds[i].h_WorldHasColony )
+			{
+				this.arrayOfWorlds[i].UpdateOffWorldColony(i);
+			}
+		}
 
 	}
 
-	function ColonizeWorld()
+	function UpdateWorldsDisplays()
 	{
-		this.h_WorldHasColony = true;
-		this.h_WorldColonyLevel = 1;
-	}
-
-	function UpdateOffWorldColony()
-	{
-		this.h_ColonyStoredFood += this.h_ColonyFoodOutput;
-		this.h_ColonyStoredMat += this.h_ColonyMaterialOutput;
-		if ( this.h_ColonyStoredFood >= this.h_ColonyStoredFoodMax ) { this.h_ColonyStoredFood = this.h_ColonyStoredFood; }
-		if ( this.h_ColonyStoredMat >= this.h_ColonyStoredMatMax ) { this.h_ColonyStoredMat = this.h_ColonyStoredMat; }
 	}
 
 	function SendResourcesToMainColony()
@@ -172,8 +254,13 @@
 		h_WorldHasRuins: h_WorldHasRuins,
 		h_WorldFertilityLevel: h_WorldFertilityLevel,
 		h_WorldMineralLevel: h_WorldMineralLevel,
+		h_ColonyStoredFood: h_ColonyStoredFood,
+		h_ColonyStoredMat: h_ColonyStoredMat,
+
+
 		h_DistanceFromMainColony: h_DistanceFromMainColony,
 		h_DistanceFromCapital: h_DistanceFromCapital,
+
 		h_WorldHasColony: h_WorldHasColony,
 		h_WorldColonyLevel: h_WorldColonyLevel,
 		h_WorldID: h_WorldID,
@@ -181,11 +268,14 @@
 		arrayOfWorlds: arrayOfWorlds,
 
 		CreateWorld: CreateWorld,
-		ColonizeWorld: ColonizeWorld,
-		UpdateOffWorldColony: UpdateOffWorldColony,
+//		CreateNewName: CreateNewName,
 
-		CreateWorld: CreateWorld,
-		displayWorldName: displayWorldName,
+		ColonizeWorld: ColonizeWorld,
+
+		UpdateOffWorldColony: UpdateOffWorldColony,
+		UpdateWorldsDisplays: UpdateWorldsDisplays,
+		UpdateWorlds: UpdateWorlds,
+		
 		arrayOfWorlds: arrayOfWorlds,
 		worldMatCargo: worldMatCargo,
 		worldFoodCargo: worldFoodCargo,
