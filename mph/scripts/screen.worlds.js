@@ -1,14 +1,8 @@
 ﻿mph.screens["worlds-screen"] = ( function ()
 {
-	var settings = mph.settings,
-	storage = mph.storage,
-	display = mph.display,
-	board = mph.board,
-	input = mph.input,
+	var display = mph.display,
 	dom = mph.dom,
-	audio = mph.audio,
 	$ = dom.$,
-	cursor,
 	firstRun = true,
 	paused = false,
 
@@ -37,9 +31,7 @@
 	function startGame()
 	{
 		gameState = {
-			timer: 0, // setTimeout reference
-			startTime: 0, // time at start of level
-			endTime: 0 // time to game over
+			
 		};
 
 
@@ -57,34 +49,48 @@
 		previousTime = Date.now();
 
 		GameTimer += deltaTime;
+		displayWorlds();
+		
 
 		window.requestAnimationFrame( update );
 		window.requestAnimationFrame( updateGameInfo );
 	}
 
-	function announce( str )
+	function displayWorlds()
 	{
-		var element = $( "#game-screen .announcement" )[0];
-		element.innerHTML = str;
-		if ( Modernizr.cssanimations )
-		{
-			dom.removeClass( element, "zoomfade" );
-			setTimeout( function ()
-			{
-				dom.addClass( element, "zoomfade" );
-			}, 1 );
-		} else
-		{
-			dom.addClass( element, "active" );
-			setTimeout( function ()
-			{
-				dom.removeClass( element, "active" );
-			}, 1000 );
-		}
+	    if (objShips.arrivedAtWorld == true) {
+	        objWorlds.displayWorldName = "FuckADuck";
+	        objWorlds.h_ColonyMaterialOutput += (deltaTime * 0.5);
+	        objWorlds.h_ColonyFoodOutput += (deltaTime * 0.75);
+	    }
+	    /*for(index = 0; index < objWorlds.arrayOfWorlds.length; index++)
+	    {
+	        objWorlds.displayWorldName = objWorlds.arrayOfWorlds[index];
+	    }*/
 	}
 
+	function recieveCargo()
+	{
+	    objWorlds.h_ColonyMaterialOutput += objShips.currentCargo;
+	}
 
-	function updateGameInfo()
+	sendCargo();
+	function sendCargo()
+	{
+	    objWorlds.worldMatCargo += objWorlds.h_ColonyMaterialOutput;
+	    objWorlds.worldFoodCargo += objWorlds.h_ColonyFoodOutput;
+
+	    dom.bind("#worlds-screen button[name=SendCargo]", "click",
+		  function () {
+		      if (objShips.supplyShipDisplay >= 1) {
+		          objWorlds.h_ColonyMaterialOutput = 0;
+		          objWorlds.h_ColonyFoodOutput = 0;
+		          objShips.supplyShipDisplay = 0;
+		      }
+		  });
+	}
+
+	function UpdateWorlds()
 	{
 		$( "#worlds-screen .Level span" )[0].innerHTML = "Level of Colony: " + objWorlds.h_WorldColonyLevel;
 		for ( var i = 0; i < objWorlds.arrayOfWorlds.length ; ++i )
@@ -92,23 +98,16 @@
 			$( "#worlds-screen .nearbyWorlds span" )[0].innerHTML += objWorlds.arrayOfWorlds[i];
 		}
 		$( "worlds-screen .screenFeedBack span" )[0].innerHTML = objWorlds.h_WorldID;
-		
 	}
 
-	function gameOver()
+	function updateGameInfo()
 	{
-		audio.play( "gameover" );
-		stopGame();
-		storage.set( "activeGameData", null );
-		display.gameOver( function ()
-		{
-			announce( "Game over" );
-			setTimeout( function ()
-			{
-				mph.game.showScreen(
-				   "hiscore", gameState.score );
-			}, 2500 );
-		} );
+	    $("#worlds-screen .Level span")[0].innerHTML = "Level of Colony: " + objWorlds.h_WorldColonyLevel;
+	    $("#worlds-screen .WName span")[0].innerHTML = objWorlds.displayWorldName;
+	    $("#worlds-screen .SShips span")[0].innerHTML = Math.floor(objShips.supplyShipDisplay);
+	    $("#worlds-screen .colonyStoredMat span")[0].innerHTML = Math.floor(objWorlds.h_ColonyMaterialOutput);
+	    $("#worlds-screen .colonyStoredFood span")[0].innerHTML = Math.floor(objWorlds.h_ColonyFoodOutput);
+
 	}
 
 	function run()
@@ -147,12 +146,28 @@
 		}
 	}
 
+	function announce(str) {
+	    var element = $("#game-screen .announcement")[0];
+	    element.innerHTML = str;
+	    if (Modernizr.cssanimations) {
+	        dom.removeClass(element, "zoomfade");
+	        setTimeout(function () {
+	            dom.addClass(element, "zoomfade");
+	        }, 1);
+	    } else {
+	        dom.addClass(element, "active");
+	        setTimeout(function () {
+	            dom.removeClass(element, "active");
+	        }, 1000);
+	    }
+	}
+
 	function setup()
 	{
-			
+	   
 		////////////World Colony  Buttons///////////////////////
 		///////Level Up the Colony
-		/*dom.bind( "#worlds-screen button[name=upgradeColony]", "click",
+		dom.bind( "#worlds-screen button[name=upgradeColony]", "click",
 		  function ()
 		  {
 		  	if ( objWorlds.mcLevel < 100 )
@@ -185,7 +200,7 @@
 		  	}
 
 		  }
-		  );*/
+		  );
 	}
 
 	return {

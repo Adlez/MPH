@@ -33,7 +33,8 @@
         maxCargo = 0,
         currentCargo = 0,
         enemyShipPower = 0,
-        foodMaintCost = 0
+        foodMaintCost = 0,
+        arrivedAtWorld = false
 
         
         setRandTravelTime = function ()
@@ -87,6 +88,7 @@
         currentCargo: currentCargo,
         enemyShipPower: enemyShipPower,
         foodMaintCost: foodMaintCost,
+        arrivedAtWorld: arrivedAtWorld,
 
         setRandTravelTime: setRandTravelTime,
         setRandEnemyPower: setRandEnemyPower,
