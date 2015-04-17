@@ -161,12 +161,12 @@
         });
     }
 
-    travelToNewColony();
+    //travelToNewColony();
     function travelToNewColony()
     {
-        var FLButton =
+        /*var FLButton =
           $("#ship-screen button[name=FTL]")[0];
-        dom.bind(FLButton, "click", function (e) {
+        dom.bind(FLButton, "click", function (e) {*/
             if(objShips.colonyShipDisplay >= 1 && objShips.travelTime <= 0)
             {
                 destroyShips();
@@ -181,7 +181,7 @@
                 
                 shipState.startTimer = true;
             }
-        });
+        //});
     }
 
     function destroyShips()
@@ -191,6 +191,7 @@
         objShips.colonyShipDisplay -= objShips.colonyShipDisplay;
         objShips.shipPower -= objShips.shipPower;
         objShips.maxCargo -= objShips.maxCargo;
+        objShips.foodMaintCost -= objShips.foodMaintCost;
     }
 
     function decideArrivelOutcome()
@@ -280,7 +281,8 @@
 
     return {
         run: run,
-        update: update
+        update: update,
+        travelToNewColony: travelToNewColony
 
     };
 

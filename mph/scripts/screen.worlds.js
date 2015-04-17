@@ -69,11 +69,13 @@
 		          objWorlds.h_ColonyMaterialOutput = 0;
 		          objWorlds.h_ColonyFoodOutput = 0;
 		          objShips.supplyShipDisplay = 0;
+		          objMainCOlony.mcStoredFood += objWorlds.worldFoodCargo;
+		          objMainColony.mcStoredMaterial += objWorlds.worldMatCargo;
 		      }
 		  });
 	}
 
-	function UpdateWorlds()
+    function UpdateWorlds()
 	{
 		
 		objWorlds.UpdateWorldsDisplays();
@@ -172,6 +174,20 @@
 		objWorlds.CreateWorld();
 		objWorlds.CreateWorld();
 		objWorlds.CreateWorld();
+
+		dom.bind("#worlds-screen button[name=upgradeColony]", "click",
+		  function () {
+		      mph.screens["ship-screen"].travelToNewColony();
+		      if (objShips.arrivedAtWorld == true) {
+		          objWorlds.h_WorldColonyLevel++;
+		      }
+		      else {
+		          var destroyed = window.confirm(
+                    "Your fleet was wiped out by the enemy on route! :(");
+		      }
+		      console.log("Ouch Fucker");
+
+		  });
 
 		////////////World Colony  Buttons///////////////////////
 		///////Level Up the Colony
