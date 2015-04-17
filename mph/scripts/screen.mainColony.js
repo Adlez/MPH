@@ -593,110 +593,125 @@
 		dom.bind( "#mainColony-screen button[name=buildSpaceEl]", "click",
 		  function ()
 		  {
-		  	if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingSpaceElBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 2 < objMainColony.mcBuildingCap )
+		  	if ( !buildingSpaceElIsBuilt )
 		  	{
-		  		//(buildingName, buildCost, constructionTime, maintCost)
-		  		buildingSpaceEl = true;
-		  		objMainColony.mcConstructionInProgress = true;
-		  		objBuildings.buildingCurBuildTime = 0;
+		  		if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingSpaceElBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 2 < objMainColony.mcBuildingCap )
+		  		{
+		  			//(buildingName, buildCost, constructionTime, maintCost)
+		  			buildingSpaceEl = true;
+		  			objMainColony.mcConstructionInProgress = true;
+		  			objBuildings.buildingCurBuildTime = 0;
 
-		  		objMainColony.mcStoredMaterial -= objBuildings.buildingSpaceElBuildCost;
+		  			objMainColony.mcStoredMaterial -= objBuildings.buildingSpaceElBuildCost;
 
-		  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingSpaceElBuildCost;
-		  		$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingSpaceElBuildCost;
-		  		$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Space Elevator";
-		  		//play audio
-		  	}
-		  	else
-		  	{
-		  		if ( objMainColony.mcConstructionInProgress )
-		  		{
-		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
-		  		}
-		  		else if ( objMainColony.mcCurBuildingCount + 2 > objMainColony.mcBuildingCap )
-		  		{
-		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
-		  		}
-		  		else if ( objBuildings.buildingSpaceElBuildCost > objMainColony.mcStoredMaterial )
-		  		{
-		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build Space Elevator";
+		  			$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingSpaceElBuildCost;
+		  			$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingSpaceElBuildCost;
+		  			$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Space Elevator";
+		  			//play audio
 		  		}
 		  		else
-		  		{ $( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Something Aweful Has Happened. Sorry, we'll try and fix that."; }
-		  		//display warning that construction is already in progress
+		  		{
+		  			if ( objMainColony.mcConstructionInProgress )
+		  			{
+		  				$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
+		  			}
+		  			else if ( objMainColony.mcCurBuildingCount + 2 > objMainColony.mcBuildingCap )
+		  			{
+		  				$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
+		  			}
+		  			else if ( objBuildings.buildingSpaceElBuildCost > objMainColony.mcStoredMaterial )
+		  			{
+		  				$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build Space Elevator";
+		  			}
+		  			else
+		  			{ $( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Something Aweful Has Happened. Sorry, we'll try and fix that."; }
+		  			//display warning that construction is already in progress
+		  		}
 		  	}
+		  	else
+		  	{ $( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "You already have a space elevator"; }
 		  }
 		  );
 
 		dom.bind( "#mainColony-screen button[name=buildConPlat]", "click",
 			function ()
 			{
-				if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingConPlatBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 2 < objMainColony.mcBuildingCap )
+				if ( !buildingConPlatIsBuilt )
 				{
-					//(buildingName, buildCost, constructionTime, maintCost)
-					buildingConPlat = true;
-					objMainColony.mcConstructionInProgress = true;
-					objBuildings.buildingCurBuildTime = 0;
+					if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingConPlatBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 2 < objMainColony.mcBuildingCap )
+					{
+						//(buildingName, buildCost, constructionTime, maintCost)
+						buildingConPlat = true;
+						objMainColony.mcConstructionInProgress = true;
+						objBuildings.buildingCurBuildTime = 0;
 
-					objMainColony.mcStoredMaterial -= objBuildings.buildingConPlatBuildCost;
-					$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingConPlatBuildCost;
-					$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingConPlatBuildCost;
-					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Space Elevator";
-					//play audio
-				}
-				else
-				{
-					if ( objMainColony.mcConstructionInProgress )
-					{
-						$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
-					}
-					else if ( objMainColony.mcCurBuildingCount + 2 > objMainColony.mcBuildingCap )
-					{
-						$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
-					}
-					else if ( objBuildings.buildingConPlatBuildCost > objMainColony.mcStoredMaterial )
-					{
-						$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build Construction Platform";
+						objMainColony.mcStoredMaterial -= objBuildings.buildingConPlatBuildCost;
+						$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingConPlatBuildCost;
+						$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingConPlatBuildCost;
+						$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Construction Platform";
+						//play audio
 					}
 					else
-					{ $( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Something Aweful Has Happened. Sorry, we'll try and fix that."; }
-					//display warning that construction is already in progress
+					{
+						if ( objMainColony.mcConstructionInProgress )
+						{
+							$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
+						}
+						else if ( objMainColony.mcCurBuildingCount + 2 > objMainColony.mcBuildingCap )
+						{
+							$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
+						}
+						else if ( objBuildings.buildingConPlatBuildCost > objMainColony.mcStoredMaterial )
+						{
+							$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build Construction Platform";
+						}
+						else
+						{ $( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Something Aweful Has Happened. Sorry, we'll try and fix that."; }
+						//display warning that construction is already in progress
+					}
 				}
+				else
+				{ $( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "You already have a space elevator"; }
 			} );
 		dom.bind( "#mainColony-screen button[name=buildMD]", "click",
 			function ()
 			{
-				if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingMDBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
+				if ( !buildingMDIsBuilt )
 				{
-					//(buildingName, buildCost, constructionTime, maintCost)
-					buildingMD = true;
-					objMainColony.mcConstructionInProgress = true;
-					objBuildings.buildingCurBuildTime = 0;
+					if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingMDBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
+					{
+						//(buildingName, buildCost, constructionTime, maintCost)
+						buildingMD = true;
+						objMainColony.mcConstructionInProgress = true;
+						objBuildings.buildingCurBuildTime = 0;
 
-					objMainColony.mcStoredMaterial -= objBuildings.buildingMDBuildCost;
-					$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingMDBuildCost;
-					$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingMDBuildCost;
-					$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Military Depot";
-					//play audio
-				}
-				else
-				{
-					if ( objMainColony.mcConstructionInProgress )
-					{
-						$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
-					}
-					else if ( objMainColony.mcCurBuildingCount + 1 > objMainColony.mcBuildingCap )
-					{
-						$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
-					}
-					else if ( objBuildings.buildingMDBuildCost > objMainColony.mcStoredMaterial )
-					{
-						$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build Military Depot";
+						objMainColony.mcStoredMaterial -= objBuildings.buildingMDBuildCost;
+						$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingMDBuildCost;
+						$( "#mainColony-screen .mainColonyStoredMat span" )[0].innerHTML = +Math.floor( objMainColony.mcStoredMaterial ) + " - " + objBuildings.buildingMDBuildCost;
+						$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Now building: Military Depot";
+						//play audio
 					}
 					else
-					{ $( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Something Aweful Has Happened. Sorry, we'll try and fix that."; }
-					//display warning that construction is already in progress
+					{
+						if ( objMainColony.mcConstructionInProgress )
+						{
+							$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Already building " + currentlyBuilding;
+						}
+						else if ( objMainColony.mcCurBuildingCount + 1 > objMainColony.mcBuildingCap )
+						{
+							$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Colony at maximum Building Capacity.";
+						}
+						else if ( objBuildings.buildingMDBuildCost > objMainColony.mcStoredMaterial )
+						{
+							$( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Not enough Material to build Military Depot";
+						}
+						else
+						{ $( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "Something Aweful Has Happened. Sorry, we'll try and fix that."; }
+						//display warning that construction is already in progress
+					}
 				}
+				else
+				{ $( "#mainColony-screen .screenFeedBack span" )[0].innerHTML = "You already have a Military Depot."; }
 			} );
 
 		///////Level Up the Main Colony
