@@ -12,8 +12,7 @@
 
 
 	h_WorldColonyLevelUpCostMat = 0,
-	h_WorldColonyLevel = 0,
-
+    h_WorldColonyLevel = 0,
 	h_ColonyFoodOutput = 0,
 	h_ColonyMaterialOutput = 0,
 	h_ColonyStoredFood = 0,
@@ -30,7 +29,17 @@
 	arrayOfSyllables = [];
 
     worldMatCargo = 0,
-    worldFoodCargo = 0
+    worldFoodCargo = 0,
+    homeWorldMat = 0,
+    homeWorldFood = 0,
+    
+    isSettled1 = false,
+    isSettled2 = false,
+    isSettled3 = false,
+
+    updateOne = false,
+    updateTwo = false,
+    updateThree = false
 
 /*	function CreateNewName()
 	{
@@ -79,7 +88,7 @@
 		var NewWorld = Object.create( objWorlds );
 	
 		//decide the WorldType, 1 = Planet, 2 = Moon, 3 = Asteroid
-		NewWorld.h_WorldType = Math.floor(( Math.random() * 3 ) + 1 );
+		NewWorld.h_WorldType = Math.floor((Math.random() * 3 ) + 1);
 
 		//Next Assign the World's Fertility And Mineral Level based on the world type
 		if ( NewWorld.h_WorldType == 1 )
@@ -88,12 +97,12 @@
 			//Planets Get +1 Fertility Level:
 			NewWorld.h_WorldFertilityLevel++;
 			//Foodoutput determined by Ferility and Level
-			NewWorld.h_ColonyFoodOutput = h_WorldFertilityLevel * h_WorldColonyLevel;
+			NewWorld.h_ColonyFoodOutput = h_WorldFertilityLevel * NewWorld.h_WorldColonyLevel;
 			NewWorld.h_WorldTypeName = "Planet";
 
 
-			NewWorld.h_WorldMineralLevel = ( Math.floor(( Math.random() * 3 ) + 1 ) );
-			NewWorld.h_ColonyMaterialOutput = h_WorldMineralLevel * h_WorldColonyLevel;
+			NewWorld.h_WorldMineralLevel = Math.floor(( Math.random() * 3 ) + 1 );
+			NewWorld.h_ColonyMaterialOutput = h_WorldMineralLevel * NewWorld.h_WorldColonyLevel;
 			//Planets can have ruins:
 			temp = ( ( Math.random() * 100 ) + 1 );
 			if ( temp >= 50 )
@@ -109,19 +118,19 @@
 			NewWorld.h_ColonyFoodOutput = Math.floor(( NewWorld.h_WorldFertilityLevel * NewWorld.h_WorldColonyLevel ) * 0.5 );
 			NewWorld.h_WorldTypeName = "Moon";
 
-			NewWorld.h_WorldMineralLevel = ( Math.floor(( Math.random() * 3 ) + 1 ) );
-			NewWorld.h_ColonyMaterialOutput = h_WorldMineralLevel * h_WorldColonyLevel;
+			NewWorld.h_WorldMineralLevel = Math.floor(( Math.random() * 3 ) + 1 );
+			NewWorld.h_ColonyMaterialOutput = h_WorldMineralLevel * NewWorld.h_WorldColonyLevel;
 
 		}
 		else if ( NewWorld.h_WorldType == 3 )
 		{
 			//Asteroids cannot be fertile
 			NewWorld.h_WorldFertilityLevel = 0;
-			NewWorld.h_ColonyFoodOutput = NewWorld.h_WorldFertilityLevel * h_WorldColonyLevel;
+			NewWorld.h_ColonyFoodOutput = NewWorld.h_WorldFertilityLevel * NewWorld.h_WorldColonyLevel;
 			NewWorld.h_WorldTypeName = "Asteroid";
 
-			NewWorldh_WorldMineralLevel = ( Math.floor(( Math.random() * 3 ) + 1 ) );
-			NewWorld.h_ColonyMaterialOutput = h_WorldMineralLevel * h_WorldColonyLevel;
+			NewWorldh_WorldMineralLevel = Math.floor(( Math.random() * 3 ) + 1 );
+			NewWorld.h_ColonyMaterialOutput = h_WorldMineralLevel * NewWorld.h_WorldColonyLevel;
 			//Asteroids produce Material Much faster
 			NewWorld.h_ColonyMaterialOutput *= 2;
 		}
@@ -205,11 +214,9 @@
 	}
 
 
-	function UpdateOffWorldColony( indexNumber )
+	function UpdateOffWorldColony( )
 	{
-		var index = indexNumber;
-		
-		for ( var i = 0; i < arrayOfWorlds.length; ++i )
+		for ( index = 0; index < arrayOfWorlds.length; index++ )
 		{
 
 			this.arrayOfWorlds[index].h_ColonyStoredFood += this.arrayOfWorlds[index].h_ColonyFoodOutput;
@@ -263,6 +270,7 @@
 
 		h_WorldHasColony: h_WorldHasColony,
 		h_WorldColonyLevel: h_WorldColonyLevel,
+		
 		h_WorldID: h_WorldID,
 
 		arrayOfWorlds: arrayOfWorlds,
@@ -280,7 +288,16 @@
 		worldMatCargo: worldMatCargo,
 		worldFoodCargo: worldFoodCargo,
 		h_ColonyFoodOutput: h_ColonyFoodOutput,
-		h_ColonyMaterialOutput: h_ColonyMaterialOutput
+		h_ColonyMaterialOutput: h_ColonyMaterialOutput,
+		isSettled1: isSettled1,
+		isSettled2: isSettled2,
+		isSettled3: isSettled3,
+		updateOne: updateOne,
+		updateTwo: updateTwo, 
+		updateThree: updateThree,
+		homeWorldMat: homeWorldMat,
+		homeWorldFood: homeWorldFood
+
 
 	};
 } )();

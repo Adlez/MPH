@@ -20,6 +20,17 @@
 		$( "#about-screen .OnScreenText3 span" )[0].innerHTML = this.Help;
 	}
 
+	function setup() {
+	    displayGameInfo();
+	}
+
+	function run() {
+	    if (firstRun) {
+	        setup();
+	        firstRun = false;
+	    }
+	}
+
 	return {
 		run: run,
 		textOnScreen1: textOnScreen1,

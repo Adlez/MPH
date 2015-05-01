@@ -32,7 +32,7 @@ body {
 	position: absolute;
 	left: 0;
 	top: 0;
-	font-size: 35px;
+	font-size: 40px;
 	width: 32em;
 	height: 24em;
 	background-color: rgb(30,30,30);
@@ -133,7 +133,7 @@ ul.menu {
 			/*Default Screen Formatting*/
 #mainColony-screen, #unit-screen, #ship-screen, #worlds-screen{
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	font-size: 0.25em;
+	font-size: 0.3em;
 	color: rgb(79,255,232);
 }
 
@@ -147,6 +147,33 @@ ul.menu {
 	font-size: 2.0em;
 	color: rgb(231,54,0);
 }
+
+#unit-screen .MainColonyStats, #worlds-screen .MainColonyStats, #ship-screen .MainColonyStats, #mainColony-screen .MainColonyStats
+{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 2.0em;
+}
+
+#worlds-screen .HomeWorldStats
+{
+     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 2.0em;
+}
+
+#ship-screen .ShipPower, .SupplyShips, .EscortShips, .ColonyShips, .MaxCargo, .CurrentCargo, .Travel, .FoodCost
+{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 2.0em;
+    text-align: center;
+}
+
+#unit-screen .Power, .Velos, .Titav, .Aegis, .Timer
+{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 2.0em;
+    
+}
+
 .matFarmReq, .matMineReq, .matRFReq, .matConPlatReq, .matSpaceElReq, .matMDReq
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;

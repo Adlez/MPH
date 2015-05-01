@@ -29,7 +29,7 @@
 
 	pauseTime;
 
-	myAudio = new Audio( "sounds/12 Status Quo Show.ogg" || "sounds/12 Status Quo Show.mp3" );
+	//myAudio = new Audio( "sounds/12 Status Quo Show.ogg" || "sounds/12 Status Quo Show.mp3" );
 	//Main Colony Object
 
 
@@ -49,7 +49,7 @@
 			startTime: 0, // time at start of level
 			endTime: 0 // time to game over
 		};
-		mph.audio.initialize();
+		//mph.audio.initialize();
 
 		
 
@@ -69,13 +69,14 @@
 		previousTime = Date.now();
 
 //		mph.audio.play( "12 Status Quo Show" )
-		myAudio.addEventListener( 'ended', function ()
+		/*myAudio.addEventListener( 'ended', function ()
 		{
 			this.currentTime = 0;
 			this.play();
-		}, false );
+		}, false );*/
 
 		GameTimer += deltaTime;
+		gameOver();
 
 		var Level_Max = 100;
 		var Level_Min = 1;
@@ -296,25 +297,23 @@
 
 	function gameOver()
 	{
-		audio.play( "gameover" );
-		stopGame();
-		storage.set( "activeGameData", null );
-		display.gameOver( function ()
-		{
-			announce( "Game over" );
-			setTimeout( function ()
-			{
-				mph.game.showScreen(
-				   "hiscore", gameState.score );
-			}, 2500 );
-		} );
+	    if(objMainColony.mcStoredFood <= -500)
+	    {
+	        var starving = window.confirm(
+                "Your people are starving to death, we have already lost a 1/3 of the population");
+	    }
+	    if(objMainColony.mcStoredFood <= -1000)
+	    {
+	        var everyoneIsDead = window.confirm("This colony is no longer viable, we have lost too many. Game Over.");
+	        mph.game.showScreen("main-menu");
+	    }
 	}
 
 	function run()
 	{
 		if ( firstRun )
 		{
-			myAudio.play();
+			//myAudio.play();
 			objMainColony.mcLevel = 1;
 			objMainColony.UpdateMainColony( objMainColony.mcFoodProduction, objMainColony.mcMaterialProduction, objMainColony.mcLevel, 0 );
 			objMainColony.mcBuildBuilding( "Farm", 2, 1 );
@@ -593,7 +592,7 @@
 		dom.bind( "#mainColony-screen button[name=buildSpaceEl]", "click",
 		  function ()
 		  {
-		  	if ( !buildingSpaceElIsBuilt )
+		      if (!objBuildings.buildingSpaceElIsBuilt)
 		  	{
 		  		if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingSpaceElBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 2 < objMainColony.mcBuildingCap )
 		  		{
@@ -636,7 +635,7 @@
 		dom.bind( "#mainColony-screen button[name=buildConPlat]", "click",
 			function ()
 			{
-				if ( !buildingConPlatIsBuilt )
+			    if (!objBuildings.buildingConPlatIsBuilt)
 				{
 					if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingConPlatBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 2 < objMainColony.mcBuildingCap )
 					{
@@ -676,7 +675,7 @@
 		dom.bind( "#mainColony-screen button[name=buildMD]", "click",
 			function ()
 			{
-				if ( !buildingMDIsBuilt )
+			    if (!objBuildings.buildingMDIsBuilt)
 				{
 					if ( !objMainColony.mcConstructionInProgress && objBuildings.buildingMDBuildCost <= objMainColony.mcStoredMaterial && objMainColony.mcCurBuildingCount + 1 < objMainColony.mcBuildingCap )
 					{

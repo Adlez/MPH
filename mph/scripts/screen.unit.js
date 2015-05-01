@@ -211,7 +211,7 @@ mph.screens["unit-screen"] = (function ()
         displayAegis -= (displayAegis / 2);
         displayVelos -= (displayVelos / 2);
         displayTitav -= (displayTitav / 2);
-        displayPower -= (displayPower / 2);
+        displayPower = ((displayAegis + displayTitav + displayVelos) * 10);
         //unitState.Units.splice(0, (unitState.Units.length / 2));
     }
 
@@ -378,13 +378,16 @@ mph.screens["unit-screen"] = (function ()
        $("#unit-screen .Timer span")[0].innerHTML = Math.floor(enemyColony.Distance);
        $("#unit-screen .EnemyPower span")[0].innerHTML = Math.floor(enemyColony.Power);
        $("#unit-screen .ParasitePower span")[0].innerHTML = Math.floor(enemyColony.ParaPower);
-       $("#unit-screen .AttackDelay span")[0].innerHTML = Math.floor(enemyColony.attackDelay);
-       $("#unit-screen .MainMat2 span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
-       $("#unit-screen .EnemyReset span")[0].innerHTML = Math.floor(enemyColony.enemyReset);
-       $("#unit-screen .Diff span")[0].innerHTML = Math.floor(enemyColony.difficultyIncrease);
        $("#unit-screen .matCVReq span")[0].innerHTML = "Costs 100 Material";
        $("#unit-screen .matCTReq span")[0].innerHTML = "Costs 250 Material";
        $("#unit-screen .matCAReq span")[0].innerHTML = "Costs 500 Material";
+       $("#unit-screen .mainColonyStoredMat span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
+       $("#unit-screen .mainColonyStoredFood span")[0].innerHTML = Math.floor(objMainColony.mcStoredFood);
+
+        //$("#unit-screen .AttackDelay span")[0].innerHTML = Math.floor(enemyColony.attackDelay);
+        //$("#unit-screen .MainMat2 span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
+        //$("#unit-screen .EnemyReset span")[0].innerHTML = Math.floor(enemyColony.enemyReset);
+        //$("#unit-screen .Diff span")[0].innerHTML = Math.floor(enemyColony.difficultyIncrease);
     }
 
     function togglePause(enable) {

@@ -44,7 +44,7 @@
 
         setRandEnemyPower = function()
         {
-            this.enemyShipPower = Math.floor((Math.random() * 1000) + 500);
+            this.enemyShipPower = Math.floor((Math.random() * 20) + 10);
         }
 
         setRandEnemyPowerLower1 = function () {

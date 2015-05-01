@@ -161,15 +161,12 @@
         dom.bind(FLButton, "click", function (e) {*/
             if(objShips.colonyShipDisplay >= 1 && objShips.travelTime <= 0)
             {
-                destroyShips();
                 objShips.setRandTravelTime();
-                if (enemyColony.lowerShipPower1 == true)
+                /*if (enemyColony.lowerShipPower1 == true)
                 {
                     objShips.setRandEnemyPowerLower1();
-                }
-                else {
-                    objShips.setRandEnemyPower();
-                }
+                }*/
+                objShips.setRandEnemyPower();
                 
                 shipState.startTimer = true;
             }
@@ -188,12 +185,17 @@
 
     function decideArrivelOutcome()
     {
-        if(objShips.shipPower >= objShips.enemyShipPower)
+        objShips.shipPower -= objShips.enemyShipPower;
+        if(objShips.shipPower >= 0)
         {
             Arrived();
             objShips.arrivedAtWorld = true;
-            objWorlds.recieveCargo();
+            arrived1stPlanet();
+            arrived2ndPlanet();
+            arrived3rdPlanet();
+            
             objShips.currentCargo = 0;
+            destroyShips();
         }
         else {
             objShips.currentCargo = 0;
@@ -205,8 +207,60 @@
 
     function Arrived()
     {
-        var arrived = window.confirm(
+        var arrivedatplanet = window.confirm(
             "You have arrived at the planet!");
+    }
+
+    function arrived1stPlanet()
+    {
+        if (objShips.arrivedAtWorld == true) {
+            if (objWorlds.isSettled1 == true) {
+                objWorlds.arrayOfWorlds[0].h_WorldColonyLevel += 1;
+                objWorlds.updateOne = true;
+                objWorlds.arrayOfWorlds[0].h_ColonyStoredMat += objShips.currentCargo
+            }
+            else {
+                //objWorlds.isSettled1 = false;
+                if (objWorlds.isSettled1 == true) {
+                    var oneSettled = window.confirm(
+                       "Colony one has already been settled.");
+                }
+            }
+        }
+    }
+
+    function arrived2ndPlanet() {
+        if (objShips.arrivedAtWorld == true) {
+            if (objWorlds.isSettled2 == true) {
+                objWorlds.arrayOfWorlds[1].h_WorldColonyLevel += 1;
+                objWorlds.updateTwo = true;
+                objWorlds.arrayOfWorlds[1].h_ColonyStoredMat += objShips.currentCargo
+            }
+            else {
+                //objWorlds.isSettled2 = false;
+                if (objWorlds.isSettled2 == true) {
+                    var twoSettled = window.confirm(
+                       "Colony two has already been settled.");
+                }
+            }
+        }
+    }
+
+    function arrived3rdPlanet() {
+        if (objShips.arrivedAtWorld == true) {
+            if (objWorlds.isSettled3 == true) {
+                objWorlds.arrayOfWorlds[2].h_WorldColonyLevel += 1;
+                objWorlds.updateThree = true;
+                objWorlds.arrayOfWorlds[2].h_ColonyStoredMat += objShips.currentCargo
+            }
+            else {
+                //objWorlds.isSettled3 = false;
+                if (objWorlds.isSettled3 == true) {
+                    var threeSettled = window.confirm(
+                       "Colony three has already been settled.");
+                }
+            }
+        }
     }
 
     function announce(str) {
@@ -234,16 +288,14 @@
         $("#ship-screen .MaxCargo span")[0].innerHTML = Math.floor(objShips.maxCargo);
         $("#ship-screen .CurrentCargo span")[0].innerHTML = Math.floor(objShips.currentCargo);
         $("#ship-screen .Travel span")[0].innerHTML = Math.floor(objShips.travelTime);
-        $("#ship-screen .MainMat span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
+        //$("#ship-screen .MainMat span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
         $("#ship-screen .FoodCost span")[0].innerHTML = Math.floor(objShips.foodMaintCost);
-        $("#ship-screen .MainFood span")[0].innerHTML = Math.floor(objMainColony.mcStoredFood);
-        $("#mainColony-screen .mainColonyStoredFood span")[0].innerHTML = Math.floor(objMainColony.mcStoredFood);
-        $("#mainColony-screen .mainColonyStoredMat span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
-        $("#mainColony-screen .Farms span")[0].innerHTML = Math.floor(objMainColony.mcCurFarmCount);
-        $("#mainColony-screen .Mines span")[0].innerHTML = Math.floor(objMainColony.mcCurMineCount);
+        //$("#ship-screen .MainFood span")[0].innerHTML = Math.floor(objMainColony.mcStoredFood);
         $("#ship-screen .matCSReq span")[0].innerHTML = "Costs 100 Material & +1 food upkeep";
         $("#ship-screen .matCEReq span")[0].innerHTML = "Costs 70 Material";
         $("#ship-screen .matCCReq span")[0].innerHTML = "Costs 500 Material & +10 food upkeep";
+        $("#ship-screen .mainColonyStoredMat span")[0].innerHTML = Math.floor(objMainColony.mcStoredMaterial);
+        $("#ship-screen .mainColonyStoredFood span")[0].innerHTML = Math.floor(objMainColony.mcStoredFood);
     }
 
     function togglePause(enable) {

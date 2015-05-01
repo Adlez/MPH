@@ -12,11 +12,11 @@ enemyColony = ( function ()
                 
     setRandPower = function ()
     {
-        this.Power = Math.floor((Math.random() * 100) + 50);
+        this.Power = Math.floor((Math.random() * 1500) + 300);
     }
 
     setRandParaPower = function () {
-        this.ParaPower = Math.floor((Math.random() * 100) + 50);
+        this.ParaPower = Math.floor((Math.random() * 1000) + 500);
     }
 
     setRandAttackerPower = function () {
@@ -25,7 +25,7 @@ enemyColony = ( function ()
 
     setRandDistance = function()
     {
-        this.Distance = Math.floor((Math.random() * 10) + 1);
+        this.Distance = Math.floor((Math.random() * 30) + 10);
     }
 
     setRandAttackDelay = function()

@@ -158,7 +158,7 @@ window.addEventListener( "load", function ()
 			    "loader!scripts/input.js",
 			    "loader!scripts/screen.hiscore.js",
 			    "loader!scripts/screen.main-menu.js",
-			    "loader!scripts/screen.about.js",
+			    //"loader!scripts/screen.about.js",
 			    "loader!scripts/MainColony.js",
 			    "loader!scripts/WorldClass.js",
 			    "loader!scripts/Buildings.js",
@@ -170,8 +170,8 @@ window.addEventListener( "load", function ()
 			    "loader!scripts/Ships.js",
 			    "loader!scripts/screen.ships.js",
                 "loader!scripts/screen.worlds.js",
-			    "loader!images/jewels"
-				   + mph.settings.mphSize + ".png"
+			    "loader!images/jewels",
+                + mph.settings.mphSize + ".png"
 			]
 		}
 		] );
